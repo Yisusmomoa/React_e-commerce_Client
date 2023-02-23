@@ -8,7 +8,7 @@ const InputSearch = () => {
   return (
     <ThemeProvider theme={theme}>
       <SearchContainer>
-        <InputSearchStyled type='text'/>
+        <InputSearchStyled type='text' placeholder='search...'/>
         <SearchOutlinedIcon fontSize='medium'/>
       </SearchContainer>
     </ThemeProvider>

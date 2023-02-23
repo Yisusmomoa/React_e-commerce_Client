@@ -1,5 +1,7 @@
 import styled from "styled-components";
-
+import { device,
+    deviceMin } from "../../styles/breakpoints";
+    
 export const DropdownCategoryStyled=styled.select`
     background: transparent;
     border: none;
@@ -12,4 +14,7 @@ export const DropdownCategoryStyled=styled.select`
     margin: 8px 0;
     color:${(props)=>props.theme.colors.Letras};
     font-family:${props=>props.theme.fonts.raleway};
+    @media(${device.lg}){
+        display:none;
+    }
 `

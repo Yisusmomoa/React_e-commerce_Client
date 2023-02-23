@@ -1,11 +1,12 @@
 // font-family: 'Raleway', sans-serif;
 import styled from "styled-components";
 import { Link } from 'react-router-dom'
-import { device } from "../../styles/breakpoints";
+import { device,
+deviceMin } from "../../styles/breakpoints";
 
 export const NavBarStyled=styled.nav`
   display:flex;
-  width: 100%;
+  width: auto;
   flex-wrap: wrap;
   justify-content: space-around;
   align-items: center;
@@ -21,23 +22,16 @@ export const NavBarContainerLinks=styled.div`
     width:80%;
     align-items: center;
     justify-content: space-evenly;
-    @media(${device.md}){
+    @media(${device.sm}){
         display:none;
     }
 `
-
-export const Logo = styled.img`
-    margin: 10px;
-    max-width: 180px;
-    height: 100%;
-`;
-
 export const CartProfileContainer=styled.div`
     display:flex;
     width:7%;
     height:auto;
     justify-content: space-between;
-    @media(${device.md}){
+    @media(${device.lg}){
         display:none;
     }
 
@@ -75,7 +69,7 @@ export const NavBarContainerResponsive=styled.div`
     align-items: center;
     /* border:1px solid ${(props)=>props.theme.colors.Letras}; */
     /* box-shadow: 1px 1px 15px ${(props)=>props.theme.colors.Letras}; */
-    @media(${device.xs}){
+    @media(${deviceMin.xs}){
         display:none
     }
 `
