@@ -85,7 +85,7 @@ export const NavBarExtendedContainer=styled.div`
     display:flex;
     flex-direction:column;
     width:75vw;
-    height:90vh;
+    height:95vh;
     font-family:${props=>props.theme.fonts.raleway};
     background-color:${(props)=>props.theme.colors.Btn_Hover};
     border-radius:5px;

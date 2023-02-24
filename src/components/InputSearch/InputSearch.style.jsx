@@ -15,4 +15,6 @@ export const InputSearchStyled=styled.input`
     margin: 8px 0;
     display: inline-block;
     box-sizing: border-box;
+    font-size:16px;
+    font-family:${props=>props.theme.fonts.raleway};
 `
