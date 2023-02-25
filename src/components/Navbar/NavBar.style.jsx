@@ -5,6 +5,7 @@ import { device,
 deviceMin } from "../../styles/breakpoints";
 
 export const NavBarStyled=styled.nav`
+
   display:flex;
   width: auto;
   flex-wrap: wrap;
