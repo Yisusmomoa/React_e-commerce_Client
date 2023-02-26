@@ -3,17 +3,17 @@ import { device, deviceMin } from "../../styles/breakpoints";
 
 export const CardProductContainer=styled.div`
     display:flex;
-    width:100%;
+    width:90%;
     height:auto;
     /* border:1px solid ${props=>props.theme.colors.Letras}; */
-    border: 1px groove rgba(97, 113, 122, 0.2);
+    border: 1px groove ${props=>props.theme.colors.Border};
     border-radius:5px;
     flex-direction: column;
     align-items: center;
     padding:10px;
     transition: box-shadow 0.3s ease-in-out;
     &:hover{
-        box-shadow: 1px 2px 10px 1px #61717A;
+        box-shadow: 1px 2px 10px 5px ${props=>props.theme.colors.Border};
     }
     @media(${device.sm}){
         margin:0 auto;
