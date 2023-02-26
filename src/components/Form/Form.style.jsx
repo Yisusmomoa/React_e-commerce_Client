@@ -66,7 +66,7 @@ export const ButtonForm=styled.button`
     background-color:${(props)=>props.theme.colors.Btn_Hover};
     cursor:pointer;
     border:none;
-    border-radius:2px;
+    border-radius:4px;
     padding: 12px 50px;
     text-align: center;
     text-decoration: none;

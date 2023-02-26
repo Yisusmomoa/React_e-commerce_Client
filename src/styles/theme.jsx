@@ -9,7 +9,7 @@ export const theme={
     },
     fonts: {
         raleway: 'Raleway',
-    }
+    },
 }
 
 // https://fonts.google.com/specimen/Raleway#styles
