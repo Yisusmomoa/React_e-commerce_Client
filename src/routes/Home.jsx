@@ -11,6 +11,7 @@ const HomeStyled=styled.div`
   height:auto;
   width:auto;
   font-family:${props=>props.theme.fonts.raleway};
+  text-align:center;
 `
 const Home = () => {
   return (
