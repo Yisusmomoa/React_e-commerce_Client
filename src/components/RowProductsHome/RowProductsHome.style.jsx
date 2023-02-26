@@ -6,7 +6,11 @@ export const RowProductsHomeStyled=styled.div`
     height:auto;
     margin:0 auto;
     display:flex;
-    justify-content: space-around;
+    justify-content: space-evenly;
     flex-wrap: wrap;
+    gap: 12px;
     margin-bottom:15px;
+    @media(${device.sm}){
+        display:none;
+    }
 `

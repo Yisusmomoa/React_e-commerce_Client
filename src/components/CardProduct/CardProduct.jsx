@@ -1,5 +1,6 @@
 import React from 'react'
 import { CardProductContainer,
+  CardProductImg,
   CardProductInfo } from './CardProduct.style'
 import Monitor from '../../assets/Monitor.jpg'
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
@@ -11,9 +12,8 @@ const CardProduct = () => {
   return (
     <NavBarLink to={'/product/1'}>
       <CardProductContainer>
-        <img src={Monitor} 
-          alt='MonitorImage'
-          width={'90%'} height={'190px'}/>
+        <CardProductImg src={Monitor} 
+          alt='MonitorImage'/>
           
         <CardProductInfo>
           <h2>Name product</h2>
