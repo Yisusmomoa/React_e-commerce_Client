@@ -70,12 +70,13 @@ export const ButtonForm=styled.button`
     padding: 12px 50px;
     text-align: center;
     text-decoration: none;
-    display: inline-block;
     font-size: 18px;
     transition: background-color 0.3s ease-in;
+    margin:0 auto;
     &:hover{
         background-color:${(props)=>props.theme.colors.Btn_Reposo};
     }
+
 `
 export const ImgForm=styled.img`
     width:75%;

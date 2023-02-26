@@ -6,4 +6,6 @@ export const ShowProductsHomeStyled=styled.div`
     height:auto;
     margin:0 auto;
     margin-bottom:15px;
+    text-align: center;
 `
+

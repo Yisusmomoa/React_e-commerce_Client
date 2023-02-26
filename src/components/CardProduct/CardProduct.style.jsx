@@ -3,7 +3,7 @@ import { device, deviceMin } from "../../styles/breakpoints";
 
 export const CardProductContainer=styled.div`
     display:flex;
-    width:90%;
+    width:100%;
     height:auto;
     /* border:1px solid ${props=>props.theme.colors.Letras}; */
     border: 1px groove rgba(97, 113, 122, 0.2);
