@@ -1,7 +1,10 @@
 import { createBrowserRouter } from "react-router-dom";
 import App from "./App";
 import IsAdmin from "./components/IsAdmin.jsx/IsAdmin";
-import Admin from "./routes/Admin";
+import AdminProducts from './components/IsAdmin.jsx/Admin/AdminProducts'
+import AdminCategories from './components/IsAdmin.jsx/Admin/AdminCategories'
+import AdminUsers from './components/IsAdmin.jsx/Admin/AdminUsers'
+import AdminBrands from './components/IsAdmin.jsx/Admin/AdminBrands'
 import Home from "./routes/Home";
 import SignUp from "./routes/SignUp";
 import SignIn from "./routes/SignIn";
@@ -70,15 +73,24 @@ const router=createBrowserRouter([
                 children:[
                     {
                         index:true,
-                        element:<Admin/>
+                        element: <AdminProducts/>,
                     },
                     {
-                        path: "createproduct",
-                        element: <h1>Create product</h1>,
+                        path: "products",
+                        index:true,
+                        element: <AdminProducts/>,
                     },
                     {
-                        path: "deleteproduct",
-                        element: <h1>deleteProduct</h1>,
+                        path: "categories",
+                        element: <AdminCategories/>,
+                    },
+                    {
+                        path: "users",
+                        element: <AdminUsers/>,
+                    },
+                    {
+                        path: "brands",
+                        element: <AdminBrands/>,
                     },
                 ]
             }
