@@ -9,3 +9,11 @@ export const SubNavbarContainer=styled.nav`
     align-items: center;
 
 `
+export const ButtonAdd=styled.button`
+    width:auto;
+    height:auto;
+    background-color:transparent;
+    border:none;
+    color:${props=>props.theme.colors.Letras};
+    
+`

@@ -11,11 +11,14 @@ const AdminUsers = () => {
   const showModalUsers=()=>{
     alert("Admin Users")
   }
+  const searchUsers=(name)=>{
+    console.log("name Users", name)
+  }
   return (
     <AdminUsersContainer>
-      <SubNavbar showModal={showModalUsers}/>
+      <SubNavbar showModal={showModalUsers} search={searchUsers}/>
       <hr/>
-      AdminBrands
+      AdminUsers
     </AdminUsersContainer>
   )
 }

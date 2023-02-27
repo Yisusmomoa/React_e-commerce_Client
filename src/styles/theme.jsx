@@ -6,7 +6,9 @@ export const theme={
         Btn_Hover:'#3F72AF', //este es el nuevo btn_repaso
         Letras:'#61717a',
         Letras2:'#DBE2EF',
-        Border:'rgba(97, 113, 122, 0.2)'
+        Border:'rgba(97, 113, 122, 0.2)',
+        Delete:'#C90000',
+        DeleteHover:'#A70000',
     },
     fonts: {
         raleway: 'Raleway',
