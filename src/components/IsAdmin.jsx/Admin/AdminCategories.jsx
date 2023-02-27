@@ -2,6 +2,7 @@ import React from 'react'
 import styled from "styled-components";
 import { device, deviceMin } from "../../../styles/breakpoints";
 import SubNavbar from '../SubNavbar/SubNavbar';
+
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -48,46 +49,46 @@ const AdminCategories = () => {
   }
   return (
     <AdminCategoriesContainer>
-      <SubNavbar showModal={showModalCategories} search={searchCategories}/>
+      <SubNavbar showModal={showModalCategories} 
+        search={searchCategories}
+        title={'Categories'}/>
       <hr/>
-      <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 650 }} aria-label="simple table">
-        <TableHead>
-          <TableRow>
-            <TableCell>Id</TableCell>
-            <TableCell >Name</TableCell>
-            <TableCell >Description</TableCell>
-            <TableCell >updatedAt</TableCell>
-            <TableCell >createdAt</TableCell>
-            <TableCell >Edit</TableCell>
-            <TableCell >Delete</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {rows.map((row) => (
-            <TableRow
-              key={row.id}
-            >
-              <TableCell component="th" scope="row">
-                {row.id}
-              </TableCell>
-              <TableCell >{row.name}</TableCell>
-              <TableCell >{row.createdAt}</TableCell>
-              <TableCell >{row.updatedAt}</TableCell>
-              <TableCell >{row.createdAt}</TableCell>
-              <TableCell ><ButtonAdmin title={'Edit'} 
-                typeBtn={'Edit'} iconName={'Edit'} id={row.id}
-                action={editCategory}> </ButtonAdmin>
-              </TableCell>
-              <TableCell ><ButtonAdmin title={'Delete'}
-                typeBtn={'Delete'} iconName={'Delete'} id={row.id}
-                action={deleteCategory}> </ButtonAdmin>
-              </TableCell>
+      <TableContainer component={Paper} sx={{ maxHeight: 550 }}>
+        <Table sx={{ minWidth: 650 }} stickyHeader>
+          <TableHead>
+            <TableRow>
+              <TableCell sx={{maxwidth:180}}>Id</TableCell>
+              <TableCell sx={{maxwidth:180}} >Name</TableCell>
+              <TableCell sx={{maxwidth:180}} >updatedAt</TableCell>
+              <TableCell sx={{maxwidth:180}} >createdAt</TableCell>
+              <TableCell sx={{width:280}}>Edit</TableCell>
+              <TableCell sx={{width:280}}>Delete</TableCell>
             </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
+          </TableHead>
+          <TableBody>
+            {rows.map((row) => (
+              <TableRow
+                key={row.id}
+              >
+                <TableCell component="th" scope="row">
+                  {row.id}
+                </TableCell>
+                <TableCell >{row.name}</TableCell>
+                <TableCell >{row.updatedAt}</TableCell>
+                <TableCell >{row.createdAt}</TableCell>
+                <TableCell ><ButtonAdmin title={'Edit'} 
+                  typeBtn={'Edit'} iconName={'Edit'} id={row.id}
+                  action={editCategory}> </ButtonAdmin>
+                </TableCell>
+                <TableCell ><ButtonAdmin title={'Delete'}
+                  typeBtn={'Delete'} iconName={'Delete'} id={row.id}
+                  action={deleteCategory}> </ButtonAdmin>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
     </AdminCategoriesContainer>
   )
 }
