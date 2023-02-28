@@ -50,7 +50,7 @@ const router=createBrowserRouter([
                 element:<ShopCart/>
             },
             {
-                path:"/profile",
+                path:"/profile/",
                 element:<Profile/>,
                 children:[
                     {
