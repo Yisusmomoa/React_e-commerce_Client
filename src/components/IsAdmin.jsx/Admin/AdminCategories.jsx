@@ -14,6 +14,7 @@ import ButtonAdmin from './ButtonAdmin';
 import Modal from '../Modal/Modal';
 import { useModal } from '../../../state/hooks/useModal';
 import ButtonAddModal from '../Modal/ButtonAddModal';
+import { Modal_InputStyled } from '../Modal/Modal.style';
 
 const AdminCategoriesContainer=styled.div`
   width:100%;
@@ -60,7 +61,7 @@ const AdminCategories = () => {
         <form action=''>
           <p>
             <label htmlFor="CategoryName">Category name: </label>
-            <input type='text' name='CategoryName' />
+            <Modal_InputStyled type='text' name='CategoryName' />
           </p>
           <ButtonAddModal/>
         </form>
@@ -73,7 +74,7 @@ const AdminCategories = () => {
           <p>
             <label>{categoryToUpdate.name}</label>
             <label htmlFor="CategoryName">Category name: </label>
-            <input type='text' name='CategoryName' />
+            <Modal_InputStyled type='text' name='CategoryName' />
           </p>
           <ButtonAddModal/>
         </form>
@@ -113,7 +114,7 @@ const AdminCategories = () => {
                     action={editCategory}> </ButtonAdmin>
                   </TableCell>
                   <TableCell ><ButtonAdmin title={'Delete'}
-                    typeBtn={'Delete'} iconName={'Delete'} data={row}
+                    typeBtn={'Delete'} iconName={'Delete'} data={row.id}
                     action={deleteCategory}> </ButtonAdmin>
                   </TableCell>
                 </TableRow>

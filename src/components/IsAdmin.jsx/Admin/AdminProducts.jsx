@@ -10,8 +10,6 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import TextField from '@mui/material/TextField';
-import Autocomplete from '@mui/material/Autocomplete';
 
 
 import ButtonAdmin from './ButtonAdmin';
@@ -19,6 +17,7 @@ import { useModal } from '../../../state/hooks/useModal';
 import Modal from '../Modal/Modal';
 import ButtonAddModal from '../Modal/ButtonAddModal';
 import DropdownCategory from '../../DropdownCategory/DropdownCategory';
+import { Modal_InputStyled } from '../Modal/Modal.style';
 
 const AdminProductsContainer=styled.div`
   width:100%;
@@ -78,10 +77,17 @@ const AdminProducts = () => {
   const [brand, setBrand]=useState(1) //igualar a la primera posición
   //del arreglo que vendrá desde el back
   const [category, setCategory]=useState(1)
+  const [productToUpdate, setProductToUpdate]=useState({})
   const [
     isOpenModalAdd,
     openModalAdd,
     closeModalAdd
+  ]=useModal()
+
+  const [
+    isOpenModalUpdate,
+    openModalUpdate,
+    closeModalUpdate
   ]=useModal()
 
   const searchProducts=(name)=>{
@@ -90,8 +96,10 @@ const AdminProducts = () => {
   const deletProduct=(id)=>{
     console.log("deletProduct", id)
   }
-  const editProduct=(id)=>{
-    console.log("editProduct", id)
+  const editProduct=(data)=>{
+    console.log("editProduct", data)
+    setProductToUpdate(data)
+    openModalUpdate()
   }
   return (
     <AdminProductsContainer>
@@ -100,15 +108,15 @@ const AdminProducts = () => {
           <form action=''>
             <p>
               <label htmlFor="ProductName">Product name: </label>
-              <input type='text' name='ProductName' />
+              <Modal_InputStyled type='text' name='ProductName' />
             </p>
             <p>
               <label htmlFor="DescriptionName">Description: </label>
-              <input type='text' name='DescriptionName' />
+              <Modal_InputStyled type='text' name='DescriptionName' />
             </p>
             <p>
               <label htmlFor="PriceName">Price: </label>
-              <input type='number' name='PriceName' />
+              <Modal_InputStyled type='number' name='PriceName' />
             </p>
             <p>
               <label>
@@ -145,6 +153,58 @@ const AdminProducts = () => {
             <ButtonAddModal/>
           </form>
       </Modal>
+
+      <Modal isOpen={isOpenModalUpdate} closeModal={closeModalUpdate}>
+        <h4>Add Product</h4>
+          <form action=''>
+            <p>
+              <label htmlFor="ProductName">Product name: </label>
+              <Modal_InputStyled type='text' name='ProductName' />
+            </p>
+            <p>
+              <label htmlFor="DescriptionName">Description: </label>
+              <Modal_InputStyled type='text' name='DescriptionName' />
+            </p>
+            <p>
+              <label htmlFor="PriceName">Price: </label>
+              <Modal_InputStyled type='number' name='PriceName' />
+            </p>
+            <p>
+              <label>
+                Brand 
+                <select value={brand} onChange={(ev)=>setBrand(ev.target.value)}>
+                  <option value="1">Brand1</option>
+                  <option value="2">Brand2</option>
+                  <option value="3">Brand2</option>
+                </select>
+              </label>
+            </p>
+            <p>
+              <label>
+                  Category 
+                  <select value={category} onChange={(ev)=>setCategory(ev.target.value)}>
+                    <option value="1">Category1</option>
+                    <option value="2">Category2</option>
+                    <option value="3">Category3</option>
+                  </select>
+                </label>
+            </p>
+            <p>
+              <label htmlFor="imgBrand">First product Img: </label>
+              <input type='file' name='imgBrand'/>
+            </p>
+            <p>
+              <label htmlFor="imgBrand">Second product Img: </label>
+              <input type='file' name='imgBrand'/>
+            </p>
+            <p>
+              <label htmlFor="imgBrand">Third product Img: </label>
+              <input type='file' name='imgBrand'/>
+            </p>
+            <ButtonAddModal/>
+          </form>
+      </Modal>
+
       <SubNavbar showModal={openModalAdd} 
         search={searchProducts}
         title={'Products'}/>
@@ -181,11 +241,11 @@ const AdminProducts = () => {
                 <TableCell sx={{maxwidth:180}}>{row.brandName}</TableCell>
                 <TableCell sx={{maxwidth:180}}>{row.updatedAt}</TableCell>
                 <TableCell sx={{width:280}}><ButtonAdmin title={'Edit'} 
-                  typeBtn={'Edit'} iconName={'Edit'} id={row.id}
+                  typeBtn={'Edit'} iconName={'Edit'} data={row}
                   action={editProduct}> </ButtonAdmin>
                 </TableCell>
                 <TableCell sx={{width:280}}><ButtonAdmin title={'Delete'}
-                  typeBtn={'Delete'} iconName={'Delete'} id={row.id}
+                  typeBtn={'Delete'} iconName={'Delete'} data={row.id}
                   action={deletProduct}> </ButtonAdmin>
                 </TableCell>
               </TableRow>

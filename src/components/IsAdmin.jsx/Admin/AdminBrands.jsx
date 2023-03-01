@@ -14,6 +14,8 @@ import ButtonAdmin from './ButtonAdmin';
 import { useModal } from '../../../state/hooks/useModal';
 import Modal from '../Modal/Modal';
 import ButtonAddModal from '../Modal/ButtonAddModal';
+import { Modal_InputStyled } from '../Modal/Modal.style';
+
 
 const AdminBrandsContainer=styled.div`
   width:100%;
@@ -71,7 +73,7 @@ const AdminBrands = () => {
           <form action=''>
             <p>
               <label htmlFor="BrandName">Brand name: </label>
-              <input type='text' name='BrandName' />
+              <Modal_InputStyled type='text' name='BrandName' />
             </p>
             <p>
               <label htmlFor="imgBrand">Brand Img: </label>
@@ -87,7 +89,7 @@ const AdminBrands = () => {
           <form action=''>
             <p>
               <label htmlFor="BrandName">Brand name: </label>
-              <input type='text' name='BrandName' />
+              <Modal_InputStyled type='text' name='BrandName' />
             </p>
             <p>
               <label htmlFor="imgBrand">Brand Img: </label>
@@ -131,7 +133,7 @@ const AdminBrands = () => {
                   action={editBrand}> </ButtonAdmin>
                 </TableCell>
                 <TableCell sx={{width:280}}><ButtonAdmin title={'Delete'}
-                  typeBtn={'Delete'} iconName={'Delete'} data={row}
+                  typeBtn={'Delete'} iconName={'Delete'} data={row.id}
                   action={deleteBrand}> </ButtonAdmin>
                 </TableCell>
               </TableRow>
