@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
-import { Products_AsideOptions } from '../Products.style'
 import ListOf from './ListsOf/ListOf'
 import PriceFilter from './PriceFilter'
+import { Price_Container, Products_AsideOptions } from './AsideProducts.style'
 
 const arrayCategory=[
   {id:1, name:"Category1"},
@@ -41,10 +41,12 @@ const AsideProducts = () => {
       <ListOf title={'Category'} 
         info={arrayCategory} select={selectCategory}/>
 
-      <h4>Price</h4>
-      <PriceFilter setPrice={setPriceMinHandle}/>
-      -
-      <PriceFilter setPrice={setPriceMaxHandle}/>
+      <Price_Container>
+        <h4>Price</h4>
+        <PriceFilter setPrice={setPriceMinHandle}/>
+        -
+        <PriceFilter setPrice={setPriceMaxHandle}/>
+      </Price_Container>
       <ListOf title={'Brands'}
         info={arrayBrand} select={selectBrand}/>
     </Products_AsideOptions>

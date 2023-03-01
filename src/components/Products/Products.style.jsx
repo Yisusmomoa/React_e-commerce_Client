@@ -11,19 +11,17 @@ export const ProductsContainer=styled.div`
 `
 
 export const Products_SubNavBar=styled.nav`
-
-`
-
-export const Products_AsideOptions=styled.aside`
-     width:350px;
-    /* height:auto; */
-    height:85vh;
-    display:flex;
-    flex-direction: column;
-    align-items: center;
     border:1px solid ${props=>props.theme.colors.Border};
+    background-color:${(props)=>props.theme.colors.fondo};
+    height:25%;
+    width:100%;
 `
 
 export const Products_ListProducts=styled.div`
-
+    width:100%;
+    height:100%;
+    display:flex;
+    flex-wrap:wrap;
+    justify-content: space-evenly;
+    gap:15px;
 `
