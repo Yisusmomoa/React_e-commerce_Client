@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from "styled-components";
 import { device, deviceMin } from "../../../styles/breakpoints";
 import SubNavbar from '../SubNavbar/SubNavbar';
@@ -11,6 +11,9 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import ButtonAdmin from './ButtonAdmin';
+import { useModal } from '../../../state/hooks/useModal';
+import Modal from '../Modal/Modal';
+import ButtonAddModal from '../Modal/ButtonAddModal';
 
 const AdminBrandsContainer=styled.div`
   width:100%;
@@ -36,21 +39,64 @@ const rows = [
 ];
 
 const AdminBrands = () => {
-  const showModalBrand=()=>{
-    alert("Admin Brand")
-  }
+  const [
+    isOpenModalAdd,
+    openModalAdd,
+    closeModalAdd
+  ]=useModal()
+
+  const [
+    isOpenModalUpdate,
+    openModalUpdate,
+    closeModalUpdate
+  ]=useModal()
+
+  const [brandToUpdate, setBrandToUpdate]=useState({})
+
   const searchBrand=(name)=>{
     console.log("name Brand", name)
   }
   const deleteBrand=(id)=>{
     console.log("deleteBrand", id)
   }
-  const editBrand=(id)=>{
-    console.log("editBrand", id)
+  const editBrand=(data)=>{
+    setBrandToUpdate(data)
+    openModalUpdate()
+    console.log("editBrand", data)
   }
   return (
     <AdminBrandsContainer>
-      <SubNavbar showModal={showModalBrand} 
+      <Modal isOpen={isOpenModalAdd} closeModal={closeModalAdd}>
+        <h4>Add brand</h4>
+          <form action=''>
+            <p>
+              <label htmlFor="BrandName">Brand name: </label>
+              <input type='text' name='BrandName' />
+            </p>
+            <p>
+              <label htmlFor="imgBrand">Brand Img: </label>
+              <input type='file' name='imgBrand'/>
+            </p>
+            <ButtonAddModal/>
+          </form>
+      </Modal>
+
+      <Modal isOpen={isOpenModalUpdate} 
+        closeModal={closeModalUpdate}>
+        <h4>Update brand</h4>
+          <form action=''>
+            <p>
+              <label htmlFor="BrandName">Brand name: </label>
+              <input type='text' name='BrandName' />
+            </p>
+            <p>
+              <label htmlFor="imgBrand">Brand Img: </label>
+              <input type='file' name='imgBrand'/>
+            </p>
+            <ButtonAddModal/>
+          </form>
+      </Modal>
+      <SubNavbar showModal={openModalAdd} 
         search={searchBrand} title={'Brands'}/>
       <hr/>
       <TableContainer component={Paper} 
@@ -81,11 +127,11 @@ const AdminBrands = () => {
                 <TableCell sx={{maxwidth:180}}>{row.updatedAt}</TableCell>
                 <TableCell sx={{maxwidth:180}}>{row.createdAt}</TableCell>
                 <TableCell sx={{width:280}}><ButtonAdmin title={'Edit'} 
-                  typeBtn={'Edit'} iconName={'Edit'} id={row.id}
+                  typeBtn={'Edit'} iconName={'Edit'} data={row}
                   action={editBrand}> </ButtonAdmin>
                 </TableCell>
                 <TableCell sx={{width:280}}><ButtonAdmin title={'Delete'}
-                  typeBtn={'Delete'} iconName={'Delete'} id={row.id}
+                  typeBtn={'Delete'} iconName={'Delete'} data={row}
                   action={deleteBrand}> </ButtonAdmin>
                 </TableCell>
               </TableRow>

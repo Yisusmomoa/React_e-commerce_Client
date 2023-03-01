@@ -40,11 +40,11 @@ const getIconFromName=(iconName)=>{
             break;
     }
 }
-const ButtonAdmin = ({title, typeBtn, iconName, action, id}) => {
+const ButtonAdmin = ({title, typeBtn, iconName, action, data}) => {
     const icon=getIconFromName(iconName)
   return (
     <ButtonAdminStyle typeBtn={typeBtn}
-    onClick={()=>action(id)}>{icon}{title}</ButtonAdminStyle>
+        onClick={()=>action(data)}>{icon}{title}</ButtonAdminStyle>
   )
 }
 

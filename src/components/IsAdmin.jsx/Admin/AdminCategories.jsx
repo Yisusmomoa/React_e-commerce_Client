@@ -13,6 +13,7 @@ import Paper from '@mui/material/Paper';
 import ButtonAdmin from './ButtonAdmin';
 import Modal from '../Modal/Modal';
 import { useModal } from '../../../state/hooks/useModal';
+import ButtonAddModal from '../Modal/ButtonAddModal';
 
 const AdminCategoriesContainer=styled.div`
   width:100%;
@@ -38,26 +39,44 @@ const rows = [
 
 const AdminCategories = () => {
   const [isOpenModalAdd, openModalAdd, closeModalAdd]=useModal()
-
-  const showModalAddCategories=()=>{
-    // openModalAdd()
-  }
-  const closeModalAddCategories=()=>{
-  }
-  const searchCategories=(name)=>{
+  const [isOpenModalUpdate, openModalUpdate, closeModalUpdate]=useModal()
+  const [categoryToUpdate, setCategoryToUpdate]=useState({})
+ const searchCategories=(name)=>{
     console.log("name Categories", name)
   }
   const deleteCategory=(id)=>{
     console.log("deleteCategory", id)
   }
-  const editCategory=(id)=>{
-    console.log("editCategory", id)
+  const editCategory=(data)=>{
+    setCategoryToUpdate(data)
+    openModalUpdate()
+    console.log("editCategory", data)
   }
   return (
     <>
-      <Modal isOpen={isOpenModalAdd} closeModal={closeModalAdd}>
+      <Modal isOpen={isOpenModalAdd} 
+      closeModal={closeModalAdd}>
         <h4>Add category</h4>
-        <p>add modal</p>
+        <form action=''>
+          <p>
+            <label htmlFor="CategoryName">Category name: </label>
+            <input type='text' name='CategoryName' />
+          </p>
+          <ButtonAddModal/>
+        </form>
+      </Modal>
+
+      <Modal isOpen={isOpenModalUpdate}
+        closeModal={closeModalUpdate} >
+        <h4>Update</h4>
+        <form action=''>
+          <p>
+            <label>{categoryToUpdate.name}</label>
+            <label htmlFor="CategoryName">Category name: </label>
+            <input type='text' name='CategoryName' />
+          </p>
+          <ButtonAddModal/>
+        </form>
       </Modal>
 
       <AdminCategoriesContainer>
@@ -90,11 +109,11 @@ const AdminCategories = () => {
                   <TableCell >{row.updatedAt}</TableCell>
                   <TableCell >{row.createdAt}</TableCell>
                   <TableCell ><ButtonAdmin title={'Edit'} 
-                    typeBtn={'Edit'} iconName={'Edit'} id={row.id}
+                    typeBtn={'Edit'} iconName={'Edit'} data={row}
                     action={editCategory}> </ButtonAdmin>
                   </TableCell>
                   <TableCell ><ButtonAdmin title={'Delete'}
-                    typeBtn={'Delete'} iconName={'Delete'} id={row.id}
+                    typeBtn={'Delete'} iconName={'Delete'} data={row}
                     action={deleteCategory}> </ButtonAdmin>
                   </TableCell>
                 </TableRow>
