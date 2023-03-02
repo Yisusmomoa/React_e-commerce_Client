@@ -7,10 +7,12 @@ import { ButtonAddToCart,
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import AddCircleOutlineOutlinedIcon from '@mui/icons-material/AddCircleOutlineOutlined';
 import RemoveCircleOutlineOutlinedIcon from '@mui/icons-material/RemoveCircleOutlineOutlined';
+import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
 import { NavBarLink } from '../Navbar/NavBar.style';
 const ProductBodyInfo = () => {
   return (
     <ProductBody_ContainerInfo>
+      <FavoriteBorderOutlinedIcon fontSize='large'/>
       <h2>Gabinete Naceb Zion</h2>
       <h4>Product details</h4>
       <h6>Gabinete Naceb Zion con Ventana RGB, 
@@ -35,6 +37,7 @@ const ProductBodyInfo = () => {
           Add to cart
         </ButtonAddToCart>
       </ProductInfo_Actions>
+        
 
     </ProductBody_ContainerInfo>
   )

@@ -3,13 +3,16 @@ import { device, deviceMin } from "../../styles/breakpoints";
 
 export const ProfileDetails_Container=styled.div`
     display:flex;
-    width:100%;
-    height:auto;
-    flex-direction:column;
+    width:60%;
+    height:100%;
+    flex-direction: row;
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
-
+    gap:5rem;
+    @media(${device.sm}){
+        width:100%;
+    }
 `
 
 export const FormStyled=styled.form`
@@ -22,6 +25,7 @@ export const FormStyled=styled.form`
     flex-direction: row;
     align-items: center;
     align-content: space-around;
+    gap:2rem;
     @media (${device.sm}){
         flex-direction: column;
     }
@@ -61,7 +65,8 @@ export const DangerZone_Container=styled.div`
     width:90%;
     height:auto;
     display:flex;
-    flex-wrap: wrap;
+    flex-direction: column;
+    /* flex-wrap: wrap; */
     justify-content: flex-start;
    
 `
@@ -73,9 +78,8 @@ export const DeleteAccount_Container=styled.div`
     flex-wrap: wrap;
     border:1px solid ${(props)=>props.theme.colors.Delete};
     align-items: center;
-    padding:15px;
+    padding:10px;
 `
-
 
 export const ButtonDeletAccount=styled.button`
     color:${(props)=>props.theme.colors.Letras2};

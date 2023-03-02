@@ -1,6 +1,8 @@
 import React from 'react'
 import Form from '../components/Form/Form'
-import { ButtonDeletAccount, ButtonForm, DangerZone_Container, DeleteAccount_Container, FormStyled, InputForm, ProfileDetails_Container } from '../components/Profile/ProfileDetails.style'
+import { ButtonDeletAccount, ButtonForm, DangerZone_Container,
+   DeleteAccount_Container, FormStyled, 
+   InputForm, ProfileDetails_Container } from '../components/Profile/ProfileDetails.style'
 import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
 import AlternateEmailOutlinedIcon from '@mui/icons-material/AlternateEmailOutlined';
 import HttpsOutlinedIcon from '@mui/icons-material/HttpsOutlined';

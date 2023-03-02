@@ -3,23 +3,53 @@ import { device, deviceMin } from "../../styles/breakpoints";
 import { Link, NavLink } from "react-router-dom";
 
 export const ProfileContainer=styled.div`
-    display:flex;
-    border:1px solid ${props=>props.theme.colors.Border};
-    background-color:${(props)=>props.theme.colors.fondo};
     height:auto;
     width:100%;
+    display:flex;
+    flex-wrap:wrap;
+    border:1px solid ${props=>props.theme.colors.Border};
+    background-color:${(props)=>props.theme.colors.fondo};
     font-family:${props=>props.theme.fonts.raleway};
+    /* justify-content: center; */
+    align-items: center;
+    margin: 0 auto;
 `
 
 export const Profile_Aside=styled.aside`
-    min-width:350px;
+    width:30%;
     /* height:auto; */
     height:85vh;
     display:flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    border:1px solid ${props=>props.theme.colors.Border};
+    /* border:1px solid ${props=>props.theme.colors.Border}; */
+    @media(${device.sm}){
+        width:50%;
+        display:none;
+    }
+`
+
+export const Profile_SubNavbar=styled.div`
+    width:100%;
+    /* height:auto; */
+    height:auto;
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom:15px;
+    @media(${deviceMin.sm}){
+        display:none;
+    }
+`
+export const SubNavBar_InfoUser=styled.div`
+
+`
+export const SubNavBar_Links=styled.div`
+    display:flex;
+    width:80%;
+    height:auto;
+    gap:5px;
 `
 
 export const Profile_Link=styled(Link)`
