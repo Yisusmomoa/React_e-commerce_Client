@@ -16,6 +16,13 @@ export const users=createApi({
                 body
             }),
         }),
+        login:builder.mutation({
+            query:(body)=>({
+                url:'/login',
+                method:"POST",
+                body
+            }),
+        })
 
     })
 
@@ -23,5 +30,6 @@ export const users=createApi({
 
 export const {
     useCreateUserMutation,
-    useGetAllUsersQuery
+    useGetAllUsersQuery,
+    useLoginMutation
 }=users

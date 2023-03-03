@@ -11,7 +11,7 @@ import { theme } from '../../styles/theme';
 import { NavBarLink } from '../Navbar/NavBar.style';
 import SignUp from '../../assets/signup/SignUp.svg'
 import SignIn from '../../assets/signin/SignIn.svg'
-import { useCreateUserMutation } from '../../state/store/service/UserService';
+import { useCreateUserMutation, useLoginMutation } from '../../state/store/service/UserService';
 import {useForm} from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
@@ -20,6 +20,8 @@ import Swal from 'sweetalert2';
 const Form = ({typeForm}) => {
     const navigate=useNavigate()
     const [registerAction, {isError, isLoading, isSuccess, error, data}]=useCreateUserMutation()
+    const [loginAction, {isError:isErrorLogin, isLoading:isLoadingLogin, 
+        isSuccess:isSuccessLogin, error:errorLogin, data:dataLogin}]=useLoginMutation()
     // const MySwal = withReactContent(Swal)
     const {
         register,
@@ -27,11 +29,22 @@ const Form = ({typeForm}) => {
         watch, 
         formState:{errors}
     }=useForm()
+
+    const {
+        register:login,
+        handleSubmit:handleSubmitLogin,
+        watch:watchLogin,
+        formState:{errors:errorsLogin}
+    }=useForm()
+
     const onSubmit=(user)=>{
         registerAction(user)
     }
+    const onSubmitLogin=(user)=>{
+        console.log(user)
+        loginAction(user)
+    }
     useEffect(() => {
-        console.log("isLoading", isLoading)
         if(isLoading){
             Swal.fire({
                 title:'Loading',
@@ -43,30 +56,67 @@ const Form = ({typeForm}) => {
             })
         }
         if (isSuccess) {
-            console.log(data)
             Swal.fire({
                 icon: 'success',
                 title: 'successfull registered'
             }).then(()=>navigate("/signIn"))
         }
+        else if(isError){
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: error?.data.message,
+            })
+        }
     }, [isLoading]);
+
+    useEffect(() => {
+        console.log("isLoadingLogin", isLoadingLogin)
+        if(isLoadingLogin){
+            Swal.fire({
+                title:'Loading',
+                allowEscapeKey: false,
+                allowOutsideClick: false,
+                didOpen:()=>{
+                    Swal.showLoading()
+                }
+            })
+        }
+        if (isSuccessLogin) {
+            Swal.fire({
+                icon: 'success',
+                title: 'Welcome'
+            }).then(()=>navigate("/home"))
+        }
+        else if(isErrorLogin){
+            console.log(errorLogin)
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: errorLogin?.data.message,
+            })
+        }
+    }, [isLoadingLogin]);
 
     if (typeForm==="Signin") {
         return (
-            <FormStyled>
+            <FormStyled onSubmit={handleSubmitLogin(onSubmitLogin)}>
                 <ContainerInputs>
-
                     <ContainerInput>
                         <AlternateEmailOutlinedIcon fontSize='large'/>
                         <InputForm type='email' 
-                            placeholder='Your email'/>
+                            placeholder='Your email'
+                            {...login("email", {required:true}) }/>
                     </ContainerInput>
+                    {errorsLogin.email &&<span>This field is required</span>}
 
                     <ContainerInput>
                         <HttpsOutlinedIcon fontSize='large'/>
                         <InputForm type='password' 
-                            placeholder='Password'/>
+                            placeholder='Password'
+                            {...login("password", {required:true} ) }/>
                     </ContainerInput>
+                    {errorsLogin.password &&<span>This field is required</span>}
                     
                     <ButtonForm>Login</ButtonForm>
                 </ContainerInputs>
@@ -124,8 +174,8 @@ const Form = ({typeForm}) => {
                 <NavBarLink to={'/signIn'}>I am already a member</NavBarLink>
             </ContainerImg>
         </FormStyled>
-        {isLoading&&<span>Loading...</span>}
-        {isError&&<span>{error?.data.message}</span>}
+        {/* {isLoading&&<span>Loading...</span>} */}
+        {/* {isError&&<span>{error?.data.message}</span>} */}
     </ThemeProvider>
   )
 }
