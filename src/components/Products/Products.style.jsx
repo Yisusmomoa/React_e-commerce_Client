@@ -15,6 +15,9 @@ export const Products_SubNavBar=styled.nav`
     background-color:${(props)=>props.theme.colors.fondo};
     height:25%;
     width:100%;
+    @media(${deviceMin.md}){
+        display:none;
+    }
 `
 
 export const Products_ListProducts=styled.div`
