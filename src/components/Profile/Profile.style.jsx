@@ -133,12 +133,13 @@ export const ProfilePicContent=styled.div`
     opacity: 0;
     transition: opacity .2s ease-in-out;
     &:hover{
-        cursor:pointer;
         opacity: 1;
     }
     
 `
 
 export const InputFile=styled.input`
-    opacity: 0;
+opacity: 0;
+   position: absolute;
+   z-index: -1;
 `

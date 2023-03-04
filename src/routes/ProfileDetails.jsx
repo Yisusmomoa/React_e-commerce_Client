@@ -25,7 +25,6 @@ const ProfileDetails = () => {
     formState:{errors}
   }=useForm()
   const onSubmitUpdate=(user)=>{
-    console.log(user)
     const id=data?.result.id
     const {
       email,
@@ -35,7 +34,7 @@ const ProfileDetails = () => {
     }=user
     updateUser({
       id,
-      email:email,
+      email,
       username,
       password
     })

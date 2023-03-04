@@ -39,6 +39,14 @@ export const users=createApi({
                 method:"PUT",
                 body
             }),
+            invalidatesTags:["me"],
+        }),
+        updateUserImg:builder.mutation({
+            query:(formData)=>({
+                url:`/${formData.get("id")}`,
+                method:"PUT",
+                body: formData
+            }),
             invalidatesTags:["me"]
         }),
 
@@ -52,5 +60,6 @@ export const {
     useLoginMutation,
     useMeQuery,
     useLogoutMutation,
-    useUpdateUserMutation
+    useUpdateUserMutation,
+    useUpdateUserImgMutation
 }=users
