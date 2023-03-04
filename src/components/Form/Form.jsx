@@ -11,13 +11,16 @@ import { theme } from '../../styles/theme';
 import { NavBarLink } from '../Navbar/NavBar.style';
 import SignUp from '../../assets/signup/SignUp.svg'
 import SignIn from '../../assets/signin/SignIn.svg'
-import { useCreateUserMutation, useLoginMutation } from '../../state/store/service/UserService';
+import { useCreateUserMutation, useLoginMutation, useMeQuery } from '../../state/store/service/UserService';
 import {useForm} from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 
 // minuto 16:56 atomic design
 const Form = ({typeForm}) => {
+    //TODO Validar que el email si sea un email
+    const dataMe=useMeQuery()
+
     const navigate=useNavigate()
     const [registerAction, {isError, isLoading, isSuccess, error, data}]=useCreateUserMutation()
     const [loginAction, {isError:isErrorLogin, isLoading:isLoadingLogin, 
@@ -41,9 +44,13 @@ const Form = ({typeForm}) => {
         registerAction(user)
     }
     const onSubmitLogin=(user)=>{
-        console.log(user)
         loginAction(user)
     }
+    // useEffect(() => {
+    //     if(dataMe){
+    //         navigate("/home")
+    //     }
+    // }, []);
     useEffect(() => {
         if(isLoading){
             Swal.fire({
@@ -71,7 +78,6 @@ const Form = ({typeForm}) => {
     }, [isLoading]);
 
     useEffect(() => {
-        console.log("isLoadingLogin", isLoadingLogin)
         if(isLoadingLogin){
             Swal.fire({
                 title:'Loading',
@@ -83,13 +89,16 @@ const Form = ({typeForm}) => {
             })
         }
         if (isSuccessLogin) {
+            // Swal.fire({
+            //     icon: 'success',
+            //     title: 'Welcome'
+            // }).then(()=>navigate("/home"))
             Swal.fire({
                 icon: 'success',
                 title: 'Welcome'
-            }).then(()=>navigate("/home"))
+            }).then(()=>window.location.href = '/home')
         }
         else if(isErrorLogin){
-            console.log(errorLogin)
             Swal.fire({
                 icon: 'error',
                 title: 'Oops...',
@@ -98,6 +107,12 @@ const Form = ({typeForm}) => {
         }
     }, [isLoadingLogin]);
 
+    if(dataMe?.data){
+        return (
+            <Navigate to={'/'} replace={true}/>
+        )
+    }
+    
     if (typeForm==="Signin") {
         return (
             <FormStyled onSubmit={handleSubmitLogin(onSubmitLogin)}>

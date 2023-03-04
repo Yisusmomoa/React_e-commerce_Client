@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 // components
 import CartProfile from './CartProfile'
@@ -10,11 +10,16 @@ import NavbarResponsive from './NavbarResponsive'
 import { ThemeProvider } from 'styled-components'
 import { theme } from '../../styles/theme'
 import { NavBarStyled} from './NavBar.style'
+import { useMeQuery } from '../../state/store/service/UserService';
 
 
 const Navbar = () => {
   const [extendNavbar, setExtendNavbar] = useState(false)
     const [showSearchInput, setShowSearchInput] = useState(false)
+    //TODO cuando hago el login, me redirecciona a home, pero se muestran ambos componentes, cart y profile, y el link de signin
+    //TODO usar un useEffect, justo cuando se monta el componente usar useMeQuery
+    const dataMe=useMeQuery()
+    console.log(dataMe)
     const handleClick=()=>{
         setExtendNavbar(!extendNavbar)
     }
@@ -26,15 +31,17 @@ const Navbar = () => {
       <NavBarStyled>
           
         <NavBarLinks/>
-
-        <CartProfile/>
+        {
+          dataMe?.data&&<CartProfile/>
+        }
+        {/* <CartProfile/> */}
+        
 
         <NavbarResponsive 
             extendNavbar={extendNavbar} 
             handleClick={handleClick} 
             handleClickSearch={handleClickSearch}
             showSearchInput={showSearchInput}/>
-            
       </NavBarStyled>
       
       <NavbarExtended extendNavbar={extendNavbar}/>

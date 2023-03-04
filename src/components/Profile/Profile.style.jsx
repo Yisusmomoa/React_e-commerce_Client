@@ -96,3 +96,49 @@ export const ButtonLogout=styled.button`
     }
 
 `
+export const ProfilePic=styled.form`
+    position: relative;
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    overflow: hidden;
+    background-color: #111;
+   
+`
+
+export const ImgProfile=styled.img`
+    width:100%;
+    height:100%;
+    border-radius: 50%;
+    cursor:pointer;
+    object-fit: cover;
+    opacity: 1;
+    transition: opacity .2s ease-in-out;
+    &:hover{
+        opacity: .5;
+    }
+`
+
+export const ProfilePicContent=styled.div`
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    opacity: 0;
+    transition: opacity .2s ease-in-out;
+    &:hover{
+        cursor:pointer;
+        opacity: 1;
+    }
+    
+`
+
+export const InputFile=styled.input`
+    opacity: 0;
+`
