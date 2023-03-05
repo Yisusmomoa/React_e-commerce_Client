@@ -24,6 +24,7 @@ const AddCategory = ({isOpenModalAdd, closeModalAdd}) => {
         watch, 
         formState:{errors}
     }=useForm()
+
     useEffect(() => {
         if(isLoading){
             Swal.fire({
@@ -43,11 +44,11 @@ const AddCategory = ({isOpenModalAdd, closeModalAdd}) => {
         }
         else if(isError){
             console.log(error)
-            // Swal.fire({
-            //     icon: 'error',
-            //     title: 'Oops...',
-            //     text: error?.data.message,
-            // })
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: error?.data.message,
+            })
         }
     }, [isLoading]);
 

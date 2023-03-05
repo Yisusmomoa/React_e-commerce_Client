@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from "styled-components";
 import { device, deviceMin } from "../../../styles/breakpoints";
 import SubNavbar from '../SubNavbar/SubNavbar';
@@ -15,8 +15,9 @@ import Modal from '../Modal/Modal';
 import { useModal } from '../../../state/hooks/useModal';
 import ButtonAddModal from '../Modal/ButtonAddModal';
 import { Modal_InputStyled } from '../Modal/Modal.style';
-import { useGetAllCategoriesQuery } from '../../../state/store/service/CategoryService';
+import { useDeleteCategoryMutation, useGetAllCategoriesQuery } from '../../../state/store/service/CategoryService';
 import AddCategory from './CategoriesModals/AddCategory';
+import Swal from 'sweetalert2'
 
 const AdminCategoriesContainer=styled.div`
   width:100%;
@@ -26,7 +27,11 @@ const AdminCategoriesContainer=styled.div`
 const AdminCategories = () => {
   //Service
     const {data, isError, isLoading, isSuccess, error}=useGetAllCategoriesQuery()
-   
+    const [deleteCategory,
+      {isSuccess:isSuccessDelete, 
+        isLoading:isLoadingDelete, 
+        isError:isErrorDelete, 
+        error:errorDelete}]=useDeleteCategoryMutation()
   //service
 
   //modals add. update
@@ -38,14 +43,55 @@ const AdminCategories = () => {
  const searchCategories=(name)=>{
     console.log("name Categories", name)
   }
-  const deleteCategory=(id)=>{
-    console.log("deleteCategory", id)
+  const handleDeleteCategory=(id)=>{
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        deleteCategory(id)  
+      }
+    })
   }
   const editCategory=(data)=>{
     setCategoryToUpdate(data)
     openModalUpdate()
-    console.log("editCategory", data)
   }
+
+  useEffect(() => {
+    if(isLoadingDelete){
+        Swal.fire({
+            title:'Loading',
+            allowEscapeKey: false,
+            allowOutsideClick: false,
+            didOpen:()=>{
+                Swal.showLoading()
+            }
+        })
+    }
+    if (isSuccessDelete) {
+      Swal.fire(
+        'Deleted!',
+        'Your file has been deleted.',
+        'success'
+      )
+    }
+    else if(isErrorDelete){
+        console.log(errorDelete)
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: errorDelete?.data.message,
+        })
+    }
+}, [isLoadingDelete]);
+  
+
   return (
     <>
       <AddCategory isOpenModalAdd={isOpenModalAdd} 
@@ -99,7 +145,7 @@ const AdminCategories = () => {
                   </TableCell>
                   <TableCell ><ButtonAdmin title={'Delete'}
                     typeBtn={'Delete'} iconName={'Delete'} data={row.id}
-                    action={deleteCategory}> </ButtonAdmin>
+                    action={handleDeleteCategory}> </ButtonAdmin>
                   </TableCell>
                 </TableRow>
               ))}
