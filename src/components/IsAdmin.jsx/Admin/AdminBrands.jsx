@@ -15,6 +15,8 @@ import { useModal } from '../../../state/hooks/useModal';
 import Modal from '../Modal/Modal';
 import ButtonAddModal from '../Modal/ButtonAddModal';
 import { Modal_InputStyled } from '../Modal/Modal.style';
+import { useGetAllBrandsQuery } from '../../../state/store/service/BrandService';
+import AddBrand from './BrandModals/AddBrand';
 
 
 const AdminBrandsContainer=styled.div`
@@ -22,25 +24,14 @@ const AdminBrandsContainer=styled.div`
   height:100%;
 `
 
-function createData(
-  id,
-  name,
-  imgBrand,
-  createdAt,
-  updatedAt,
-) {
-  return { id, name,imgBrand, createdAt, updatedAt };
-}
-
-const rows = [
-  createData(1, "Brand1", "imgBrand1",6.0,1.0),
-  createData(2, "Brand2","imgBrand2", 9.0,1.0),
-  createData(3, "Brand3","imgBrand3", 16.0,1.0 ),
-  createData(4, "Brand4","imgBrand4", 3.7, 10),
-  createData(5, "Brand5","imgBrand5", 16.0, 5),
-];
-
 const AdminBrands = () => {
+
+  //Services
+    const {
+      data, isSuccess,isLoading, isError,error
+    }=useGetAllBrandsQuery()
+  //Services
+
   const [
     isOpenModalAdd,
     openModalAdd,
@@ -68,21 +59,9 @@ const AdminBrands = () => {
   }
   return (
     <AdminBrandsContainer>
-      <Modal isOpen={isOpenModalAdd} closeModal={closeModalAdd}>
-        <h4>Add brand</h4>
-          <form action=''>
-            <p>
-              <label htmlFor="BrandName">Brand name: </label>
-              <Modal_InputStyled type='text' name='BrandName' />
-            </p>
-            <p>
-              <label htmlFor="imgBrand">Brand Img: </label>
-              <input type='file' name='imgBrand'/>
-            </p>
-            <ButtonAddModal/>
-          </form>
-      </Modal>
-
+      <AddBrand isOpenModalAdd={isOpenModalAdd}
+        closeModalAdd={closeModalAdd}/>
+        
       <Modal isOpen={isOpenModalUpdate} 
         closeModal={closeModalUpdate}>
         <h4>Update brand</h4>
@@ -101,6 +80,7 @@ const AdminBrands = () => {
       <SubNavbar showModal={openModalAdd} 
         search={searchBrand} title={'Brands'}/>
       <hr/>
+
       <TableContainer component={Paper} 
         sx={{ maxHeight: 550 }}>
         <Table sx={{ minWidth: 850 }} 
@@ -109,6 +89,7 @@ const AdminBrands = () => {
             <TableRow>
               <TableCell>Id</TableCell>
               <TableCell >Name</TableCell>
+              <TableCell >Img</TableCell>
               <TableCell >updatedAt</TableCell>
               <TableCell >createdAt</TableCell>
               <TableCell >Edit</TableCell>
@@ -116,7 +97,7 @@ const AdminBrands = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows.map((row) => (
+            {data?.map((row) => (
               <TableRow
                 key={row.id}
               >
@@ -126,6 +107,7 @@ const AdminBrands = () => {
                   {row.id}
                 </TableCell>
                 <TableCell sx={{maxwidth:180}}>{row.name}</TableCell>
+                <TableCell sx={{maxwidth:180}}><img src={row.imgManuFacturer} height={"35px"} width={"35px"}/></TableCell>
                 <TableCell sx={{maxwidth:180}}>{row.updatedAt}</TableCell>
                 <TableCell sx={{maxwidth:180}}>{row.createdAt}</TableCell>
                 <TableCell sx={{width:280}}><ButtonAdmin title={'Edit'} 

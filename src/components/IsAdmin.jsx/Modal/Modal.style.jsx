@@ -43,6 +43,6 @@ export const Modal_InputStyled=styled.input`
     margin: 8px 0;
     display: inline-block;
     box-sizing: border-box;
-    font-size:16px;
+    font-size:18px;
     font-family:${props=>props.theme.fonts.raleway};
 `

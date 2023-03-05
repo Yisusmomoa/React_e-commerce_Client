@@ -23,14 +23,27 @@ export const categories=createApi({
                 method:"DELETE"
             }),
             invalidatesTags:["Categories"]
+        }),
+        updateCategory:builder.mutation({
+            query:({id, ...body})=>({
+                url:`/${id}`,
+                method:'PUT',
+                body
+            }),
+            invalidatesTags:["Categories"]
         })
         
     })
 
 })
 
+// este es mi mayordomo, el repartidor del rappi
+// como el useCotnext
+// Export hooks for usage in functional components, which are
+// auto-generated based on the defined endpoints
 export const {
     useGetAllCategoriesQuery,
     useCreateCategoryMutation,
-    useDeleteCategoryMutation
+    useDeleteCategoryMutation,
+    useUpdateCategoryMutation
 }=categories

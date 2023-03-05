@@ -12,11 +12,12 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import ButtonAdmin from './ButtonAdmin';
 import Modal from '../Modal/Modal';
-import { useModal } from '../../../state/hooks/useModal';
 import ButtonAddModal from '../Modal/ButtonAddModal';
 import { Modal_InputStyled } from '../Modal/Modal.style';
+import { useModal } from '../../../state/hooks/useModal';
 import { useDeleteCategoryMutation, useGetAllCategoriesQuery } from '../../../state/store/service/CategoryService';
 import AddCategory from './CategoriesModals/AddCategory';
+import UpdateCategory from './CategoriesModals/UpdateCategory';
 import Swal from 'sweetalert2'
 
 const AdminCategoriesContainer=styled.div`
@@ -40,9 +41,10 @@ const AdminCategories = () => {
   const [categoryToUpdate, setCategoryToUpdate]=useState({})
   //modals add, update
 
- const searchCategories=(name)=>{
+  const searchCategories=(name)=>{
     console.log("name Categories", name)
   }
+
   const handleDeleteCategory=(id)=>{
     Swal.fire({
       title: 'Are you sure?',
@@ -58,11 +60,6 @@ const AdminCategories = () => {
       }
     })
   }
-  const editCategory=(data)=>{
-    setCategoryToUpdate(data)
-    openModalUpdate()
-  }
-
   useEffect(() => {
     if(isLoadingDelete){
         Swal.fire({
@@ -89,26 +86,22 @@ const AdminCategories = () => {
             text: errorDelete?.data.message,
         })
     }
-}, [isLoadingDelete]);
+  }, [isLoadingDelete]);
   
+  const editCategory=(data)=>{
+    setCategoryToUpdate(data)
+    openModalUpdate()
+  }
+
 
   return (
     <>
       <AddCategory isOpenModalAdd={isOpenModalAdd} 
         closeModalAdd={closeModalAdd}/>
 
-      <Modal isOpen={isOpenModalUpdate}
-        closeModal={closeModalUpdate} >
-        <h4>Update</h4>
-        <form action=''>
-          <p>
-            <label>{categoryToUpdate.name}</label>
-            <label htmlFor="CategoryName">Category name: </label>
-            <Modal_InputStyled type='text' name='CategoryName' />
-          </p>
-          <ButtonAddModal/>
-        </form>
-      </Modal>
+      <UpdateCategory isOpenModalUpdate={isOpenModalUpdate}
+        closeModalUpdate={closeModalUpdate} category={categoryToUpdate}/>
+
 
       <AdminCategoriesContainer>
         <SubNavbar showModal={openModalAdd} 
