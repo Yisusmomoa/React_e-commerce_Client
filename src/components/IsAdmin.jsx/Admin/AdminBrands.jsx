@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from "styled-components";
 import { device, deviceMin } from "../../../styles/breakpoints";
 import SubNavbar from '../SubNavbar/SubNavbar';
@@ -15,8 +15,9 @@ import { useModal } from '../../../state/hooks/useModal';
 import Modal from '../Modal/Modal';
 import ButtonAddModal from '../Modal/ButtonAddModal';
 import { Modal_InputStyled } from '../Modal/Modal.style';
-import { useGetAllBrandsQuery } from '../../../state/store/service/BrandService';
+import { useDeleteBrandMutation, useGetAllBrandsQuery } from '../../../state/store/service/BrandService';
 import AddBrand from './BrandModals/AddBrand';
+import Swal from 'sweetalert2';
 
 
 const AdminBrandsContainer=styled.div`
@@ -30,33 +31,83 @@ const AdminBrands = () => {
     const {
       data, isSuccess,isLoading, isError,error
     }=useGetAllBrandsQuery()
+    const [
+      deleteBrand,
+      {isSuccess:isSuccessDelete,
+      isLoading:isLoadingDelete,
+      isError:isErrorDelete,
+      error:errorDelete}
+    ]=useDeleteBrandMutation()
   //Services
 
-  const [
-    isOpenModalAdd,
-    openModalAdd,
-    closeModalAdd
-  ]=useModal()
+  //modals
+    const [
+      isOpenModalAdd,
+      openModalAdd,
+      closeModalAdd
+    ]=useModal()
 
-  const [
-    isOpenModalUpdate,
-    openModalUpdate,
-    closeModalUpdate
-  ]=useModal()
+    const [
+      isOpenModalUpdate,
+      openModalUpdate,
+      closeModalUpdate
+    ]=useModal()
+  //modals
 
   const [brandToUpdate, setBrandToUpdate]=useState({})
 
   const searchBrand=(name)=>{
     console.log("name Brand", name)
   }
-  const deleteBrand=(id)=>{
-    console.log("deleteBrand", id)
+  const handleDeleteBrand=(id)=>{
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        deleteBrand(id)  
+      }
+    })
   }
+  useEffect(() => {
+    if(isLoadingDelete){
+        Swal.fire({
+            title:'Loading',
+            allowEscapeKey: false,
+            allowOutsideClick: false,
+            didOpen:()=>{
+                Swal.showLoading()
+            }
+        })
+    }
+    if (isSuccessDelete) {
+      Swal.fire(
+        'Deleted!',
+        'Your register has been deleted.',
+        'success'
+      )
+    }
+    else if(isErrorDelete){
+        console.log(errorDelete)
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: errorDelete?.data.message,
+        })
+    }
+  }, [isLoadingDelete]);
+
   const editBrand=(data)=>{
     setBrandToUpdate(data)
     openModalUpdate()
     console.log("editBrand", data)
   }
+
   return (
     <AdminBrandsContainer>
       <AddBrand isOpenModalAdd={isOpenModalAdd}
@@ -116,7 +167,7 @@ const AdminBrands = () => {
                 </TableCell>
                 <TableCell sx={{width:280}}><ButtonAdmin title={'Delete'}
                   typeBtn={'Delete'} iconName={'Delete'} data={row.id}
-                  action={deleteBrand}> </ButtonAdmin>
+                  action={handleDeleteBrand}> </ButtonAdmin>
                 </TableCell>
               </TableRow>
             ))}

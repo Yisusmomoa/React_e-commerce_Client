@@ -74,7 +74,7 @@ const AdminCategories = () => {
     if (isSuccessDelete) {
       Swal.fire(
         'Deleted!',
-        'Your file has been deleted.',
+        'Your register has been deleted.',
         'success'
       )
     }

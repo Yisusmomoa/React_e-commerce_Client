@@ -27,6 +27,7 @@ const AddBrand = ({isOpenModalAdd, closeModalAdd}) => {
         formData.append("name", brand)
         createBrand(formData)
     }
+
     useEffect(() => {
         if(isLoading){
             Swal.fire({
@@ -51,6 +52,10 @@ const AddBrand = ({isOpenModalAdd, closeModalAdd}) => {
                 title: 'Oops...',
                 text: error?.data.message,
             })
+        }
+        return ()=>{
+            setBrand("")
+            setSelectedFile("")
         }
     }, [isLoading]);
 
