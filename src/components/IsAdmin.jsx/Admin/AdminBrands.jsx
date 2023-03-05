@@ -18,6 +18,7 @@ import { Modal_InputStyled } from '../Modal/Modal.style';
 import { useDeleteBrandMutation, useGetAllBrandsQuery } from '../../../state/store/service/BrandService';
 import AddBrand from './BrandModals/AddBrand';
 import Swal from 'sweetalert2';
+import UpdateBrand from './BrandModals/UpdateBrand';
 
 
 const AdminBrandsContainer=styled.div`
@@ -59,75 +60,67 @@ const AdminBrands = () => {
   const searchBrand=(name)=>{
     console.log("name Brand", name)
   }
-  const handleDeleteBrand=(id)=>{
-    Swal.fire({
-      title: 'Are you sure?',
-      text: "You won't be able to revert this!",
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes, delete it!'
-    }).then((result) => {
-      if (result.isConfirmed) {
-        deleteBrand(id)  
+  //Delete brand
+    const handleDeleteBrand=(id)=>{
+      Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          deleteBrand(id)  
+        }
+      })
+    }
+    useEffect(() => {
+      if(isLoadingDelete){
+          Swal.fire({
+              title:'Loading',
+              allowEscapeKey: false,
+              allowOutsideClick: false,
+              didOpen:()=>{
+                  Swal.showLoading()
+              }
+          })
       }
-    })
-  }
-  useEffect(() => {
-    if(isLoadingDelete){
-        Swal.fire({
-            title:'Loading',
-            allowEscapeKey: false,
-            allowOutsideClick: false,
-            didOpen:()=>{
-                Swal.showLoading()
-            }
-        })
-    }
-    if (isSuccessDelete) {
-      Swal.fire(
-        'Deleted!',
-        'Your register has been deleted.',
-        'success'
-      )
-    }
-    else if(isErrorDelete){
-        console.log(errorDelete)
-        Swal.fire({
-            icon: 'error',
-            title: 'Oops...',
-            text: errorDelete?.data.message,
-        })
-    }
-  }, [isLoadingDelete]);
+      if (isSuccessDelete) {
+        Swal.fire(
+          'Deleted!',
+          'Your register has been deleted.',
+          'success'
+        )
+      }
+      else if(isErrorDelete){
+          console.log(errorDelete)
+          Swal.fire({
+              icon: 'error',
+              title: 'Oops...',
+              text: errorDelete?.data.message,
+          })
+      }
+    }, [isLoadingDelete]);
+  //Delete brand
 
   const editBrand=(data)=>{
     setBrandToUpdate(data)
     openModalUpdate()
-    console.log("editBrand", data)
   }
 
   return (
     <AdminBrandsContainer>
       <AddBrand isOpenModalAdd={isOpenModalAdd}
         closeModalAdd={closeModalAdd}/>
-        
-      <Modal isOpen={isOpenModalUpdate} 
-        closeModal={closeModalUpdate}>
-        <h4>Update brand</h4>
-          <form action=''>
-            <p>
-              <label htmlFor="BrandName">Brand name: </label>
-              <Modal_InputStyled type='text' name='BrandName' />
-            </p>
-            <p>
-              <label htmlFor="imgBrand">Brand Img: </label>
-              <input type='file' name='imgBrand'/>
-            </p>
-            <ButtonAddModal/>
-          </form>
-      </Modal>
+      
+      <UpdateBrand
+        isOpenModalUpdate={isOpenModalUpdate}
+        closeModalUpdate={closeModalUpdate}
+        brandToUpdate={brandToUpdate}
+      />
+     
       <SubNavbar showModal={openModalAdd} 
         search={searchBrand} title={'Brands'}/>
       <hr/>

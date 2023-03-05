@@ -23,6 +23,18 @@ export const brands=createApi({
                 method:"DELETE"
             }),
             invalidatesTags:["Brands"]
+        }),
+        updateBrand:builder.mutation({
+            query:(formData)=>({
+                url:`/${formData.get("id")}`,
+                method:"PUT",
+                body:formData
+                // body:{
+                //     name:formData.get("name"),
+                //     imgBrand:formData.get("imgBrand")
+                // }
+            }),
+            invalidatesTags:["Brands"]
         })
     })
 })
@@ -32,5 +44,6 @@ export const {
     useGetAllBrandsQuery,
     useCreateBrandMutation,
     useDeleteBrandMutation,
+    useUpdateBrandMutation
     
 }=brands
