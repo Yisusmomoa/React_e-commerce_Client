@@ -1,9 +1,9 @@
 import React from 'react'
 import { Img_RowImgs } from './ProductBody.style'
 
-const ProductBodyImgsRow = ({img}) => {
+const ProductBodyImgsRow = ({img, onChangeImg}) => {
   return (
-    <Img_RowImgs src={img} />
+    <Img_RowImgs src={img} onClick={(ev)=>onChangeImg(ev.target.src)} />
   )
 }
 

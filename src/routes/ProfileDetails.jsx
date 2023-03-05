@@ -53,7 +53,7 @@ const ProfileDetails = () => {
     if (isSuccess) {
         Swal.fire({
             icon: 'success',
-            title: 'successfull registered'
+            title: 'successfull edit'
         })
     }
     else if(isError){

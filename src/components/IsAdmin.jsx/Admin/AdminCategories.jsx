@@ -15,33 +15,26 @@ import Modal from '../Modal/Modal';
 import { useModal } from '../../../state/hooks/useModal';
 import ButtonAddModal from '../Modal/ButtonAddModal';
 import { Modal_InputStyled } from '../Modal/Modal.style';
+import { useGetAllCategoriesQuery } from '../../../state/store/service/CategoryService';
+import AddCategory from './CategoriesModals/AddCategory';
 
 const AdminCategoriesContainer=styled.div`
   width:100%;
   height:100%;
 `
 
-function createData(
-  id,
-  name,
-  createdAt,
-  updatedAt,
-) {
-  return { id, name, createdAt, updatedAt };
-}
-
-const rows = [
-  createData(1, "Categoria1", 6.0,1.0),
-  createData(2, "Categoria2", 9.0,1.0),
-  createData(3, "Categoria3", 16.0,1.0 ),
-  createData(4, "Categoria4", 3.7, 10),
-  createData(5, "Categoria5", 16.0, 5),
-];
-
 const AdminCategories = () => {
+  //Service
+    const {data, isError, isLoading, isSuccess, error}=useGetAllCategoriesQuery()
+   
+  //service
+
+  //modals add. update
   const [isOpenModalAdd, openModalAdd, closeModalAdd]=useModal()
   const [isOpenModalUpdate, openModalUpdate, closeModalUpdate]=useModal()
   const [categoryToUpdate, setCategoryToUpdate]=useState({})
+  //modals add, update
+
  const searchCategories=(name)=>{
     console.log("name Categories", name)
   }
@@ -55,17 +48,8 @@ const AdminCategories = () => {
   }
   return (
     <>
-      <Modal isOpen={isOpenModalAdd} 
-      closeModal={closeModalAdd}>
-        <h4>Add category</h4>
-        <form action=''>
-          <p>
-            <label htmlFor="CategoryName">Category name: </label>
-            <Modal_InputStyled type='text' name='CategoryName' />
-          </p>
-          <ButtonAddModal/>
-        </form>
-      </Modal>
+      <AddCategory isOpenModalAdd={isOpenModalAdd} 
+        closeModalAdd={closeModalAdd}/>
 
       <Modal isOpen={isOpenModalUpdate}
         closeModal={closeModalUpdate} >
@@ -99,7 +83,7 @@ const AdminCategories = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {rows.map((row) => (
+              {data?.results?.map((row) => (
                 <TableRow
                   key={row.id}
                 >

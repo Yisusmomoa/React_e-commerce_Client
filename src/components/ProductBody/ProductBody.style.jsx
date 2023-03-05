@@ -64,6 +64,7 @@ export const Img_RowImgs=styled.img`
     cursor:pointer;
     border:1px solid black;
     border-radius:2px;
+    opacity:0.5;
 `
 
 

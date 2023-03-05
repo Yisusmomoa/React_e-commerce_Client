@@ -16,8 +16,6 @@ import { useMeQuery } from '../../state/store/service/UserService';
 const Navbar = () => {
   const [extendNavbar, setExtendNavbar] = useState(false)
     const [showSearchInput, setShowSearchInput] = useState(false)
-    //TODO cuando hago el login, me redirecciona a home, pero se muestran ambos componentes, cart y profile, y el link de signin
-    //TODO usar un useEffect, justo cuando se monta el componente usar useMeQuery
     const dataMe=useMeQuery()
     console.log(dataMe)
     const handleClick=()=>{
@@ -42,7 +40,7 @@ const Navbar = () => {
             handleClick={handleClick} 
             handleClickSearch={handleClickSearch}
             showSearchInput={showSearchInput}/>
-      </NavBarStyled>
+        </NavBarStyled>
       
       <NavbarExtended extendNavbar={extendNavbar}/>
     </ThemeProvider>
