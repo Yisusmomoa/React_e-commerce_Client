@@ -23,6 +23,7 @@ import { useGetAllBrandsQuery } from '../../../state/store/service/BrandService'
 import { useGetAllCategoriesQuery } from '../../../state/store/service/CategoryService';
 import AddProduct from './ProductModals/AddProduct';
 import Swal from 'sweetalert2';
+import UpdateProduct from './ProductModals/UpdateProduct';
 
 const AdminProductsContainer=styled.div`
   width:100%;
@@ -127,7 +128,6 @@ const AdminProducts = () => {
 
 
   const editProduct=(data)=>{
-    console.log("editProduct", data)
     setProductToUpdate(data)
     openModalUpdate()
   }
@@ -137,56 +137,12 @@ const AdminProducts = () => {
       <AddProduct isOpenModalAdd={isOpenModalAdd} closeModalAdd={closeModalAdd}
         brands={dataBrands} categories={dataCateg?.results} />
 
-      <Modal isOpen={isOpenModalUpdate} closeModal={closeModalUpdate}>
-        <h4>Add Product</h4>
-          <form action=''>
-            <p>
-              <label htmlFor="ProductName">Product name: </label>
-              <Modal_InputStyled type='text' name='ProductName' />
-            </p>
-            <p>
-              <label htmlFor="DescriptionName">Description: </label>
-              <Modal_InputStyled type='text' name='DescriptionName' />
-            </p>
-            <p>
-              <label htmlFor="PriceName">Price: </label>
-              <Modal_InputStyled type='number' name='PriceName' />
-            </p>
-            <p>
-              <label>
-                Brand 
-                <select value={brand} onChange={(ev)=>setBrand(ev.target.value)}>
-                  <option value="1">Brand1</option>
-                  <option value="2">Brand2</option>
-                  <option value="3">Brand2</option>
-                </select>
-              </label>
-            </p>
-            <p>
-              <label>
-                  Category 
-                  <select value={category} onChange={(ev)=>setCategory(ev.target.value)}>
-                    <option value="1">Category1</option>
-                    <option value="2">Category2</option>
-                    <option value="3">Category3</option>
-                  </select>
-                </label>
-            </p>
-            <p>
-              <label htmlFor="imgBrand">First product Img: </label>
-              <input type='file' name='imgBrand'/>
-            </p>
-            <p>
-              <label htmlFor="imgBrand">Second product Img: </label>
-              <input type='file' name='imgBrand'/>
-            </p>
-            <p>
-              <label htmlFor="imgBrand">Third product Img: </label>
-              <input type='file' name='imgBrand'/>
-            </p>
-            <ButtonAddModal/>
-          </form>
-      </Modal>
+      <UpdateProduct
+        isOpenModalUpdate={isOpenModalUpdate} 
+        closeModalUpdate={closeModalUpdate}
+        brands={dataBrands} categories={dataCateg?.results} 
+        productToUpdate={productToUpdate}
+      />
 
       <SubNavbar showModal={openModalAdd} 
         search={searchProducts}

@@ -29,7 +29,8 @@ export const products=createApi({
                 url:`/${formData.get('id')}`,
                 method:'PUT',
                 body:formData
-            })
+            }),
+            invalidatesTags:["Products"]
         })
     })
 })

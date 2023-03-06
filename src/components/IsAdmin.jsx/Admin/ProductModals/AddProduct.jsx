@@ -48,9 +48,8 @@ const AddProduct = ({isOpenModalAdd,
         formData.append("price", data.ProductPrice)
         formData.append("description", data.ProductDescription)
         formData.append("price", data.ProductPrice)
-        formData.append("CategoryId", data.Brand)
-        formData.append("ManuFacturerId", data.Category)
-        formData.append("ManuFacturerId", data.Category)
+        formData.append("CategoryId", category)
+        formData.append("ManuFacturerId", brand)
         for (let index = 0; index < data.image.length; index++) {
             const element = data.image[index];
             formData.append("images", element)
@@ -73,7 +72,7 @@ const AddProduct = ({isOpenModalAdd,
         if (isSuccess) {
             Swal.fire({
                 icon: 'success',
-                title: 'successfull created'
+                title: 'successfull updated'
             }).then(()=>closeModalAdd())
         }
         else if(isError){
