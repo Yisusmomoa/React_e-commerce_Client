@@ -3,10 +3,11 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/dist/query/react";
 export const users=createApi({
     reducerPath:'user',
     baseQuery:fetchBaseQuery({baseUrl:'/api/user'}),
-    tagTypes:["me"],
+    tagTypes:["me", "users"],
     endpoints:(builder)=>({
         getAllUsers:builder.query({
-            query:()=>""
+            query:()=>"",
+            providesTags:["users"]
         }),
         createUser:builder.mutation({
             query:(body)=>({
@@ -14,6 +15,7 @@ export const users=createApi({
                 method:"POST",
                 body
             }),
+            invalidatesTags:["users"]
         }),
         login:builder.mutation({
             query:(body)=>({
@@ -50,6 +52,7 @@ export const users=createApi({
             invalidatesTags:["me"]
         }),
 
+
     })
 
 })
@@ -61,5 +64,5 @@ export const {
     useMeQuery,
     useLogoutMutation,
     useUpdateUserMutation,
-    useUpdateUserImgMutation
+    useUpdateUserImgMutation,
 }=users

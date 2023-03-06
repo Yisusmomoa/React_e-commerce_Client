@@ -16,6 +16,7 @@ import Modal from '../Modal/Modal';
 import { Modal_InputStyled } from '../Modal/Modal.style';
 import ButtonAddModal from '../Modal/ButtonAddModal';
 import Checkbox from '@mui/material/Checkbox';
+import { useGetAllUsersQuery } from '../../../state/store/service/UserService';
 
 const AdminUsersContainer=styled.div`
   width:100%;
@@ -55,6 +56,14 @@ const rows = [
 ];
 
 const AdminUsers = () => {
+
+  //Services
+    const {data, isSuccess, 
+      isError, isLoading, error}=useGetAllUsersQuery()
+    console.log(data)
+  //Services
+
+  //Modals
   const [
     isOpenModalAdd, 
     openModalAdd, 
@@ -63,6 +72,7 @@ const AdminUsers = () => {
     isOpenModalUpdate, 
     openModalUpdate, 
     closeModalUpdate]=useModal()
+  //Modals
 
   const [userToUpdate, setUserToUpdate]=useState({})
   const [rol, setRol]=useState(1)
@@ -169,7 +179,7 @@ const AdminUsers = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows.map((row) => (
+            {data?.map((row) => (
               <TableRow
                 key={row.id}
               >
