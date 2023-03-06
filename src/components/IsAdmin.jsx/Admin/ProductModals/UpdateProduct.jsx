@@ -37,7 +37,7 @@ const UpdateProduct = ({isOpenModalUpdate,
             // const {image}=ev.target.elements
             // console.log(image)
             // console.log(image.files)
-            console.log("Update", data)
+            console.log("Update", data.ProductPrice)
             const formData=new FormData()
             formData.append("id", productToUpdate.id)
             formData.append("name", data.ProductName)
@@ -93,14 +93,15 @@ const UpdateProduct = ({isOpenModalUpdate,
               {...updateProduct("ProductName") } />
             </p>
             <p>
-              <label htmlFor="DescriptionName">Description: </label>
-              <Modal_InputStyled type='text' name='DescriptionName' 
-              {...updateProduct("DescriptionName") }/>
+              <label htmlFor="ProductDescription">Description: </label>
+              <Modal_InputStyled type='text' name='ProductDescription' 
+              {...updateProduct("ProductDescription") }/>
             </p>
             <p>
-              <label htmlFor="PriceName">Price: </label>
-              <Modal_InputStyled type='number' name='PriceName'
-              {...updateProduct("PriceName") } />
+              <label htmlFor="ProductPrice">Price: </label>
+              <Modal_InputStyled type='number' name='ProductPrice'
+                min={1}
+              {...updateProduct("ProductPrice") } />
             </p>
             <p>
                 <label>
