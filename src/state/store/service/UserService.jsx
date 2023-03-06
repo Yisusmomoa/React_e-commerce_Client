@@ -51,7 +51,13 @@ export const users=createApi({
             }),
             invalidatesTags:["me"]
         }),
-
+        desactivateUser:builder.mutation({
+            query:(id)=>({
+                url:`/${id}`,
+                method:"DELETE"
+            }),
+            invalidatesTags:["me", "users"]
+        })
 
     })
 
@@ -65,4 +71,5 @@ export const {
     useLogoutMutation,
     useUpdateUserMutation,
     useUpdateUserImgMutation,
+    useDesactivateUserMutation
 }=users
