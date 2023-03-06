@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from "styled-components";
 import { device, deviceMin } from "../../../styles/breakpoints";
 import SubNavbar from '../SubNavbar/SubNavbar';
@@ -16,7 +16,8 @@ import Modal from '../Modal/Modal';
 import { Modal_InputStyled } from '../Modal/Modal.style';
 import ButtonAddModal from '../Modal/ButtonAddModal';
 import Checkbox from '@mui/material/Checkbox';
-import { useGetAllUsersQuery } from '../../../state/store/service/UserService';
+import { useDesactivateUserAdminMutation, useGetAllUsersQuery } from '../../../state/store/service/UserService';
+import Swal from 'sweetalert2';
 
 const AdminUsersContainer=styled.div`
   width:100%;
@@ -60,7 +61,11 @@ const AdminUsers = () => {
   //Services
     const {data, isSuccess, 
       isError, isLoading, error}=useGetAllUsersQuery()
-    console.log(data)
+    
+    const [desactivateUserAdmin, {isLoading:isLoadingDesactivate,
+      isSuccess:isSuccessDesactivate,
+      isError:isErrorDesactivate,
+      error:errorDesactivate }]=useDesactivateUserAdminMutation()
   //Services
 
   //Modals
@@ -81,19 +86,43 @@ const AdminUsers = () => {
   const searchUsers=(name)=>{
     console.log("name Users", name)
   }
-  const deletUser=(id)=>{
-    console.log("deletUser", id)
-  }
-  const statusUser=(id, status)=>{
-    console.log(id)
-    console.log(status)
-    setIsActive(status)
+  const handleDesactivateUser=(id, status)=>{
+    desactivateUserAdmin(id)
   }
   const editUser=(data)=>{
     setUserToUpdate(data)
     openModalUpdate()
     console.log("editUser", data)
   }
+  
+  useEffect(() => {
+    if(isLoadingDesactivate){
+      Swal.fire({
+        title:'Loading',
+        allowEscapeKey: false,
+        allowOutsideClick: false,
+        didOpen:()=>{
+            Swal.showLoading()
+        }
+      })
+    }
+    if (isSuccessDesactivate) {
+      Swal.fire(
+        'Desactivated!',
+        'Your register has been desactivated.',
+        'success'
+      )
+    }
+    else if(isErrorDesactivate){
+      console.log(errorDesactivate)
+      Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: errorDesactivate?.data.message,
+      })
+  }
+  }, [isLoadingDesactivate]);
+
   return (
     <AdminUsersContainer>
       <Modal isOpen={isOpenModalAdd} 
@@ -175,17 +204,17 @@ const AdminUsers = () => {
               <TableCell >updatedAt</TableCell>
               <TableCell >createdAt</TableCell>
               <TableCell >Edit</TableCell>
-              <TableCell >Delete</TableCell>
+              {/* <TableCell >Delete</TableCell> */}
             </TableRow>
           </TableHead>
           <TableBody>
             {data?.map((row) => (
               <TableRow
-                key={row.id}
-              >
+                key={row.id}>
               <TableCell sx={{maxwidth:150}}>
-                <Checkbox onChange={(ev)=>statusUser(row.id, ev.target.checked)}
-                checked={isActive} />
+                <Checkbox 
+                  onChange={(ev)=>handleDesactivateUser(row.id, ev.target.checked)}
+                checked={row.isActive} />
               </TableCell>
                 <TableCell component="th" 
                   scope="row"
@@ -197,14 +226,14 @@ const AdminUsers = () => {
                 <TableCell sx={{maxwidth:150}}>{row.role}</TableCell>
                 <TableCell sx={{maxwidth:150}}>{row.updatedAt}</TableCell>
                 <TableCell sx={{maxwidth:150}}>{row.createdAt}</TableCell>
-                <TableCell sx={{width:340}}><ButtonAdmin title={'Edit'} 
+                <TableCell sx={{width:240}}><ButtonAdmin title={'Edit'} 
                   typeBtn={'Edit'} iconName={'Edit'} data={row}
                   action={editUser}> </ButtonAdmin>
                 </TableCell>
-                <TableCell sx={{width:340}}><ButtonAdmin title={'Delete'}
+                {/* <TableCell sx={{width:340}}><ButtonAdmin title={'Delete'}
                   typeBtn={'Delete'} iconName={'Delete'} data={row.id}
                   action={deletUser}> </ButtonAdmin>
-                </TableCell>
+                </TableCell> */}
               </TableRow>
             ))}
           </TableBody>
