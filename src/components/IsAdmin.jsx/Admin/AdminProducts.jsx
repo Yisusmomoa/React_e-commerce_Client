@@ -18,77 +18,55 @@ import Modal from '../Modal/Modal';
 import ButtonAddModal from '../Modal/ButtonAddModal';
 import DropdownCategory from '../../DropdownCategory/DropdownCategory';
 import { Modal_InputStyled } from '../Modal/Modal.style';
+import { useGetAllProductsQuery } from '../../../state/store/service/ProductService';
+import { useGetAllBrandsQuery } from '../../../state/store/service/BrandService';
+import { useGetAllCategoriesQuery } from '../../../state/store/service/CategoryService';
+import AddProduct from './ProductModals/AddProduct';
 
 const AdminProductsContainer=styled.div`
   width:100%;
   height:100%;
 `
-function createData(
-  id,
-  name,
-  description,
-  price,
-  createdAt,
-  updatedAt,
-  categoryId,
-  categoryName,
-  brandId,
-  brandName,
-) {
-  return { id, name, 
-    description, price,
-    createdAt, updatedAt, 
-    categoryId, categoryName,
-    brandId, brandName};
-}
 
-const rows = [
-  createData(1, "Product1", "Descr prod jweorwqoerqw e9rhqwoeirgqw ierwgeoirgqwei1",390, 
-    "27-01-2023", "27-01-2023", 1, "Category1", 2, "Brand2"),
-    createData(2, "Product2", "Descr prod 2",390, 
-    "27-01-2023", "27-01-2023", 2, "Category2", 2, "Brand2"),
-    createData(3, "Product3", "Descr prod 3",390, 
-    "27-01-2023", "27-01-2023", 3, "Category3", 1, "Brand1"),
-    createData(4, "Product4", "Descr prod 4",390, 
-    "27-01-2023", "27-01-2023", 1, "Category1", 3, "Brand3"),
-    createData(5, "Product5", "Descr prod 5",390, 
-    "27-01-2023", "27-01-2023", 4, "Category4", 2, "Brand2"),
-    createData(6, "Product5", "Descr prod 5",390, 
-    "27-01-2023", "27-01-2023", 4, "Category4", 2, "Brand2"),
-    createData(7, "Product5", "Descr prod 5",390, 
-    "27-01-2023", "27-01-2023", 4, "Category4", 2, "Brand2"),
-    createData(8, "Product5", "Descr prod 5",390, 
-    "27-01-2023", "27-01-2023", 4, "Category4", 2, "Brand2"),
-    createData(9, "Product5", "Descr prod 5",390, 
-    "27-01-2023", "27-01-2023", 4, "Category4", 2, "Brand2"),
-    createData(10, "Product5", "Descr prod 5",390, 
-    "27-01-2023", "27-01-2023", 4, "Category4", 2, "Brand2"),
-    createData(11, "Product5", "Descr prod 5",390, 
-    "27-01-2023", "27-01-2023", 4, "Category4", 2, "Brand2"),
-    createData(12, "Product5", "Descr prod 5",390, 
-    "27-01-2023", "27-01-2023", 4, "Category4", 2, "Brand2"),
-    createData(13, "Product5", "Descr prod 5",390, 
-    "27-01-2023", "27-01-2023", 4, "Category4", 2, "Brand2"),
-    createData(14, "Product5", "Descr prod 5",390, 
-    "27-01-2023", "27-01-2023", 4, "Category4", 2, "Brand2"),
-];
+
 const AdminProducts = () => {
-  
+
+  //Services
+    //TODO: se puede implementar useMemo para no tener que estar trayendo a cada rato desde el backend
+    const {
+      data, isSuccess, isError,error
+    }=useGetAllProductsQuery()
+
+    const {data:dataCateg, isError:isErrorCateg, 
+      isSuccess:isSuccessCateg, error:errorCateg}=useGetAllCategoriesQuery()
+
+    const {
+      data:dataBrands, isSuccess:isSuccessBrand, 
+      isError:isErrorBrand, error:errorBrand
+    }=useGetAllBrandsQuery()
+  //Services
+
+  //combos
   const [brand, setBrand]=useState(1) //igualar a la primera posición
   //del arreglo que vendrá desde el back
   const [category, setCategory]=useState(1)
-  const [productToUpdate, setProductToUpdate]=useState({})
-  const [
-    isOpenModalAdd,
-    openModalAdd,
-    closeModalAdd
-  ]=useModal()
+   //combos
 
-  const [
-    isOpenModalUpdate,
-    openModalUpdate,
-    closeModalUpdate
-  ]=useModal()
+  //modals
+    const [
+      isOpenModalAdd,
+      openModalAdd,
+      closeModalAdd
+    ]=useModal()
+
+    const [productToUpdate, setProductToUpdate]=useState({})
+    
+    const [
+      isOpenModalUpdate,
+      openModalUpdate,
+      closeModalUpdate
+    ]=useModal()
+  //modals
 
   const searchProducts=(name)=>{
     console.log("name Product", name)
@@ -103,56 +81,9 @@ const AdminProducts = () => {
   }
   return (
     <AdminProductsContainer>
-      <Modal isOpen={isOpenModalAdd} closeModal={closeModalAdd}>
-        <h4>Add Product</h4>
-          <form action=''>
-            <p>
-              <label htmlFor="ProductName">Product name: </label>
-              <Modal_InputStyled type='text' name='ProductName' />
-            </p>
-            <p>
-              <label htmlFor="DescriptionName">Description: </label>
-              <Modal_InputStyled type='text' name='DescriptionName' />
-            </p>
-            <p>
-              <label htmlFor="PriceName">Price: </label>
-              <Modal_InputStyled type='number' name='PriceName' />
-            </p>
-            <p>
-              <label>
-                Brand 
-                <select value={brand} onChange={(ev)=>setBrand(ev.target.value)}>
-                  <option value="1">Brand1</option>
-                  <option value="2">Brand2</option>
-                  <option value="3">Brand2</option>
-                </select>
-              </label>
-            </p>
-            <p>
-              <label>
-                  Category 
-                  <select value={category} onChange={(ev)=>setCategory(ev.target.value)}>
-                    <option value="1">Category1</option>
-                    <option value="2">Category2</option>
-                    <option value="3">Category3</option>
-                  </select>
-                </label>
-            </p>
-            <p>
-              <label htmlFor="imgBrand">First product Img: </label>
-              <input type='file' name='imgBrand'/>
-            </p>
-            <p>
-              <label htmlFor="imgBrand">Second product Img: </label>
-              <input type='file' name='imgBrand'/>
-            </p>
-            <p>
-              <label htmlFor="imgBrand">Third product Img: </label>
-              <input type='file' name='imgBrand'/>
-            </p>
-            <ButtonAddModal/>
-          </form>
-      </Modal>
+      
+      <AddProduct isOpenModalAdd={isOpenModalAdd} closeModalAdd={closeModalAdd}
+        brands={dataBrands} categories={dataCateg?.results} />
 
       <Modal isOpen={isOpenModalUpdate} closeModal={closeModalUpdate}>
         <h4>Add Product</h4>
@@ -220,13 +151,14 @@ const AdminProducts = () => {
               <TableCell >Price</TableCell>
               <TableCell >Category name</TableCell>
               <TableCell >Brand name</TableCell>
+              <TableCell >createdAt</TableCell>
               <TableCell >updatedAt</TableCell>
               <TableCell >Edit</TableCell>
               <TableCell >Delete</TableCell>
             </TableRow>
           </TableHead>
           <TableBody >
-            {rows.map((row) => (
+            {data?.map((row) => (
               <TableRow 
                 key={row.id}
               >
@@ -237,8 +169,9 @@ const AdminProducts = () => {
                 <TableCell sx={{maxwidth:180}}>{row.name}</TableCell>
                 <TableCell sx={{maxwidth:180}}>{row.description}</TableCell>
                 <TableCell sx={{maxwidth:180}}>{row.price}</TableCell>
-                <TableCell sx={{maxwidth:180}}>{row.categoryName}</TableCell>
-                <TableCell sx={{maxwidth:180}}>{row.brandName}</TableCell>
+                <TableCell sx={{maxwidth:180}}>{row.Category.name}</TableCell>
+                <TableCell sx={{maxwidth:180}}>{row.ManuFacturer.name}</TableCell>
+                <TableCell sx={{maxwidth:180}}>{row.createdAt}</TableCell>
                 <TableCell sx={{maxwidth:180}}>{row.updatedAt}</TableCell>
                 <TableCell sx={{width:280}}><ButtonAdmin title={'Edit'} 
                   typeBtn={'Edit'} iconName={'Edit'} data={row}
