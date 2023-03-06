@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import SubNavbar from '../SubNavbar/SubNavbar'
 import styled from "styled-components";
 import { device, deviceMin } from "../../../styles/breakpoints";
@@ -18,10 +18,11 @@ import Modal from '../Modal/Modal';
 import ButtonAddModal from '../Modal/ButtonAddModal';
 import DropdownCategory from '../../DropdownCategory/DropdownCategory';
 import { Modal_InputStyled } from '../Modal/Modal.style';
-import { useGetAllProductsQuery } from '../../../state/store/service/ProductService';
+import { useDeleteProductMutation, useGetAllProductsQuery } from '../../../state/store/service/ProductService';
 import { useGetAllBrandsQuery } from '../../../state/store/service/BrandService';
 import { useGetAllCategoriesQuery } from '../../../state/store/service/CategoryService';
 import AddProduct from './ProductModals/AddProduct';
+import Swal from 'sweetalert2';
 
 const AdminProductsContainer=styled.div`
   width:100%;
@@ -44,6 +45,14 @@ const AdminProducts = () => {
       data:dataBrands, isSuccess:isSuccessBrand, 
       isError:isErrorBrand, error:errorBrand
     }=useGetAllBrandsQuery()
+
+    const [
+      deleteProduct,
+      {isSuccess:isSuccessDelete,
+      isLoading:isLoadingDelete,
+      isError:isErrorDelete,
+      error:errorDelete}
+    ]=useDeleteProductMutation()
   //Services
 
   //combos
@@ -60,7 +69,7 @@ const AdminProducts = () => {
     ]=useModal()
 
     const [productToUpdate, setProductToUpdate]=useState({})
-    
+
     const [
       isOpenModalUpdate,
       openModalUpdate,
@@ -71,9 +80,52 @@ const AdminProducts = () => {
   const searchProducts=(name)=>{
     console.log("name Product", name)
   }
-  const deletProduct=(id)=>{
-    console.log("deletProduct", id)
-  }
+  //Delete product
+    const handleDeleteProduct=(id)=>{
+      Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          deleteProduct(id)  
+        }
+      })
+    }
+    useEffect(() => {
+      if(isLoadingDelete){
+          Swal.fire({
+              title:'Loading',
+              allowEscapeKey: false,
+              allowOutsideClick: false,
+              didOpen:()=>{
+                  Swal.showLoading()
+              }
+          })
+      }
+      if (isSuccessDelete) {
+        Swal.fire(
+          'Deleted!',
+          'Your register has been deleted.',
+          'success'
+        )
+      }
+      else if(isErrorDelete){
+          console.log(errorDelete)
+          Swal.fire({
+              icon: 'error',
+              title: 'Oops...',
+              text: errorDelete?.data.message,
+          })
+      }
+    }, [isLoadingDelete]);
+  //Delete product
+
+
   const editProduct=(data)=>{
     console.log("editProduct", data)
     setProductToUpdate(data)
@@ -179,7 +231,7 @@ const AdminProducts = () => {
                 </TableCell>
                 <TableCell sx={{width:280}}><ButtonAdmin title={'Delete'}
                   typeBtn={'Delete'} iconName={'Delete'} data={row.id}
-                  action={deletProduct}> </ButtonAdmin>
+                  action={handleDeleteProduct}> </ButtonAdmin>
                 </TableCell>
               </TableRow>
             ))}
