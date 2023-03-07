@@ -8,6 +8,7 @@ import {
   IsAdmin_Aside
 } from './IsAdmin.style.jsx'
 import { useMeQuery } from '../../state/store/service/UserService'
+import { Profile_Link } from '../Profile/Profile.style'
 const IsAdmin = () => {
   const { data, isLoading} = useMeQuery();
   return  !isLoading && (
@@ -17,10 +18,10 @@ const IsAdmin = () => {
           
           <IsAdmin_Aside >
             
-            <NavBarLink to={'/admin/products'}>Products</NavBarLink>
-            <NavBarLink to={'/admin/brands'}>Brands</NavBarLink>
-            <NavBarLink to={'/admin/categories'}>Categories</NavBarLink>
-            <NavBarLink to={'/admin/users'}>Users</NavBarLink>
+            <Profile_Link to={'/admin/products'}>Products</Profile_Link>
+            <Profile_Link to={'/admin/brands'}>Brands</Profile_Link>
+            <Profile_Link to={'/admin/categories'}>Categories</Profile_Link>
+            <Profile_Link to={'/admin/users'}>Users</Profile_Link>
             
           </IsAdmin_Aside>
 

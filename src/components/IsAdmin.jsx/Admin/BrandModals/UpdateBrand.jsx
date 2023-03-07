@@ -5,7 +5,8 @@ import ButtonAddModal from '../../Modal/ButtonAddModal'
 import { useUpdateBrandMutation } from '../../../../state/store/service/BrandService'
 import Swal from 'sweetalert2'
 
-const UpdateBrand = ({isOpenModalUpdate,closeModalUpdate, brandToUpdate }) => {
+const UpdateBrand = ({isOpenModalUpdate,
+    closeModalUpdate, brandToUpdate }) => {
   
     const [
         updateBrand,
@@ -56,11 +57,12 @@ const UpdateBrand = ({isOpenModalUpdate,closeModalUpdate, brandToUpdate }) => {
         }
     }, [isLoading]);
 
-    // useEffect(() => {
-    //     console.log("brand", name)
-    //     console.log("brandToUpdate.name", brandToUpdate.name)
-    //     setName(brandToUpdate.name)
-    // }, []);
+    useEffect(() => {
+        setName(brandToUpdate?.name)
+        return ()=>{
+            setName('')
+        }
+    }, [brandToUpdate]);
 
     return (
     <Modal isOpen={isOpenModalUpdate} 

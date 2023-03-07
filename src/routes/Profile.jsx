@@ -2,7 +2,8 @@ import React, { useRef, useEffect } from 'react'
 import { Outlet, useNavigate } from 'react-router-dom'
 import { ThemeProvider } from 'styled-components'
 import { theme } from '../styles/theme'
-import { ButtonLogout, ImgProfile, InputFile, ProfileContainer, ProfilePic, ProfilePicContent, Profile_Aside, Profile_Link } from '../components/Profile/Profile.style'
+import { ButtonLogout, ImgProfile, InputFile, ProfileContainer,
+   ProfilePic, ProfilePicContent, Profile_Aside, Profile_Link } from '../components/Profile/Profile.style'
 
 import Swal from 'sweetalert2';
 // icons
