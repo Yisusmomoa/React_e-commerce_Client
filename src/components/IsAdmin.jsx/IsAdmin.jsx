@@ -11,7 +11,7 @@ import { useMeQuery } from '../../state/store/service/UserService'
 const IsAdmin = () => {
   const { data, isLoading} = useMeQuery();
   return  !isLoading && (
-    data?.result.role==="admin"?(
+    data?.result.rolId===1 ?(
       <ThemeProvider theme={theme}>
         <IsAdminContainer>
           

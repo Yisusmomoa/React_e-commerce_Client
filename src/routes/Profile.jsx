@@ -97,12 +97,13 @@ const Profile = () => {
           <Profile_Link to={'/profile/wishlist'}> <BookmarkBorderOutlinedIcon fontSize='large'/> Wishlist</Profile_Link>
           <Profile_Link to={'/profile/myorders'}><LocalMallOutlinedIcon fontSize='large'/> My orders</Profile_Link>
           {
-            data?.result.role==="admin"&&<Profile_Link to={'/admin'}> <AdminPanelSettingsOutlinedIcon fontSize='large'/> Admin</Profile_Link>
+            data?.result.rolId===1&&<Profile_Link to={'/admin'}> <AdminPanelSettingsOutlinedIcon fontSize='large'/> Admin</Profile_Link>
           }
           
           <ButtonLogout onClick={handleClickLogout}>Logout</ButtonLogout>
 
         </Profile_Aside>
+
         <ProfileSubnavbar/>
         <Outlet/>
       </ProfileContainer>

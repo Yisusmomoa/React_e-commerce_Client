@@ -62,7 +62,7 @@ const AdminUsers = () => {
   //Services
     const {data, isSuccess, 
       isError, isLoading, error}=useGetAllUsersQuery()
-    
+    console.log("data", data)
     const [desactivateUserAdmin, {isLoading:isLoadingDesactivate,
       isSuccess:isSuccessDesactivate,
       isError:isErrorDesactivate,
@@ -226,7 +226,7 @@ const AdminUsers = () => {
                 </TableCell>
                 <TableCell sx={{maxwidth:150}}>{row.username}</TableCell>
                 <TableCell sx={{maxwidth:150}}>{row.email}</TableCell>
-                <TableCell sx={{maxwidth:150}}>{row.role}</TableCell>
+                <TableCell sx={{maxwidth:150}}>{row.RolId===1?'Admin':'Normal'}</TableCell>
                 <TableCell sx={{maxwidth:150}}>{row.updatedAt}</TableCell>
                 <TableCell sx={{maxwidth:150}}>{row.createdAt}</TableCell>
                 <TableCell sx={{width:240}}><ButtonAdmin title={'Edit'} 

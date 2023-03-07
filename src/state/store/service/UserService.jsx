@@ -67,6 +67,14 @@ export const users=createApi({
         }),
         getUserById:builder.query({
             query:(id)=>`${id}`
+        }),
+        updateUserAdmin:builder.mutation({
+            query:({id, ...body})=>({
+                url:`/admin/users/${id}`,
+                method:"PUT",
+                body
+            }),
+            invalidatesTags:["users"],
         })
 
     })
@@ -83,5 +91,6 @@ export const {
     useUpdateUserImgMutation,
     useDesactivateUserMutation,
     useDesactivateUserAdminMutation,
-    useGetUserByIdQuery
+    useGetUserByIdQuery,
+    useUpdateUserAdminMutation
 }=users
