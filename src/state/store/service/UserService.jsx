@@ -64,6 +64,9 @@ export const users=createApi({
                 method:"DELETE"
             }),
             invalidatesTags:["users"]
+        }),
+        getUserById:builder.query({
+            query:(id)=>`${id}`
         })
 
     })
@@ -79,5 +82,6 @@ export const {
     useUpdateUserMutation,
     useUpdateUserImgMutation,
     useDesactivateUserMutation,
-    useDesactivateUserAdminMutation
+    useDesactivateUserAdminMutation,
+    useGetUserByIdQuery
 }=users

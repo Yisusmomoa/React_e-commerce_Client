@@ -18,6 +18,7 @@ import ButtonAddModal from '../Modal/ButtonAddModal';
 import Checkbox from '@mui/material/Checkbox';
 import { useDesactivateUserAdminMutation, useGetAllUsersQuery } from '../../../state/store/service/UserService';
 import Swal from 'sweetalert2';
+import UpdateUser from './UserModals/UpdateUser';
 
 const AdminUsersContainer=styled.div`
   width:100%;
@@ -76,12 +77,11 @@ const AdminUsers = () => {
   const [
     isOpenModalUpdate, 
     openModalUpdate, 
-    closeModalUpdate]=useModal()
+    closeModalUpdate, setIsOpenUpdate]=useModal()
   //Modals
 
-  const [userToUpdate, setUserToUpdate]=useState({})
+  const [userToUpdate, setUserToUpdate]=useState(0)
   const [rol, setRol]=useState(1)
-  const [isActive, setIsActive]=useState(true)
 
   const searchUsers=(name)=>{
     console.log("name Users", name)
@@ -92,7 +92,6 @@ const AdminUsers = () => {
   const editUser=(data)=>{
     setUserToUpdate(data)
     openModalUpdate()
-    console.log("editUser", data)
   }
   
   useEffect(() => {
@@ -123,6 +122,7 @@ const AdminUsers = () => {
   }
   }, [isLoadingDesactivate]);
 
+ 
   return (
     <AdminUsersContainer>
       <Modal isOpen={isOpenModalAdd} 
@@ -155,7 +155,10 @@ const AdminUsers = () => {
         </form>
       </Modal>
 
-      <Modal isOpen={isOpenModalUpdate} 
+    <UpdateUser isOpenModalUpdate={isOpenModalUpdate} 
+        closeModalUpdate={closeModalUpdate} data={userToUpdate}/>
+
+      {/* <Modal isOpen={isOpenModalUpdate} 
         closeModal={closeModalUpdate}>
         <h4>Edit User</h4>
         <form action=''>
@@ -184,7 +187,7 @@ const AdminUsers = () => {
 
           <ButtonAddModal/>
         </form>
-      </Modal>
+      </Modal> */}
 
       <SubNavbar showModal={openModalAdd} 
         search={searchUsers}

@@ -10,7 +10,8 @@ export const useModal = (initialValue=false) => {
     return [
         isOpen,
         openModal,
-        closeModal
+        closeModal,
+        setIsOpen
     ]
 }
 
