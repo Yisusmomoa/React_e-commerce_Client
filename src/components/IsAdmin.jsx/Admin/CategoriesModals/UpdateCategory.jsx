@@ -6,7 +6,8 @@ import Modal from '../../Modal/Modal'
 import { useUpdateCategoryMutation } from '../../../../state/store/service/CategoryService'
 import Swal from 'sweetalert2'
 
-const UpdateCategory = ({isOpenModalUpdate, closeModalUpdate, category}) => {
+const UpdateCategory = ({isOpenModalUpdate, 
+  closeModalUpdate, category}) => {
   const [
       updateCategory,
       {isLoading, isSuccess, isError, error}
@@ -21,6 +22,7 @@ const UpdateCategory = ({isOpenModalUpdate, closeModalUpdate, category}) => {
       name
     })
   }
+
   useEffect(() => {
         if(isLoading){
             Swal.fire({
@@ -50,7 +52,13 @@ const UpdateCategory = ({isOpenModalUpdate, closeModalUpdate, category}) => {
           setName("")
         }
   }, [isLoading]);
-  
+
+  useEffect(() => {
+        setName(category?.name)
+        return ()=>{
+          setName('')
+        }
+    }, [category]);
   return (
     <Modal isOpen={isOpenModalUpdate}
     closeModal={closeModalUpdate} >
@@ -59,7 +67,7 @@ const UpdateCategory = ({isOpenModalUpdate, closeModalUpdate, category}) => {
         <p>
             <label htmlFor="name">Category name: </label>
             <Modal_InputStyled type='text' name='name' 
-              value={name}
+              value={name || ''}
               onChange={ev=>setName(ev.target.value)}
                   />
         </p>

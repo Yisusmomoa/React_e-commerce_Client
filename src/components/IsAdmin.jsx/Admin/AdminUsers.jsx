@@ -24,38 +24,6 @@ const AdminUsersContainer=styled.div`
   width:100%;
   height:100%;
 `
-function createData(
-  id,
-  username,
-  email,
-  role,
-  isActive,
-  createdAt,
-  updatedAt,
-) {
-  return { id, username, 
-    email, role,
-    isActive,
-    createdAt, updatedAt};
-}
-
-const rows = [
-  createData(1, "user1", "user1@gmail.com","Admin", 
-    true, "27-01-2023", "27-01-2023", ),
-  createData(2, "user2", "user2@gmail.com","normal", 
-    true, "27-01-2023", "27-01-2023", ),
-  createData(3, "user3", "user3@gmail.com","normal", 
-    false, "27-01-2023", "27-01-2023", ),
-  createData(4, "user4", "user4@gmail.com","normal", 
-    true, "27-01-2023", "27-01-2023", ),
-  createData(5, "user5", "user5@gmail.com","Admin", 
-    true, "27-01-2023", "27-01-2023", ),
-  createData(6, "user6", "user6@gmail.com","normal", 
-    false, "27-01-2023", "27-01-2023", ),
-  createData(7, "user7", "user7@gmail.com","normal", 
-    false, "27-01-2023", "27-01-2023", ),
-    
-];
 
 const AdminUsers = () => {
 

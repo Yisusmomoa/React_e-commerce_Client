@@ -72,7 +72,7 @@ const UpdateBrand = ({isOpenModalUpdate,
         <p>
           <label htmlFor="BrandName">Brand name: </label>
           <Modal_InputStyled type='text' 
-            name='BrandName' value={name}
+            name='BrandName' value={name || ''}
             onChange={(ev)=>setName(ev.target.value)}/>
         </p>
         <p>
