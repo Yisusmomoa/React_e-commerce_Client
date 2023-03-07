@@ -97,7 +97,8 @@ const AdminCategories = () => {
         closeModalAdd={closeModalAdd}/>
 
       <UpdateCategory isOpenModalUpdate={isOpenModalUpdate}
-        closeModalUpdate={closeModalUpdate} category={categoryToUpdate}/>
+        closeModalUpdate={closeModalUpdate} 
+        category={categoryToUpdate}/>
 
 
       <AdminCategoriesContainer>

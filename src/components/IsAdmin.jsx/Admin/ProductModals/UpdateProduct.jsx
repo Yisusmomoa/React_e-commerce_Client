@@ -81,6 +81,15 @@ const UpdateProduct = ({isOpenModalUpdate,
         }
     }, [isLoading]);
 
+    // useEffect(() => {
+    //     setusername(data?.username)
+    //     setemail(data?.email)
+    //     return ()=>{
+    //         setusername('')
+    //         setemail('')
+    //     }
+    // }, [data]);
+
   return (
     <Modal isOpen={isOpenModalUpdate} 
       closeModal={closeModalUpdate}>
@@ -90,16 +99,19 @@ const UpdateProduct = ({isOpenModalUpdate,
             <p>
               <label htmlFor="ProductName">Product name: </label>
               <Modal_InputStyled type='text' name='ProductName'
+              value={productToUpdate?.name || ''}
               {...updateProduct("ProductName") } />
             </p>
             <p>
               <label htmlFor="ProductDescription">Description: </label>
               <Modal_InputStyled type='text' name='ProductDescription' 
+              value={productToUpdate?.description || '' }
               {...updateProduct("ProductDescription") }/>
             </p>
             <p>
               <label htmlFor="ProductPrice">Price: </label>
               <Modal_InputStyled type='number' name='ProductPrice'
+              value={productToUpdate?.price || 0 }
                 min={1}
               {...updateProduct("ProductPrice") } />
             </p>

@@ -14,10 +14,7 @@ import Paper from '@mui/material/Paper';
 
 import ButtonAdmin from './ButtonAdmin';
 import { useModal } from '../../../state/hooks/useModal';
-import Modal from '../Modal/Modal';
-import ButtonAddModal from '../Modal/ButtonAddModal';
-import DropdownCategory from '../../DropdownCategory/DropdownCategory';
-import { Modal_InputStyled } from '../Modal/Modal.style';
+
 import { useDeleteProductMutation, useGetAllProductsQuery } from '../../../state/store/service/ProductService';
 import { useGetAllBrandsQuery } from '../../../state/store/service/BrandService';
 import { useGetAllCategoriesQuery } from '../../../state/store/service/CategoryService';
@@ -29,7 +26,6 @@ const AdminProductsContainer=styled.div`
   width:100%;
   height:100%;
 `
-
 
 const AdminProducts = () => {
 
@@ -56,11 +52,6 @@ const AdminProducts = () => {
     ]=useDeleteProductMutation()
   //Services
 
-  //combos
-  const [brand, setBrand]=useState(1) //igualar a la primera posición
-  //del arreglo que vendrá desde el back
-  const [category, setCategory]=useState(1)
-   //combos
 
   //modals
     const [
