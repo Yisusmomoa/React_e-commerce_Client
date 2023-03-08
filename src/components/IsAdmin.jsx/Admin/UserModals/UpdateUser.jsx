@@ -49,10 +49,13 @@ const UpdateUser = ({isOpenModalUpdate, closeModalUpdate, data}) => {
         console.log(rol)
         updateUser({
             id:data?.id,
-            rolId:rol
+            rolId:rol, 
+            username,
+            email,
+            // password
         })
-
     }
+    
     useEffect(() => {
         if(isLoading){
           Swal.fire({
