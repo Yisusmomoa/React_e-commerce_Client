@@ -20,7 +20,6 @@ const AsideProducts = () => {
     isError:isErrorBrand,error:errorBrand
   }=useGetAllBrandsQuery()
 
-  console.log(dataBrand)
 
   const [priceMin, setPriceMin] = useState(0);
   const [priceMax, setPriceMax] = useState(0);

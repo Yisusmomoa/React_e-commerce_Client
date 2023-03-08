@@ -27,7 +27,7 @@ export const ProductBodyContainer=styled.div`
 `
 
 export const ProductBody_ContainerImgs=styled.div`
-    width:auto;
+    width:75%;
     height:550px;
     display:flex;
     flex-direction:column;
@@ -37,7 +37,7 @@ export const ProductBody_ContainerImgs=styled.div`
 
 export const ImgPrincipal=styled.img`
     width:100%;
-    object-fit: scale-down;
+    object-fit: fill;
     height:400px;
     border:1px solid black;
     border-radius:5px;
@@ -57,7 +57,7 @@ export const ContainerImgs_RowImgs=styled.div`
 
 export const Img_RowImgs=styled.img`
     width:50%;
-    object-fit:scale-down;
+    object-fit:cover;
     height:75%;
     /* margin:0 15px 0 15px; */
     overflow:hidden;

@@ -37,6 +37,11 @@ export const products=createApi({
                 url:`/pagination/?size=${size}&page=${page}`,
                 method:'GET',
             })
+        }),
+        getProductById:builder.query({
+            query:(id)=>({
+                url:`/${id}`
+            })
         })
     })
 })
@@ -46,5 +51,6 @@ export const {
     useCreateProductMutation,
     useDeleteProductMutation,
     useUpdateProductMutation,
-    useGetPaginationProductsQuery
+    useGetPaginationProductsQuery,
+    useGetProductByIdQuery
 }=products

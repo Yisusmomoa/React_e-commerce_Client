@@ -9,22 +9,19 @@ import AddCircleOutlineOutlinedIcon from '@mui/icons-material/AddCircleOutlineOu
 import RemoveCircleOutlineOutlinedIcon from '@mui/icons-material/RemoveCircleOutlineOutlined';
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
 import { NavBarLink } from '../Navbar/NavBar.style';
-const ProductBodyInfo = () => {
+const ProductBodyInfo = ({productInfo}) => {
+  console.log(productInfo)
   return (
     <ProductBody_ContainerInfo>
       <FavoriteBorderOutlinedIcon fontSize='large'/>
-      <h2>Gabinete Naceb Zion</h2>
+      <h2>{productInfo?.name}</h2>
       <h4>Product details</h4>
-      <h6>Gabinete Naceb Zion con Ventana RGB, 
-        Full-Tower, ATX, USB 3.0, 
-        sin Fuente, 3 Ventiladores 
-        RGB Instalados, Negro
-      </h6>
+      <h6>{productInfo?.description} </h6>
       <h4>Category</h4>
       <NavBarLink>
-        <h5>Hardware</h5>
+        <h5>{productInfo?.Category?.name}</h5>
       </NavBarLink>
-      <h2>$129</h2>
+      <h2>${productInfo?.price}</h2>
 
       <ProductInfo_Actions>
         <ProductInfo_ActionsQuantity>

@@ -17,7 +17,7 @@ const Navbar = () => {
   const [extendNavbar, setExtendNavbar] = useState(false)
     const [showSearchInput, setShowSearchInput] = useState(false)
     const dataMe=useMeQuery()
-    console.log(dataMe)
+    // console.log(dataMe)
     const handleClick=()=>{
         setExtendNavbar(!extendNavbar)
     }
