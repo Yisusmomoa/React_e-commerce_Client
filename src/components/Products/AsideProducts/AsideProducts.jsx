@@ -2,14 +2,8 @@ import React, { useState } from 'react'
 import ListOf from './ListsOf/ListOf'
 import PriceFilter from './PriceFilter'
 import { Price_Container, Products_AsideOptions } from './AsideProducts.style'
-
-const arrayCategory=[
-  {id:1, name:"Category1"},
-  {id:2, name:"Category2"},
-  {id:3, name:"Category3"},
-  {id:4, name:"Category4"},
-  {id:5, name:"Category5"},
-]
+import { useGetAllCategoriesQuery } from '../../../state/store/service/CategoryService'
+import { useGetAllBrandsQuery } from '../../../state/store/service/BrandService';
 const arrayBrand=[
   {id:1, name:"Brand1"},
   {id:2, name:"Brand2"},
@@ -20,8 +14,17 @@ const arrayBrand=[
 
 
 const AsideProducts = () => {
+  const {data, isError, isSuccess, error}=useGetAllCategoriesQuery();
+  const {
+    data:dataBrand, isSuccess:isSuccessBrand, 
+    isError:isErrorBrand,error:errorBrand
+  }=useGetAllBrandsQuery()
+
+  console.log(dataBrand)
+
   const [priceMin, setPriceMin] = useState(0);
   const [priceMax, setPriceMax] = useState(0);
+  
   const selectCategory=(id)=>{
     console.log("Select category ", id)
   }
@@ -39,7 +42,7 @@ const AsideProducts = () => {
   return (
     <Products_AsideOptions>
       <ListOf title={'Category'} 
-        info={arrayCategory} select={selectCategory}/>
+        info={data?.results} select={selectCategory}/>
 
       <Price_Container>
         <h4>Price</h4>
@@ -48,7 +51,7 @@ const AsideProducts = () => {
         <PriceFilter setPrice={setPriceMaxHandle}/>
       </Price_Container>
       <ListOf title={'Brands'}
-        info={arrayBrand} select={selectBrand}/>
+        info={dataBrand} select={selectBrand}/>
     </Products_AsideOptions>
   )
 }

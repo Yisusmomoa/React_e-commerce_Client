@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { device, deviceMin } from "../../styles/breakpoints";
 
 export const ProductsContainer=styled.div`
+
    display:flex;
     border:1px solid ${props=>props.theme.colors.Border};
     background-color:${(props)=>props.theme.colors.fondo};
@@ -11,6 +12,7 @@ export const ProductsContainer=styled.div`
 `
 
 export const Products_SubNavBar=styled.nav`
+
     border:1px solid ${props=>props.theme.colors.Border};
     background-color:${(props)=>props.theme.colors.fondo};
     height:25%;
@@ -21,6 +23,8 @@ export const Products_SubNavBar=styled.nav`
 `
 
 export const Products_ListProducts=styled.div`
+    margin-top:1rem;
+    margin-bottom:1rem;
     width:100%;
     height:100%;
     display:flex;

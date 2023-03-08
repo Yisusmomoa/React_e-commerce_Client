@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { device, deviceMin } from "../../../styles/breakpoints";
 export const Products_AsideOptions=styled.aside`
+
      width:350px;
     height:100%;
     /* height:85vh; */

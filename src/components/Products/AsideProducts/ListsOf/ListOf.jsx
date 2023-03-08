@@ -17,11 +17,11 @@ const ListOf = ({info, title, select}) => {
             <RadioGroup
                 name="radio-buttons-group">
                     {
-                        info.map(element=>(
-                            <FormControlLabel key={element.id} 
-                                onClick={()=>select(element.id)}
-                                value={element.id} control={<Radio />}
-                                label={element.name} />
+                        info?.map(element=>(
+                            <FormControlLabel key={element?.id} 
+                                onClick={()=>select(element?.id)}
+                                value={element?.id} control={<Radio />}
+                                label={element?.name} />
                         ))
                     }
             </RadioGroup>
