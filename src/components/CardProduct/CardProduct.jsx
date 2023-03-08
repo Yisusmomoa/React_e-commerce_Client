@@ -1,24 +1,25 @@
 import React from 'react'
 import { CardProductContainer,
   CardProductImg,
-  CardProductInfo } from './CardProduct.style'
-import Monitor from '../../assets/Monitor.jpg'
+  CardProductInfo, 
+  PriceProd, 
+  TitleProd} from './CardProduct.style'
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 
 import { NavBarLink } from '../Navbar/NavBar.style';
 import { ButtonForm } from '../Form/Form.style';
 
-const CardProduct = () => {
+const CardProduct = ({product}) => {
   return (
-    <NavBarLink to={'/product/1'}>
+    <NavBarLink to={`/product/${product?.id}`}>
       <CardProductContainer>
-        <CardProductImg src={Monitor} 
-          alt='MonitorImage'/>
+        <CardProductImg src={product?.ImgProducts[0]?.LinkImg} 
+          alt={product?.name}/>
           
         <CardProductInfo>
-          <h2>Name product</h2>
+          <TitleProd>{product?.name}</TitleProd>
           
-          <h3>$219</h3>
+          <PriceProd>{product?.price}</PriceProd>
           <ButtonForm>
             <ShoppingCartOutlinedIcon/>
             Add to cart

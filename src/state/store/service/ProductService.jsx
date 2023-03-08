@@ -31,6 +31,12 @@ export const products=createApi({
                 body:formData
             }),
             invalidatesTags:["Products"]
+        }),
+        getPaginationProducts:builder.query({
+            query:({size, page})=>({
+                url:`/pagination/?size=${size}&page=${page}`,
+                method:'GET',
+            })
         })
     })
 })
@@ -39,5 +45,6 @@ export const {
     useGetAllProductsQuery,
     useCreateProductMutation,
     useDeleteProductMutation,
-    useUpdateProductMutation
+    useUpdateProductMutation,
+    useGetPaginationProductsQuery
 }=products

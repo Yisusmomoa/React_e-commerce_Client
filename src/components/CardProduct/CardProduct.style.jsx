@@ -21,11 +21,23 @@ export const CardProductContainer=styled.div`
     }
 `
 export const CardProductInfo=styled.div`
+    width:100%;
+    height:100%;
     background-color:${props=>
     props.theme.colors.fondo};
 `
+export const TitleProd=styled.h2`
+ font-size: 1.2rem;
+  font-weight: 700; 
+`
+export const PriceProd=styled.h3`
+font-size: 1rem;
+  font-weight: 500;
+  color: black;
+`
+
 export const CardProductImg=styled.img`
-    width:90%;
+    width:190px;
     height:190px;
     object-fit: scale-down;
 `
