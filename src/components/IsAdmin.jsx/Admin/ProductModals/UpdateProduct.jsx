@@ -2,20 +2,57 @@ import React, { useEffect, useState } from 'react'
 import Modal from '../../Modal/Modal'
 import { Modal_InputStyled } from '../../Modal/Modal.style'
 import ButtonAddModal from '../../Modal/ButtonAddModal'
-import { useForm } from 'react-hook-form'
 import { useUpdateProductMutation } from '../../../../state/store/service/ProductService'
 import Swal from 'sweetalert2'
 
 const UpdateProduct = ({isOpenModalUpdate,
     closeModalUpdate, categories, brands, productToUpdate}) => {
+    //Services
+        const [
+            updateProductService,
+            {isSuccess, isLoading, isError, error}
+        ]=useUpdateProductMutation()
+    //Services
+
+    //handleInputs
+    // const [infoProduct, setInfoProduct]=useState({})
+    // const handleOnChange=(ev)=>{
+    //     const { name, value } = ev.target;
+    //     setInfoProduct({
+    //         ...infoProduct,
+    //         [name]:value
+    //     })
+    //     console.log(infoProduct)
+    // }
+    const [nameProd, setnameProd] = useState("");
+    const [descriptionProd, setdescriptionProd] = useState("");
+    const [priceProd, setprice] = useState(0);
+    const [imgsProd, setimgsProd] = useState([]);
     
-    const [
-        updateProductService,
-        {isSuccess, isLoading, isError, error}
-    ]=useUpdateProductMutation()
+    useEffect(() => {
+        // setInfoProduct({
+        //     id:productToUpdate?.id,
+        //     name:productToUpdate?.name,
+        //     description:productToUpdate?.description,
+        //     price:productToUpdate?.price,
+        //     images:productToUpdate?.ImgProducts
+        // })
+        setnameProd(productToUpdate?.name)
+        setdescriptionProd(productToUpdate?.description)
+        setprice(productToUpdate?.price)
+        setimgsProd(productToUpdate?.ImgProducts)
+        console.log(imgsProd)
+        return ()=>{
+            // setInfoProduct({})
+            setnameProd("")
+            setdescriptionProd("")
+            setprice(0)
+            setimgsProd([])
+        }
+    }, [productToUpdate]);
+    //handleInputs
+    
     //manejo de combos
-        // console.log("categories", categories)
-        // console.log("brands", brands)
         const [brand, setbrand] = useState(1);
         const [category, setcategory] = useState(1);
         
@@ -28,92 +65,83 @@ const UpdateProduct = ({isOpenModalUpdate,
     //manejo de combos
 
     //submit
-        const { register:updateProduct, 
-            handleSubmit, 
-            watch, 
-            formState: { errors } } = useForm();
-        const onSubmit=(data)=>{
+        
+        const onSubmit=(ev)=>{
+            ev.preventDefault();
             // console.log(ev.target.elements)
             // const {image}=ev.target.elements
             // console.log(image)
             // console.log(image.files)
-            console.log("Update", data.ProductPrice)
+            // console.log("Update", data.ProductPrice)
             const formData=new FormData()
             formData.append("id", productToUpdate.id)
-            formData.append("name", data.ProductName)
-            formData.append("price", data.ProductPrice)
-            formData.append("description", data.ProductDescription)
-            formData.append("price", data.ProductPrice)
+            formData.append("name", nameProd)
+            formData.append("description", descriptionProd)
+            formData.append("price", priceProd)
             formData.append("CategoryId", category)
             formData.append("ManuFacturerId", brand)
+            updateProductService(formData)
+
+            // agregar n imagenes al formdata
             // for (let index = 0; index < data.image.length; index++) {
             //     const element = data.image[index];
             //     formData.append("images", element)
             // }
-            updateProductService(formData)
+            
         }
+
+        useEffect(() => {
+            if(isLoading){
+                Swal.fire({
+                    title:'Loading',
+                    allowEscapeKey: false,
+                    allowOutsideClick: false,
+                    didOpen:()=>{
+                        Swal.showLoading()
+                    }
+                })
+            }
+            if (isSuccess) {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'successfull updated'
+                }).then(()=>closeModalUpdate())
+            }
+            else if(isError){
+                console.log(error)
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: error?.data.message,
+                })
+            }
+        }, [isLoading]);
+        
     //submit
-
-    useEffect(() => {
-        if(isLoading){
-            Swal.fire({
-                title:'Loading',
-                allowEscapeKey: false,
-                allowOutsideClick: false,
-                didOpen:()=>{
-                    Swal.showLoading()
-                }
-            })
-        }
-        if (isSuccess) {
-            Swal.fire({
-                icon: 'success',
-                title: 'successfull updated'
-            }).then(()=>closeModalUpdate())
-        }
-        else if(isError){
-            console.log(error)
-            Swal.fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: error?.data.message,
-            })
-        }
-    }, [isLoading]);
-
-    // useEffect(() => {
-    //     setusername(data?.username)
-    //     setemail(data?.email)
-    //     return ()=>{
-    //         setusername('')
-    //         setemail('')
-    //     }
-    // }, [data]);
 
   return (
     <Modal isOpen={isOpenModalUpdate} 
       closeModal={closeModalUpdate}>
         <h4>Update Product</h4> 
-          <form onSubmit={handleSubmit(onSubmit)}
+          <form onSubmit={onSubmit}
               encType="multipart/form-data">
             <p>
               <label htmlFor="ProductName">Product name: </label>
               <Modal_InputStyled type='text' name='ProductName'
-              value={productToUpdate?.name || ''}
-              {...updateProduct("ProductName") } />
+              value={nameProd || ''} onChange={(ev)=>setnameProd(ev.target.value)} />
             </p>
             <p>
               <label htmlFor="ProductDescription">Description: </label>
               <Modal_InputStyled type='text' name='ProductDescription' 
-              value={productToUpdate?.description || '' }
-              {...updateProduct("ProductDescription") }/>
+              value={descriptionProd || '' }
+              onChange={(ev)=>setdescriptionProd(ev.target.value)} />
             </p>
             <p>
               <label htmlFor="ProductPrice">Price: </label>
               <Modal_InputStyled type='number' name='ProductPrice'
-              value={productToUpdate?.price || 0 }
-                min={1}
-              {...updateProduct("ProductPrice") } />
+              value={priceProd ||0}
+                min={1} 
+                onChange={(ev)=>setprice(ev.target.value)}/>
             </p>
             <p>
                 <label>
@@ -152,7 +180,6 @@ const UpdateProduct = ({isOpenModalUpdate,
                     name='image'
                     accept="image/png, image/jpeg"
                     multiple
-                    {...updateProduct("image") }
                 />
             </p>
             <ButtonAddModal/>

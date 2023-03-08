@@ -37,7 +37,6 @@ const UpdateUser = ({isOpenModalUpdate, closeModalUpdate, data}) => {
     }
     useEffect(() => {
         setusername(data?.username)
-        // setpassword(data.password)
         setemail(data?.email)
         return ()=>{
             setusername('')
