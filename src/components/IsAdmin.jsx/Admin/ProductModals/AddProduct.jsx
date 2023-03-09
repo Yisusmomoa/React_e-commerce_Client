@@ -94,19 +94,31 @@ const AddProduct = ({isOpenModalAdd,
                     <label htmlFor="ProductName">Product name: </label>
                     <Modal_InputStyled type='text' name='ProductName'
                     {...createProduct("ProductName", {required:true}) } />
-                    {errors.ProductName && <span>This field is required</span>}
+                </p>
+                <p>
+                    {errors.ProductName
+                        &&<span style={{color:"red",
+                        fontSize:"12px"}}>This field is required</span>}
                 </p>
                 <p>
                     <label htmlFor="ProductDescription">Description: </label>
                     <Modal_InputStyled type='text' name='ProductDescription'
                      {...createProduct("ProductDescription", {required:true}) } />
-                     {errors.ProductDescription && <span>This field is required</span>}
+                </p>
+                <p>
+                    {errors.ProductDescription
+                        &&<span style={{color:"red",
+                        fontSize:"12px"}}>This field is required</span>}
                 </p>
                 <p>
                     <label htmlFor="ProductPrice">Price: </label>
                     <Modal_InputStyled type='number' name='ProductPrice'
                      {...createProduct("ProductPrice", {required:true}) } />
-                     {errors.ProductPrice && <span>This field is required</span>}
+                </p>
+                <p>
+                    {errors.ProductPrice
+                        &&<span style={{color:"red",
+                        fontSize:"12px"}}>This field is required</span>}
                 </p>
                 <p>
                     <label>
@@ -147,7 +159,11 @@ const AddProduct = ({isOpenModalAdd,
                         multiple
                     {...createProduct("image", {required:true}) } 
                     />
-                    {errors.imgsProd && <span>This field is required</span>}
+                    <p>
+                        {errors.image
+                            &&<span style={{color:"red",
+                            fontSize:"12px"}}>This field is required</span>}
+                    </p>
                 </p>
                 <ButtonAddModal/>
             </form>
