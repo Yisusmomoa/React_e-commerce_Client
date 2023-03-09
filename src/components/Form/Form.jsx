@@ -21,11 +21,16 @@ const Form = ({typeForm}) => {
     //TODO Validar que el email si sea un email
     const dataMe=useMeQuery()
 
+    // const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    const emailRegex =/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
+    function validateEmail(email) {
+    return emailRegex.test(email);
+    }
+
     const navigate=useNavigate()
     const [registerAction, {isError, isLoading, isSuccess, error, data}]=useCreateUserMutation()
     const [loginAction, {isError:isErrorLogin, isLoading:isLoadingLogin, 
         isSuccess:isSuccessLogin, error:errorLogin, data:dataLogin}]=useLoginMutation()
-    // const MySwal = withReactContent(Swal)
     const {
         register,
         handleSubmit,
@@ -41,7 +46,10 @@ const Form = ({typeForm}) => {
     }=useForm()
 
     const onSubmit=(user)=>{
-        registerAction(user)
+        if(validateEmail(user.email)){
+            registerAction(user)
+            console.log("email correcto")
+        }
     }
     const onSubmitLogin=(user)=>{
         loginAction(user)
@@ -118,20 +126,32 @@ const Form = ({typeForm}) => {
             <FormStyled onSubmit={handleSubmitLogin(onSubmitLogin)}>
                 <ContainerInputs>
                     <ContainerInput>
-                        <AlternateEmailOutlinedIcon fontSize='large'/>
-                        <InputForm type='email' 
-                            placeholder='Your email'
-                            {...login("email", {required:true}) }/>
+                        <div>
+                            <AlternateEmailOutlinedIcon fontSize='large'/>
+                            <InputForm type='email' 
+                                placeholder='Your email'
+                                {...login("email", {required:true, pattern:emailRegex}) }/>
+                        </div>
+                        <div>
+                            {errorsLogin.email?.type==='required' &&<span style={ {color:"red",
+                                fontSize:"12px"}}>This field is required</span> }
+                            {errorsLogin.email?.type==='pattern' && 
+                                <span style={ {color:"red",fontSize:"12px"}}>Enter a valid email</span>}
+                        </div>
                     </ContainerInput>
-                    {errorsLogin.email &&<span>This field is required</span>}
 
                     <ContainerInput>
-                        <HttpsOutlinedIcon fontSize='large'/>
-                        <InputForm type='password' 
-                            placeholder='Password'
-                            {...login("password", {required:true} ) }/>
+                        <div>
+                            <HttpsOutlinedIcon fontSize='large'/>
+                            <InputForm type='password' 
+                                placeholder='Password'
+                                {...login("password", {required:true} ) }/>
+                        </div>
+                        <div>
+                            {errorsLogin.password &&
+                            <span style={ {color:"red",fontSize:"12px"}}>This field is required</span>}
+                        </div>
                     </ContainerInput>
-                    {errorsLogin.password &&<span>This field is required</span>}
                     
                     <ButtonForm>Login</ButtonForm>
                 </ContainerInputs>
@@ -149,36 +169,62 @@ const Form = ({typeForm}) => {
         <FormStyled onSubmit={handleSubmit(onSubmit)} >
             <ContainerInputs>
                 <ContainerInput>
-                    <PersonOutlineOutlinedIcon fontSize='large'/>
-                    <InputForm type='text' {...register("username", {
-                        required:true,
-                        maxLength: 50
-                    })} placeholder='Username'/>
-                    {errors.username && <span>This field is required</span>}
+                    <div>
+                        <PersonOutlineOutlinedIcon fontSize='large'/>
+                        <InputForm type='text' {...register("username", {
+                            required:true,
+                            maxLength: 50
+                        })} placeholder='Username'/>
+                    </div>
+                    <div>
+                        {errors.username?.type==='required' && 
+                            <span style={ {color:"red",fontSize:"12px"}}>This field is required</span>}
+                    </div>
                 </ContainerInput>
 
                 <ContainerInput>
-                    <AlternateEmailOutlinedIcon fontSize='large'/>
-                    <InputForm type='email' 
-                        placeholder='Your email'
-                        {...register("email", {required:true})}/>
-                    {errors.email && <span>This field is required</span>}
+                    <div>
+                        <AlternateEmailOutlinedIcon fontSize='large'/>
+                        <InputForm type='email' 
+                            placeholder='Your email'
+                            {...register("email", {required:true, pattern:emailRegex})}/>
+
+                    </div>
+                    <div>
+                        {errors.email?.type==='required' && 
+                        <span style={ {color:"red",fontSize:"12px"}}>This field is required</span>}
+
+                        {errors.email?.type==='pattern' && 
+                        <span style={ {color:"red",fontSize:"12px"}}>Enter a valid email</span>}
+                    </div>
                 </ContainerInput>
 
                 <ContainerInput>
-                    <HttpsOutlinedIcon fontSize='large'/>
-                    <InputForm type='password' 
-                        placeholder='Password'
-                        {...register("password", {required:true})}/>
-                    {errors.password && <span>This field is required</span>}
+                    <div>
+                        <HttpsOutlinedIcon fontSize='large'/>
+                        <InputForm type='password' 
+                            placeholder='Password'
+                            {...register("password", {required:true})}/>
+                    </div>
+                    <div>
+                    {errors.password?.type==='required' && 
+                        <span style={ {color:"red",
+                        fontSize:"12px"}}>This field is required</span>}
+                    </div>
                 </ContainerInput>
                 
                 <ContainerInput>
-                    <HttpsIcon fontSize='large'/>
-                    <InputForm type='password' 
-                        placeholder='Repeat your password'
-                        {...register("passwordConfirm", {required:true})}/>
-                    {errors.passwordConfirm && <span>This field is required</span>}
+                    <div>
+                        <HttpsIcon fontSize='large'/>
+                        <InputForm type='password' 
+                            placeholder='Repeat your password'
+                            {...register("passwordConfirm", {required:true})}/>
+                    </div>
+                    <div>
+                    {errors.password?.type==='required' && 
+                        <span style={ {color:"red",
+                        fontSize:"12px"}}>This field is required</span>}
+                    </div>
                 </ContainerInput>
 
                 <ButtonForm >Register</ButtonForm>

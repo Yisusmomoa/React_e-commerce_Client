@@ -134,24 +134,30 @@ const ProfileDetails = () => {
     <ProfileDetails_Container>
       <FormStyled onSubmit={handleSubmit(onSubmitUpdate)}>
         <ContainerInput>
+          <div>
             <PersonOutlineOutlinedIcon fontSize='large'/>
             <InputForm type='text' 
                 placeholder='Username'
                 {...update("username")} />
+          </div>
           </ContainerInput>
 
           <ContainerInput>
+            <div>
               <AlternateEmailOutlinedIcon fontSize='large'/>
               <InputForm type='email' 
                   placeholder='Your email'
                   {...update("email")}/>
+            </div>
           </ContainerInput>
 
           <ContainerInput>
+            <div>
               <HttpsOutlinedIcon fontSize='large'/>
               <InputForm type='password' 
                   placeholder='Password'
                 {...update("password")}/>
+            </div>
           </ContainerInput>
 
           <ButtonForm>Save</ButtonForm>

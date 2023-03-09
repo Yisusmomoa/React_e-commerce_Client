@@ -46,8 +46,13 @@ export const ContainerImg=styled.div`
 export const ContainerInput=styled.div`
     width:100%;
     display:flex;
+    flex-direction:column;
     align-items: center;
     justify-content: center;
+    div{
+        display:flex;
+        flex-direction:row;
+    }
 `
 
 export const InputForm=styled.input`
