@@ -62,8 +62,10 @@ const AddCategory = ({isOpenModalAdd, closeModalAdd}) => {
             <Modal_InputStyled type='text' name='name'
                 {...create("name",
                     {required:true})} />
-            {errors.name
-                &&<span>This field is required</span>}
+          </p>
+          <p>
+          {errors.name
+                &&<span style={{color:"red", fontSize:"12px"}}>This field is required</span>}
           </p>
           <ButtonAddModal/>
         </form>
