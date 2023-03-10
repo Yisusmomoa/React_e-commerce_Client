@@ -19,6 +19,7 @@ import { useDeleteBrandMutation, useGetAllBrandsQuery } from '../../../state/sto
 import AddBrand from './BrandModals/AddBrand';
 import Swal from 'sweetalert2';
 import UpdateBrand from './BrandModals/UpdateBrand';
+import TableBrand from './Tables/TableBrand';
 
 
 const AdminBrandsContainer=styled.div`
@@ -28,7 +29,7 @@ const AdminBrandsContainer=styled.div`
 
 const AdminBrands = () => {
 
-  //Services
+  //#region Services
     const {
       data, isSuccess,isLoading, isError,error
     }=useGetAllBrandsQuery()
@@ -39,9 +40,9 @@ const AdminBrands = () => {
       isError:isErrorDelete,
       error:errorDelete}
     ]=useDeleteBrandMutation()
-  //Services
+  //#endregion Services
 
-  //modals
+  //#region Modals
     const [
       isOpenModalAdd,
       openModalAdd,
@@ -53,14 +54,13 @@ const AdminBrands = () => {
       openModalUpdate,
       closeModalUpdate
     ]=useModal()
-  //modals
-
-  const [brandToUpdate, setBrandToUpdate]=useState({})
+  //#endregion Modals
 
   const searchBrand=(name)=>{
     console.log("name Brand", name)
   }
-  //Delete brand
+
+  //#region deleteBrand
     const handleDeleteBrand=(id)=>{
       Swal.fire({
         title: 'Are you sure?',
@@ -103,12 +103,15 @@ const AdminBrands = () => {
           })
       }
     }, [isLoadingDelete]);
-  //Delete brand
+  //#endregion deleteBrand
 
-  const editBrand=(data)=>{
-    setBrandToUpdate(data)
-    openModalUpdate()
-  }
+  //#region editBrand
+    const [brandToUpdate, setBrandToUpdate]=useState({})
+    const editBrand=(data)=>{
+      setBrandToUpdate(data)
+      openModalUpdate()
+    }
+  //#endregion editBrand
 
   return (
     <AdminBrandsContainer>
@@ -124,8 +127,8 @@ const AdminBrands = () => {
       <SubNavbar showModal={openModalAdd} 
         search={searchBrand} title={'Brands'}/>
       <hr/>
-
-      <TableContainer component={Paper} 
+      <TableBrand data={data} editBrand={editBrand} handleDeleteBrand={handleDeleteBrand}/>
+      {/* <TableContainer component={Paper} 
         sx={{ maxHeight: 550 }}>
         <Table sx={{ minWidth: 850 }} 
          stickyHeader >
@@ -166,7 +169,8 @@ const AdminBrands = () => {
             ))}
           </TableBody>
         </Table>
-      </TableContainer>
+      </TableContainer> */}
+
     </AdminBrandsContainer>
   )
 }
