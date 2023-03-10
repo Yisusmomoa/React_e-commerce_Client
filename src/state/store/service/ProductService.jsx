@@ -41,14 +41,16 @@ export const products=createApi({
         getProductById:builder.query({
             query:(id)=>({
                 url:`/${id}`
-            })
+            }),
+            invalidatesTags:["Products"]
         }),
         deleteImgProduct:builder.mutation({
             query:(body)=>({
                 url:'/deletImg',
                 method:'POST',
                 body
-            })
+            }),
+            invalidatesTags:["Products"]
         })
     })
 })

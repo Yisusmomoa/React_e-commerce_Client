@@ -6,21 +6,14 @@ import { useDeleteImgProductMutation, useGetProductByIdQuery, useUpdateProductMu
 import Swal from 'sweetalert2'
 import {ButtonAddModalStyle} from '../../Modal/Modal.style'
 import styled from 'styled-components'
-import RowProductUpdate from './RowProductUpdate'
-
-const ContainerImgs=styled.div`
-    width:100%;
-    height:100%;
-    display:flex;
-    
-`
+import ContainerImgs from './ContainerImgs'
 
 const UpdateProduct = ({isOpenModalUpdate,
     closeModalUpdate, categories, brands, productToUpdate}) => {
     const [idProd, setidProd] = useState(productToUpdate?.id);
    
    
-    //Services
+    //#region Services
         useEffect(() => {
             setidProd(productToUpdate?.id)
             return () => {
@@ -43,80 +36,134 @@ const UpdateProduct = ({isOpenModalUpdate,
             {isSuccess:isSuccessDeleteImg, isLoading:isLoadingDeleteImg,
             isError:isErrorDeleteImg, error:errorDeleteImg}
         ]=useDeleteImgProductMutation()
-    //Services
+    //#endregion Services
 
-    //handleInputs
-    const [nameProd, setnameProd] = useState("");
-    const [descriptionProd, setdescriptionProd] = useState("");
-    const [priceProd, setprice] = useState(0);
-    const [imgsProd, setimgsProd] = useState([]);
-    
-    useEffect(() => {
-        // setInfoProduct({
-        //     id:productToUpdate?.id,
-        //     name:productToUpdate?.name,
-        //     description:productToUpdate?.description,
-        //     price:productToUpdate?.price,
-        //     images:productToUpdate?.ImgProducts
-        // })
-        setnameProd(data?.name)
-        setdescriptionProd(data?.description)
-        setprice(data?.price)
-        setimgsProd(data?.ImgProducts)
-        console.log(imgsProd)
-        return ()=>{
-            // setInfoProduct({})
-            setnameProd("")
-            setdescriptionProd("")
-            setprice(0)
-            setimgsProd([])
-        }
-    }, [data]);
-    //handleInputs
-    
-    //manejo de combos
-        const [brand, setbrand] = useState(1);
-        const [category, setcategory] = useState(1);
+    //#region handleInputs
+        //handleInputs
+        const [nameProd, setnameProd] = useState("");
+        const [descriptionProd, setdescriptionProd] = useState("");
+        const [priceProd, setprice] = useState(0);
+        const [imgsProd, setimgsProd] = useState([]);
         
-        const handleChangeBrand=(ev)=>{
-            setbrand(ev.target.value)
-        }
-        const handleClickSelectCategory=(ev)=>{
-            setcategory(ev.target.value)
-        }
-    //manejo de combos
-
-    //submit
-        
-        const onSubmit=(ev)=>{
-            ev.preventDefault();
-            // console.log(ev.target.elements)
-            // const {image}=ev.target.elements
-            // console.log(image)
-            // console.log(image.files)
-            // console.log("Update", data.ProductPrice)
-            const formData=new FormData()
-            formData.append("id", productToUpdate.id)
-            formData.append("name", nameProd)
-            formData.append("description", descriptionProd)
-            formData.append("price", priceProd)
-            formData.append("CategoryId", category)
-            formData.append("ManuFacturerId", brand)
-            // formData.append("imgs", imgsProd)
-            // updateProductService(formData)
-
+        useEffect(() => {
+            // setInfoProduct({
+            //     id:productToUpdate?.id,
+            //     name:productToUpdate?.name,
+            //     description:productToUpdate?.description,
+            //     price:productToUpdate?.price,
+            //     images:productToUpdate?.ImgProducts
+            // })
+            setnameProd(data?.name)
+            setdescriptionProd(data?.description)
+            setprice(data?.price)
+            setimgsProd(data?.ImgProducts)
             console.log(imgsProd)
-
-            // agregar n imagenes al formdata
-            // for (let index = 0; index < imgsProd.image.length; index++) {
-            //     const element = imgsProd.image[index];
-            //     formData.append("images", element)
-            // }
+            return ()=>{
+                // setInfoProduct({})
+                setnameProd("")
+                setdescriptionProd("")
+                setprice(0)
+                setimgsProd([])
+            }
+        }, [data]);
+        //handleInputs
+    //#endregion handleInputs
+    
+    //#region Combos
+        //manejo de combos
+            const [brand, setbrand] = useState(1);
+            const [category, setcategory] = useState(1);
             
+            const handleChangeBrand=(ev)=>{
+                setbrand(ev.target.value)
+            }
+            const handleClickSelectCategory=(ev)=>{
+                setcategory(ev.target.value)
+            }
+        //manejo de combos
+    //#endregion Combos
+
+    //#region updateProductService
+        //submit
+            
+            const onSubmit=(ev)=>{
+                ev.preventDefault();
+                // console.log(ev.target.elements)
+                // const {image}=ev.target.elements
+                // console.log(image)
+                // console.log(image.files)
+                // console.log("Update", data.ProductPrice)
+                const formData=new FormData()
+                formData.append("id", productToUpdate.id)
+                formData.append("name", nameProd)
+                formData.append("description", descriptionProd)
+                formData.append("price", priceProd)
+                formData.append("CategoryId", category)
+                formData.append("ManuFacturerId", brand)
+                // formData.append("imgs", imgsProd)
+                updateProductService(formData)
+
+                console.log(imgsProd)
+
+                // agregar n imagenes al formdata
+                // for (let index = 0; index < imgsProd.image.length; index++) {
+                //     const element = imgsProd.image[index];
+                //     formData.append("images", element)
+                // }
+                
+            }
+
+            useEffect(() => {
+                if(isLoading){
+                    Swal.fire({
+                        title:'Loading',
+                        allowEscapeKey: false,
+                        allowOutsideClick: false,
+                        didOpen:()=>{
+                            Swal.showLoading()
+                        }
+                    })
+                }
+                if (isSuccess) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'successfull updated'
+                    }).then(()=>closeModalUpdate())
+                }
+                else if(isError){
+                    console.log(error)
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: error?.data.message,
+                    })
+                }
+            }, [isLoading]);
+            
+        //submit
+    //#endregion updateProductService
+
+    //#region deleteImgProductService
+        //Manejo de imagenes
+        const deleteImg=(idImg)=>{
+            deleteImgProductService({
+                idImg,
+                idProd:data?.id
+            })
+            // console.log("idImg", idImg)
+            // console.log("product img", productToUpdate?.id)
+            // console.log(imgsProd)
+            // const imgs=imgsProd.filter(element=>element.id!=idImg)
+            // console.log(imgs)
+            // setimgsProd(imgs)
+            // setimgsProd(current=>{
+            //     const {img, ...rest}=current.filter((element=>element.id!==idImg))
+            //     return rest
+            // })
         }
 
         useEffect(() => {
-            if(isLoading){
+            if(isLoadingDeleteImg){
                 Swal.fire({
                     title:'Loading',
                     allowEscapeKey: false,
@@ -126,74 +173,30 @@ const UpdateProduct = ({isOpenModalUpdate,
                     }
                 })
             }
-            if (isSuccess) {
-                Swal.fire({
-                    icon: 'success',
-                    title: 'successfull updated'
-                }).then(()=>closeModalUpdate())
+            if (isSuccessDeleteImg) {
+            Swal.fire(
+                'Deleted!',
+                'Your img has been deleted.',
+                'success'
+            ).then(()=>closeModalUpdate())
             }
-            else if(isError){
-                console.log(error)
+            else if(isErrorDeleteImg){
+                console.log(errorDeleteImg)
                 Swal.fire({
                     icon: 'error',
                     title: 'Oops...',
-                    text: error?.data.message,
+                    text: errorDeleteImg?.data.message,
                 })
             }
-        }, [isLoading]);
+        }, [isLoadingDeleteImg]);
         
-    //submit
+        //Manejo de imagenes
 
-    //Manejo de imagenes
-    const deleteImg=(idImg)=>{
-        deleteImgProductService({
-            idImg,
-            idProd:productToUpdate?.id
-        })
-        // console.log("idImg", idImg)
-        // console.log("product img", productToUpdate?.id)
-        // console.log(imgsProd)
-        // const imgs=imgsProd.filter(element=>element.id!=idImg)
-        // console.log(imgs)
-        // setimgsProd(imgs)
-        // setimgsProd(current=>{
-        //     const {img, ...rest}=current.filter((element=>element.id!==idImg))
-        //     return rest
-        // })
-    }
-
-    useEffect(() => {
-        if(isLoadingDeleteImg){
-            Swal.fire({
-                title:'Loading',
-                allowEscapeKey: false,
-                allowOutsideClick: false,
-                didOpen:()=>{
-                    Swal.showLoading()
-                }
-            })
-        }
-        if (isSuccessDeleteImg) {
-          Swal.fire(
-            'Deleted!',
-            'Your img has been deleted.',
-            'success'
-          )
-        }
-        else if(isErrorDeleteImg){
-            console.log(errorDeleteImg)
-            Swal.fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: errorDeleteImg?.data.message,
-            })
-        }
-      }, [isLoadingDeleteImg]);
+    //#endregion deleteImgProductService
 
     const updateImg=(idImg)=>{
         alert("updateImg"+idImg)
     }
-    //Manejo de imagenes
 
 
   return isSuccessProduct&&(
@@ -251,14 +254,15 @@ const UpdateProduct = ({isOpenModalUpdate,
 
             {
                 imgsProd?.length>0?
-                <ContainerImgs>
-                    {
-                        imgsProd?.map(img=>(
-                            <RowProductUpdate key={img.id} 
-                                img={img} deleteImg={deleteImg} updateImg={updateImg}/>
-                        ))
-                    }
-                </ContainerImgs>
+                <ContainerImgs imgsProd={imgsProd} deleteImg={deleteImg} updateImg={updateImg}/>
+                // <ContainerImgs>
+                //     {
+                //         imgsProd?.map(img=>(
+                //             <RowProductUpdate key={img.id} 
+                //                 img={img} deleteImg={deleteImg} updateImg={updateImg}/>
+                //         ))
+                //     }
+                // </ContainerImgs>
                 :
                 <p>
                     <label htmlFor="image">Imgs product: </label>
