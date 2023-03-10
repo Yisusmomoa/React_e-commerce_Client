@@ -18,7 +18,7 @@ const ProductBodyInfo = ({productInfo}) => {
       <h2>{productInfo?.name}</h2>
       <h4>Product description</h4>
       <h6>{productInfo?.description} </h6>
-      <NavBarLink>
+      <NavBarLink to={`/products/`}>
         <h5>{productInfo?.Category?.name}</h5>
       </NavBarLink>
       <h2>${productInfo?.price}</h2>

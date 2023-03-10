@@ -24,6 +24,7 @@ export const ModalContainer=styled.div`
     min-height: 200px;
     max-height: 600px;
     overflow-y:auto;
+    border-radius:5px;
 `
 
 export const ModalClose_Btn=styled.button`
@@ -32,7 +33,7 @@ export const ModalClose_Btn=styled.button`
     right: 1rem;
     background-color:transparent;
     border:none;
-    color:${props=>props.theme.colors.Letras};
+    color:${props=>props.theme.colors.Delete};
     
 `
 
@@ -45,4 +46,20 @@ export const Modal_InputStyled=styled.input`
     box-sizing: border-box;
     font-size:18px;
     font-family:${props=>props.theme.fonts.raleway};
+`
+
+export const ButtonAddModalStyle=styled.button`
+    color:${(props)=>props.theme.colors.Letras2};
+    cursor:pointer;
+    border:none;
+    border-radius:4px;
+    padding: 12px 50px;
+    text-align: center;
+    text-decoration: none;
+    background-color:#3F72AF;
+    font-size: 18px;
+    transition: background-color 0.3s ease-in;
+    &:hover{
+        background-color:#112D4E;
+    }
 `

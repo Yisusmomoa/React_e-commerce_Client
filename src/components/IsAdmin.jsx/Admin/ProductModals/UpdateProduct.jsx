@@ -1,9 +1,19 @@
 import React, { useEffect, useState } from 'react'
 import Modal from '../../Modal/Modal'
 import { Modal_InputStyled } from '../../Modal/Modal.style'
-import ButtonAddModal from '../../Modal/ButtonAddModal'
-import { useUpdateProductMutation } from '../../../../state/store/service/ProductService'
+// import ButtonAddModal from '../../Modal/ButtonAddModal'
+import { useDeleteImgProductMutation, useUpdateProductMutation } from '../../../../state/store/service/ProductService'
 import Swal from 'sweetalert2'
+import {ButtonAddModalStyle} from '../../Modal/Modal.style'
+import styled from 'styled-components'
+import RowProductUpdate from './RowProductUpdate'
+
+const ContainerImgs=styled.div`
+    width:100%;
+    height:100%;
+    display:flex;
+    
+`
 
 const UpdateProduct = ({isOpenModalUpdate,
     closeModalUpdate, categories, brands, productToUpdate}) => {
@@ -12,18 +22,14 @@ const UpdateProduct = ({isOpenModalUpdate,
             updateProductService,
             {isSuccess, isLoading, isError, error}
         ]=useUpdateProductMutation()
+        const [
+            deleteImgProductService,
+            {isSuccess:isSuccessDeleteImg, isLoading:isLoadingDeleteImg,
+            isError:isErrorDeleteImg, error:errorDeleteImg}
+        ]=useDeleteImgProductMutation()
     //Services
 
     //handleInputs
-    // const [infoProduct, setInfoProduct]=useState({})
-    // const handleOnChange=(ev)=>{
-    //     const { name, value } = ev.target;
-    //     setInfoProduct({
-    //         ...infoProduct,
-    //         [name]:value
-    //     })
-    //     console.log(infoProduct)
-    // }
     const [nameProd, setnameProd] = useState("");
     const [descriptionProd, setdescriptionProd] = useState("");
     const [priceProd, setprice] = useState(0);
@@ -80,11 +86,14 @@ const UpdateProduct = ({isOpenModalUpdate,
             formData.append("price", priceProd)
             formData.append("CategoryId", category)
             formData.append("ManuFacturerId", brand)
-            updateProductService(formData)
+            // formData.append("imgs", imgsProd)
+            // updateProductService(formData)
+
+            console.log(imgsProd)
 
             // agregar n imagenes al formdata
-            // for (let index = 0; index < data.image.length; index++) {
-            //     const element = data.image[index];
+            // for (let index = 0; index < imgsProd.image.length; index++) {
+            //     const element = imgsProd.image[index];
             //     formData.append("images", element)
             // }
             
@@ -118,6 +127,58 @@ const UpdateProduct = ({isOpenModalUpdate,
         }, [isLoading]);
         
     //submit
+
+    //Manejo de imagenes
+    const deleteImg=(idImg)=>{
+        deleteImgProductService({
+            idImg,
+            idProd:productToUpdate?.id
+        })
+        // console.log("idImg", idImg)
+        // console.log("product img", productToUpdate?.id)
+        // console.log(imgsProd)
+        // const imgs=imgsProd.filter(element=>element.id!=idImg)
+        // console.log(imgs)
+        // setimgsProd(imgs)
+        // setimgsProd(current=>{
+        //     const {img, ...rest}=current.filter((element=>element.id!==idImg))
+        //     return rest
+        // })
+    }
+
+    useEffect(() => {
+        if(isLoadingDeleteImg){
+            Swal.fire({
+                title:'Loading',
+                allowEscapeKey: false,
+                allowOutsideClick: false,
+                didOpen:()=>{
+                    Swal.showLoading()
+                }
+            })
+        }
+        if (isSuccessDeleteImg) {
+          Swal.fire(
+            'Deleted!',
+            'Your img has been deleted.',
+            'success'
+          )
+        }
+        else if(isErrorDeleteImg){
+            console.log(errorDeleteImg)
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: errorDeleteImg?.data.message,
+            })
+        }
+      }, [isLoadingDeleteImg]);
+
+    const updateImg=(idImg)=>{
+        alert("updateImg"+idImg)
+    }
+    //Manejo de imagenes
+
 
   return (
     <Modal isOpen={isOpenModalUpdate} 
@@ -171,18 +232,34 @@ const UpdateProduct = ({isOpenModalUpdate,
                     </select>
                 </label>
             </p>
-            <p>
-                <label htmlFor="image">Imgs product: </label>
-                <br/>
-                <span>Select 1-3 files</span>
-                <br/>
-                <input type='file' 
-                    name='image'
-                    accept="image/png, image/jpeg"
-                    multiple
-                />
-            </p>
-            <ButtonAddModal/>
+
+            {
+                imgsProd?.length>0?
+                <ContainerImgs>
+                    {
+                        imgsProd?.map(img=>(
+                            <RowProductUpdate key={img.id} 
+                                img={img} deleteImg={deleteImg} updateImg={updateImg}/>
+                        ))
+                    }
+                </ContainerImgs>
+                :
+                <p>
+                    <label htmlFor="image">Imgs product: </label>
+                    <br/>
+                    <span>Select 1-3 files</span>
+                    <br/>
+                    <input type='file' 
+                        name='image'
+                        accept="image/png, image/jpeg"
+                        multiple
+                    />
+                </p>
+                
+            }
+            
+            
+            <ButtonAddModalStyle>Update</ButtonAddModalStyle>
           </form>
       </Modal>
   )

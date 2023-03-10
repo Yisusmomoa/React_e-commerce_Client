@@ -42,6 +42,13 @@ export const products=createApi({
             query:(id)=>({
                 url:`/${id}`
             })
+        }),
+        deleteImgProduct:builder.mutation({
+            query:(body)=>({
+                url:'/deletImg',
+                method:'POST',
+                body
+            })
         })
     })
 })
@@ -52,5 +59,6 @@ export const {
     useDeleteProductMutation,
     useUpdateProductMutation,
     useGetPaginationProductsQuery,
-    useGetProductByIdQuery
+    useGetProductByIdQuery,
+    useDeleteImgProductMutation
 }=products

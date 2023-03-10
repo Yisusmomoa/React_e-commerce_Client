@@ -29,7 +29,8 @@ const ProductBodyImgs = ({imgs}) => {
         <ContainerImgs_RowImgs>
           {
             imgsProd?.map((img, i)=>(
-              <ProductBodyImgsRow key={i} img={img?.LinkImg} onChangeImg={handleClickImg}/>
+              <ProductBodyImgsRow key={i} img={img?.LinkImg} 
+                onChangeImg={handleClickImg}/>
             ))
           }
         </ContainerImgs_RowImgs>
