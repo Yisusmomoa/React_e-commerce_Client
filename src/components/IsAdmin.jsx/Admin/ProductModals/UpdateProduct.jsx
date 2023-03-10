@@ -27,10 +27,12 @@ const UpdateProduct = ({isOpenModalUpdate,
             isSuccess: isSuccessProduct, error:errorProduct
         }=useGetProductByIdQuery(idProd)
             console.log("🚀 ~ file: UpdateProduct.jsx:37 ~ productToUpdate: data", data)
+
         const [
             updateProductService,
             {isSuccess, isLoading, isError, error}
         ]=useUpdateProductMutation()
+
         const [
             deleteImgProductService,
             {isSuccess:isSuccessDeleteImg, isLoading:isLoadingDeleteImg,
@@ -174,11 +176,11 @@ const UpdateProduct = ({isOpenModalUpdate,
                 })
             }
             if (isSuccessDeleteImg) {
-            Swal.fire(
-                'Deleted!',
-                'Your img has been deleted.',
-                'success'
-            ).then(()=>closeModalUpdate())
+                Swal.fire(
+                    'Deleted!',
+                    'Your img has been deleted.',
+                    'success'
+                )
             }
             else if(isErrorDeleteImg){
                 console.log(errorDeleteImg)
@@ -194,9 +196,11 @@ const UpdateProduct = ({isOpenModalUpdate,
 
     //#endregion deleteImgProductService
 
-    const updateImg=(idImg)=>{
-        alert("updateImg"+idImg)
-    }
+    //#region UpdateImg
+        const updateImg=(idImg)=>{
+            alert("updateImg"+idImg)
+        }
+    //#endregion UpdateImg
 
 
   return isSuccessProduct&&(
@@ -251,30 +255,25 @@ const UpdateProduct = ({isOpenModalUpdate,
                     </select>
                 </label>
             </p>
-
             {
-                imgsProd?.length>0?
-                <ContainerImgs imgsProd={imgsProd} deleteImg={deleteImg} updateImg={updateImg}/>
-                // <ContainerImgs>
-                //     {
-                //         imgsProd?.map(img=>(
-                //             <RowProductUpdate key={img.id} 
-                //                 img={img} deleteImg={deleteImg} updateImg={updateImg}/>
-                //         ))
-                //     }
-                // </ContainerImgs>
+                imgsProd?.length>=0 && imgsProd.length<=2?
+                <>
+                    <p>
+                        <label htmlFor="image">Imgs product: </label>
+                        <br/>
+                        <span>Select 1-3 files</span>
+                        <br/>
+                        <input type='file' 
+                            name='image'
+                            accept="image/png, image/jpeg"
+                            multiple
+                        />
+                    </p>
+                    <ContainerImgs imgsProd={imgsProd} deleteImg={deleteImg} updateImg={updateImg}/>
+                </>
                 :
-                <p>
-                    <label htmlFor="image">Imgs product: </label>
-                    <br/>
-                    <span>Select 1-3 files</span>
-                    <br/>
-                    <input type='file' 
-                        name='image'
-                        accept="image/png, image/jpeg"
-                        multiple
-                    />
-                </p>
+                <ContainerImgs imgsProd={imgsProd} deleteImg={deleteImg} updateImg={updateImg}/>
+                
                 
             }
             

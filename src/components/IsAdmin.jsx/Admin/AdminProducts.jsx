@@ -29,8 +29,7 @@ const AdminProductsContainer=styled.div`
 
 const AdminProducts = () => {
 
-  //Services
-    //TODO: se puede implementar useMemo para no tener que estar trayendo a cada rato desde el backend
+  //#region Services
     const {
       data, isSuccess, isError,error
     }=useGetAllProductsQuery()
@@ -50,10 +49,10 @@ const AdminProducts = () => {
       isError:isErrorDelete,
       error:errorDelete}
     ]=useDeleteProductMutation()
-  //Services
+  //#endregion Services
+ 
 
-
-  //modals
+  //#region Modals
     const [
       isOpenModalAdd,
       openModalAdd,
@@ -67,55 +66,58 @@ const AdminProducts = () => {
       openModalUpdate,
       closeModalUpdate
     ]=useModal()
-  //modals
+  //#endregion Modals
+
+
 
   const searchProducts=(name)=>{
     console.log("name Product", name)
   }
-  //Delete product
-    const handleDeleteProduct=(id)=>{
-      Swal.fire({
-        title: 'Are you sure?',
-        text: "You won't be able to revert this!",
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, delete it!'
-      }).then((result) => {
-        if (result.isConfirmed) {
-          deleteProduct(id)  
+
+  //#region DeleteProduct
+      const handleDeleteProduct=(id)=>{
+        Swal.fire({
+          title: 'Are you sure?',
+          text: "You won't be able to revert this!",
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+          if (result.isConfirmed) {
+            deleteProduct(id)  
+          }
+        })
+      }
+      useEffect(() => {
+        if(isLoadingDelete){
+            Swal.fire({
+                title:'Loading',
+                allowEscapeKey: false,
+                allowOutsideClick: false,
+                didOpen:()=>{
+                    Swal.showLoading()
+                }
+            })
         }
-      })
-    }
-    useEffect(() => {
-      if(isLoadingDelete){
-          Swal.fire({
-              title:'Loading',
-              allowEscapeKey: false,
-              allowOutsideClick: false,
-              didOpen:()=>{
-                  Swal.showLoading()
-              }
-          })
-      }
-      if (isSuccessDelete) {
-        Swal.fire(
-          'Deleted!',
-          'Your register has been deleted.',
-          'success'
-        )
-      }
-      else if(isErrorDelete){
-          console.log(errorDelete)
-          Swal.fire({
-              icon: 'error',
-              title: 'Oops...',
-              text: errorDelete?.data.message,
-          })
-      }
-    }, [isLoadingDelete]);
-  //Delete product
+        if (isSuccessDelete) {
+          Swal.fire(
+            'Deleted!',
+            'Your register has been deleted.',
+            'success'
+          )
+        }
+        else if(isErrorDelete){
+            console.log(errorDelete)
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: errorDelete?.data.message,
+            })
+        }
+      }, [isLoadingDelete]);
+  //#endregion DeleteProduct
 
 
   const editProduct=(data)=>{
@@ -190,49 +192,3 @@ const AdminProducts = () => {
 }
 
 export default AdminProducts
-
-
-// Top 100 films as rated by IMDb users. http://www.imdb.com/chart/top
-const top100Films = [
-  { label: 'The Shawshank Redemption', year: 1994 },
-  { label: 'The Godfather', year: 1972 },
-  { label: 'The Godfather: Part II', year: 1974 },
-  { label: 'The Dark Knight', year: 2008 },
-  { label: '12 Angry Men', year: 1957 },
-  { label: "Schindler's List", year: 1993 },
-  { label: 'Pulp Fiction', year: 1994 },
-  {
-    label: 'The Lord of the Rings: The Return of the King',
-    year: 2003,
-  },
-  
-  { label: 'Goodfellas', year: 1990 },
-  { label: 'The Matrix', year: 1999 },
-  { label: 'Seven Samurai', year: 1954 },
-  {
-    label: 'Star Wars: Episode IV - A New Hope',
-    year: 1977,
-  },
-  { label: 'City of God', year: 2002 },
-  { label: 'Se7en', year: 1995 },
-  { label: 'The Silence of the Lambs', year: 1991 },
-  { label: "It's a Wonderful Life", year: 1946 },
-  {
-    label: 'Dr. Strangelove or: How I Learned to Stop Worrying and Love the Bomb',
-    year: 1964,
-  },
-  { label: 'The Great Dictator', year: 1940 },
-  { label: 'Cinema Paradiso', year: 1988 },
-  { label: 'The Lives of Others', year: 2006 },
-  { label: 'Grave of the Fireflies', year: 1988 },
-  { label: 'Paths of Glory', year: 1957 },
-  { label: 'Django Unchained', year: 2012 },
-  { label: 'The Shining', year: 1980 },
-  { label: 'WALL·E', year: 2008 },
-  { label: 'American Beauty', year: 1999 },
-  { label: 'The Dark Knight Rises', year: 2012 },
-  { label: 'Princess Mononoke', year: 1997 },
-  { label: 'Aliens', year: 1986 },
-  { label: 'Oldboy', year: 2003 },
-  
-];
