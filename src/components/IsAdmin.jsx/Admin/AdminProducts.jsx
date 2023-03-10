@@ -3,13 +3,7 @@ import SubNavbar from '../SubNavbar/SubNavbar'
 import styled from "styled-components";
 import { device, deviceMin } from "../../../styles/breakpoints";
 
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
+
 
 
 import ButtonAdmin from './ButtonAdmin';
@@ -21,6 +15,7 @@ import { useGetAllCategoriesQuery } from '../../../state/store/service/CategoryS
 import AddProduct from './ProductModals/AddProduct';
 import Swal from 'sweetalert2';
 import UpdateProduct from './ProductModals/UpdateProduct';
+import TableProduct from './Tables/TableProduct';
 
 const AdminProductsContainer=styled.div`
   width:100%;
@@ -51,7 +46,6 @@ const AdminProducts = () => {
     ]=useDeleteProductMutation()
   //#endregion Services
  
-
   //#region Modals
     const [
       isOpenModalAdd,
@@ -67,8 +61,6 @@ const AdminProducts = () => {
       closeModalUpdate
     ]=useModal()
   //#endregion Modals
-
-
 
   const searchProducts=(name)=>{
     console.log("name Product", name)
@@ -124,6 +116,7 @@ const AdminProducts = () => {
     setProductToUpdate(data)
     openModalUpdate()
   }
+  
   return (
     <AdminProductsContainer>
       
@@ -141,7 +134,9 @@ const AdminProducts = () => {
         search={searchProducts}
         title={'Products'}/>
       <hr/>
-      <TableContainer component={Paper} 
+      
+      <TableProduct data={data} editProduct={editProduct} handleDeleteProduct={handleDeleteProduct} />
+      {/* <TableContainer component={Paper} 
         sx={{ maxHeight: 550 }}>
         <Table sx={{ minWidth: 850 }} stickyHeader >
           <TableHead>
@@ -186,7 +181,7 @@ const AdminProducts = () => {
             ))}
           </TableBody>
         </Table>
-      </TableContainer>
+      </TableContainer> */}
     </AdminProductsContainer>
   )
 }
