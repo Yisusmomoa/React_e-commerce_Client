@@ -3,22 +3,16 @@ import styled from "styled-components";
 import { device, deviceMin } from "../../../styles/breakpoints";
 import SubNavbar from '../SubNavbar/SubNavbar';
 
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
-import ButtonAdmin from './ButtonAdmin';
+
 import { useModal } from '../../../state/hooks/useModal';
 import Modal from '../Modal/Modal';
 import { Modal_InputStyled } from '../Modal/Modal.style';
 import ButtonAddModal from '../Modal/ButtonAddModal';
-import Checkbox from '@mui/material/Checkbox';
+
 import { useDesactivateUserAdminMutation, useGetAllUsersQuery } from '../../../state/store/service/UserService';
 import Swal from 'sweetalert2';
 import UpdateUser from './UserModals/UpdateUser';
+import TableUser from './Tables/TableUser';
 
 const AdminUsersContainer=styled.div`
   width:100%;
@@ -27,7 +21,7 @@ const AdminUsersContainer=styled.div`
 
 const AdminUsers = () => {
 
-  //Services
+  //#region Services
     const {data, isSuccess, 
       isError, isLoading, error}=useGetAllUsersQuery()
     console.log("data", data)
@@ -35,60 +29,67 @@ const AdminUsers = () => {
       isSuccess:isSuccessDesactivate,
       isError:isErrorDesactivate,
       error:errorDesactivate }]=useDesactivateUserAdminMutation()
-  //Services
+  //#endregion Services
+  
+  //#region Modals
+    const [
+      isOpenModalAdd, 
+      openModalAdd, 
+      closeModalAdd]=useModal()
+    const [
+      isOpenModalUpdate, 
+      openModalUpdate, 
+      closeModalUpdate, setIsOpenUpdate]=useModal()
+  //#endregion Modals
 
-  //Modals
-  const [
-    isOpenModalAdd, 
-    openModalAdd, 
-    closeModalAdd]=useModal()
-  const [
-    isOpenModalUpdate, 
-    openModalUpdate, 
-    closeModalUpdate, setIsOpenUpdate]=useModal()
-  //Modals
-
-  const [userToUpdate, setUserToUpdate]=useState(0)
   const [rol, setRol]=useState(1)
 
   const searchUsers=(name)=>{
     console.log("name Users", name)
   }
-  const handleDesactivateUser=(id, status)=>{
-    desactivateUserAdmin(id)
-  }
-  const editUser=(data)=>{
-    setUserToUpdate(data)
-    openModalUpdate()
-  }
+
+  //#region desactivateUserAdmin
+    const handleDesactivateUser=(id, status)=>{
+      desactivateUserAdmin(id)
+    }
+    useEffect(() => {
+      if(isLoadingDesactivate){
+        Swal.fire({
+          title:'Loading',
+          allowEscapeKey: false,
+          allowOutsideClick: false,
+          didOpen:()=>{
+              Swal.showLoading()
+          }
+        })
+      }
+      if (isSuccessDesactivate) {
+        Swal.fire(
+          'Desactivated!',
+          'Your register has been desactivated.',
+          'success'
+        )
+      }
+      else if(isErrorDesactivate){
+        console.log(errorDesactivate)
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: errorDesactivate?.data.message,
+        })
+    }
+    }, [isLoadingDesactivate]);
+  //#endregion desactivateUserAdmin
+
+  //#region EditUser
+    const [userToUpdate, setUserToUpdate]=useState(0)
+    const editUser=(data)=>{
+      setUserToUpdate(data)
+      openModalUpdate()
+    }
+  //#endregion EditUser
   
-  useEffect(() => {
-    if(isLoadingDesactivate){
-      Swal.fire({
-        title:'Loading',
-        allowEscapeKey: false,
-        allowOutsideClick: false,
-        didOpen:()=>{
-            Swal.showLoading()
-        }
-      })
-    }
-    if (isSuccessDesactivate) {
-      Swal.fire(
-        'Desactivated!',
-        'Your register has been desactivated.',
-        'success'
-      )
-    }
-    else if(isErrorDesactivate){
-      console.log(errorDesactivate)
-      Swal.fire({
-          icon: 'error',
-          title: 'Oops...',
-          text: errorDesactivate?.data.message,
-      })
-  }
-  }, [isLoadingDesactivate]);
+  
 
  
   return (
@@ -130,7 +131,8 @@ const AdminUsers = () => {
         search={searchUsers}
         title={'Users'}/>
       <hr/>
-      <TableContainer component={Paper} 
+      <TableUser data={data} handleDesactivateUser={handleDesactivateUser} editUser={editUser} />
+      {/* <TableContainer component={Paper} 
         sx={{ maxHeight: 550 }}>
         <Table sx={{ minWidth: 850 }} 
          stickyHeader >
@@ -144,7 +146,6 @@ const AdminUsers = () => {
               <TableCell >updatedAt</TableCell>
               <TableCell >createdAt</TableCell>
               <TableCell >Edit</TableCell>
-              {/* <TableCell >Delete</TableCell> */}
             </TableRow>
           </TableHead>
           <TableBody>
@@ -170,15 +171,11 @@ const AdminUsers = () => {
                   typeBtn={'Edit'} iconName={'Edit'} data={row}
                   action={editUser}> </ButtonAdmin>
                 </TableCell>
-                {/* <TableCell sx={{width:340}}><ButtonAdmin title={'Delete'}
-                  typeBtn={'Delete'} iconName={'Delete'} data={row.id}
-                  action={deletUser}> </ButtonAdmin>
-                </TableCell> */}
               </TableRow>
             ))}
           </TableBody>
         </Table>
-      </TableContainer>
+      </TableContainer> */}
     </AdminUsersContainer>
   )
 }
