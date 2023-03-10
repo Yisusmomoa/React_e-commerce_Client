@@ -126,37 +126,6 @@ const AdminUsers = () => {
     <UpdateUser isOpenModalUpdate={isOpenModalUpdate} 
         closeModalUpdate={closeModalUpdate} data={userToUpdate}/>
 
-      {/* <Modal isOpen={isOpenModalUpdate} 
-        closeModal={closeModalUpdate}>
-        <h4>Edit User</h4>
-        <form action=''>
-          <p>
-            <label htmlFor="username">Username: </label>
-            <Modal_InputStyled type='text' name='username' />
-          </p>
-          <p>
-            <label htmlFor="password">Password: </label>
-            <Modal_InputStyled type='text' name='password' />
-          </p>
-          <p>
-            <label htmlFor="email">Email: </label>
-            <Modal_InputStyled type='email' name='email' />
-          </p>
-          <p>
-              <label>
-                Rol 
-                <select value={rol} onChange={(ev)=>setRol(ev.target.value)}>
-                  <option value="1">Admin</option>
-                  <option value="2">Normal</option>
-                  
-                </select>
-              </label>
-          </p>
-
-          <ButtonAddModal/>
-        </form>
-      </Modal> */}
-
       <SubNavbar showModal={openModalAdd} 
         search={searchUsers}
         title={'Users'}/>

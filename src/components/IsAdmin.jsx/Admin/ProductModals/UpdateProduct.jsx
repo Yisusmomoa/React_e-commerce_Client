@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import Modal from '../../Modal/Modal'
 import { Modal_InputStyled } from '../../Modal/Modal.style'
 // import ButtonAddModal from '../../Modal/ButtonAddModal'
-import { useDeleteImgProductMutation, useUpdateProductMutation } from '../../../../state/store/service/ProductService'
+import { useDeleteImgProductMutation, useGetProductByIdQuery, useUpdateProductMutation } from '../../../../state/store/service/ProductService'
 import Swal from 'sweetalert2'
 import {ButtonAddModalStyle} from '../../Modal/Modal.style'
 import styled from 'styled-components'
@@ -17,7 +17,23 @@ const ContainerImgs=styled.div`
 
 const UpdateProduct = ({isOpenModalUpdate,
     closeModalUpdate, categories, brands, productToUpdate}) => {
+    const [idProd, setidProd] = useState(productToUpdate?.id);
+   
+   
     //Services
+        useEffect(() => {
+            setidProd(productToUpdate?.id)
+            return () => {
+                setidProd(0)
+            };
+        }, [productToUpdate]);
+        
+        const {
+            data,
+            isLoading:isLoadingProduct, isError:isErrorProduct,
+            isSuccess: isSuccessProduct, error:errorProduct
+        }=useGetProductByIdQuery(idProd)
+            console.log("🚀 ~ file: UpdateProduct.jsx:37 ~ productToUpdate: data", data)
         const [
             updateProductService,
             {isSuccess, isLoading, isError, error}
@@ -43,10 +59,10 @@ const UpdateProduct = ({isOpenModalUpdate,
         //     price:productToUpdate?.price,
         //     images:productToUpdate?.ImgProducts
         // })
-        setnameProd(productToUpdate?.name)
-        setdescriptionProd(productToUpdate?.description)
-        setprice(productToUpdate?.price)
-        setimgsProd(productToUpdate?.ImgProducts)
+        setnameProd(data?.name)
+        setdescriptionProd(data?.description)
+        setprice(data?.price)
+        setimgsProd(data?.ImgProducts)
         console.log(imgsProd)
         return ()=>{
             // setInfoProduct({})
@@ -55,7 +71,7 @@ const UpdateProduct = ({isOpenModalUpdate,
             setprice(0)
             setimgsProd([])
         }
-    }, [productToUpdate]);
+    }, [data]);
     //handleInputs
     
     //manejo de combos
@@ -180,7 +196,7 @@ const UpdateProduct = ({isOpenModalUpdate,
     //Manejo de imagenes
 
 
-  return (
+  return isSuccessProduct&&(
     <Modal isOpen={isOpenModalUpdate} 
       closeModal={closeModalUpdate}>
         <h4>Update Product</h4> 
