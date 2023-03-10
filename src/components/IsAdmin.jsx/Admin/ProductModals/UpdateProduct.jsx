@@ -259,7 +259,7 @@ const UpdateProduct = ({isOpenModalUpdate,
                 imgsProd?.length>=0 && imgsProd.length<=2?
                 <>
                     <p>
-                        <label htmlFor="image">Imgs product: </label>
+                        <label htmlFor="image">Add more imgs to product: </label>
                         <br/>
                         <span>Select 1-3 files</span>
                         <br/>
