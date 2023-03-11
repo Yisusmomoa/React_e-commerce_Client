@@ -37,6 +37,7 @@ const Profile = () => {
     window.location.href = '/home'
   }
 
+  
   //#region UpdateImgProfile
     const handleSubmit=(ev)=>{
       ev.preventDefault();
@@ -50,6 +51,7 @@ const Profile = () => {
       console.log('El archivo seleccionado es:', formData.get("avatar"));
       UpdateUserImgMutation(formData)
     }
+
     useEffect(() => {
       if(isLoadingImg){
         Swal.fire({

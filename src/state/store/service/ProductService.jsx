@@ -30,7 +30,7 @@ export const products=createApi({
                 method:'PUT',
                 body:formData
             }),
-            invalidatesTags:["Products"]
+            invalidatesTags:["Products", "Product"]
         }),
         getPaginationProducts:builder.query({
             query:({size, page})=>({

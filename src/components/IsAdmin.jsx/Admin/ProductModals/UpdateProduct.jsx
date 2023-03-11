@@ -90,6 +90,7 @@ const UpdateProduct = ({isOpenModalUpdate,
             // console.log(image)
             // console.log(image.files)
             // console.log("Update", data.ProductPrice)
+            const imgs=ev.target.image.files
             const formData=new FormData()
             formData.append("id", productToUpdate.id)
             formData.append("name", nameProd)
@@ -97,16 +98,14 @@ const UpdateProduct = ({isOpenModalUpdate,
             formData.append("price", priceProd)
             formData.append("CategoryId", category)
             formData.append("ManuFacturerId", brand)
-            // formData.append("imgs", imgsProd)
-            updateProductService(formData)
-
-            console.log(imgsProd)
-
-            // agregar n imagenes al formdata
-            // for (let index = 0; index < imgsProd.image.length; index++) {
-            //     const element = imgsProd.image[index];
+            // for (let index = 0; index < imgs.length; index++) {
+            //     const element = imgs[index];
+            //     console.log(element)
             //     formData.append("images", element)
             // }
+            updateProductService(formData)
+
+            // console.log(ev.target.image.files.length)
             
         }
 
@@ -222,14 +221,14 @@ const UpdateProduct = ({isOpenModalUpdate,
                     text: errorupdateImgProduct?.data.message,
                 })
             }
-          }, [isLoadingupdateImgProduct]);
+        }, [isLoadingupdateImgProduct]);
     //#endregion UpdateImg
 
 
   return isSuccessProduct&&(
     <Modal isOpen={isOpenModalUpdate} 
       closeModal={closeModalUpdate}>
-        <h4>Update Product</h4> 
+        <h4>Update Info Product</h4> 
           <form onSubmit={onSubmit}
               encType="multipart/form-data">
             <p>
@@ -278,13 +277,13 @@ const UpdateProduct = ({isOpenModalUpdate,
                     </select>
                 </label>
             </p>
+            <ButtonAddModalStyle>Update</ButtonAddModalStyle>
+            <h4>Update imgs Product</h4>
             {
-                imgsProd?.length>=0 && imgsProd.length<=2?
+                imgsProd?.length>=0 && imgsProd.length<=2 ?
                 <>
                     <p>
                         <label htmlFor="image">Add more imgs to product: </label>
-                        <br/>
-                        <span>Select 1-3 files</span>
                         <br/>
                         <input type='file' 
                             name='image'
@@ -297,14 +296,10 @@ const UpdateProduct = ({isOpenModalUpdate,
                 </>
                 :
                 <ContainerImgs imgsProd={imgsProd} 
-                deleteImg={deleteImg} updateImg={updateImg}/>
-                
-                
+                deleteImg={deleteImg} updateImg={updateImg}/>  
             }
-            
-            
-            <ButtonAddModalStyle>Update</ButtonAddModalStyle>
           </form>
+          
       </Modal>
   )
 }
