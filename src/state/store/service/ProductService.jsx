@@ -51,6 +51,14 @@ export const products=createApi({
                 body
             }),
             invalidatesTags:["Product"]
+        }),
+        updateImgProduct:builder.mutation({
+            query:(formData)=>({
+                url:`/updateImg`,
+                method:'PUT',
+                body:formData
+            }),
+            invalidatesTags:["Product"]
         })
     })
 })
@@ -62,5 +70,6 @@ export const {
     useUpdateProductMutation,
     useGetPaginationProductsQuery,
     useGetProductByIdQuery,
-    useDeleteImgProductMutation
+    useDeleteImgProductMutation,
+    useUpdateImgProductMutation
 }=products

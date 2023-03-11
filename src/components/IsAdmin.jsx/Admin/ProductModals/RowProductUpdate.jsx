@@ -2,6 +2,7 @@ import styled from '@emotion/styled'
 import React from 'react'
 import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
 import UploadFileOutlinedIcon from '@mui/icons-material/UploadFileOutlined';
+import { InputFile } from '../../../Profile/Profile.style';
 const ContainerImgsUpdate=styled.div`
     width:100%; 
     height:200px;
@@ -24,7 +25,17 @@ const RowProductUpdate = ({img, deleteImg, updateImg}) => {
     <ContainerImgsUpdate>
       <div style={{display:'flex' , position:"absolute"}}>
         <CloseOutlinedIcon onClick={()=>deleteImg(img?.id)} sx={{cursor:'pointer'}} color='error'/>
-        <UploadFileOutlinedIcon onClick={()=>updateImg(img?.id)}  sx={{cursor:'pointer'}} color='primary' />
+
+        <label htmlFor={`upload-Img${img?.id}`} 
+                style={{cursor:"pointer"}}>
+          <UploadFileOutlinedIcon sx={{cursor:'pointer'}} color='primary' />
+          <InputFile type='file'
+               name="img" 
+               id={`upload-Img${img?.id}`} 
+               accept="image/png, image/jpeg" 
+               onChange={(ev)=>updateImg(img?.id, ev)} />
+        </label>
+        
       </div>
         <Img_RowImgs src={img?.LinkImg} />
     </ContainerImgsUpdate>

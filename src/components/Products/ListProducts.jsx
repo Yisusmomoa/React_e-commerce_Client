@@ -6,7 +6,7 @@ import { useGetPaginationProductsQuery } from '../../state/store/service/Product
 const ListProducts = () => {
   const {data, isLoading, 
     isSuccess, 
-    isError, error}=useGetPaginationProductsQuery({size:8, page:0})
+    isError, error}=useGetPaginationProductsQuery({size:8, page:1})
   return (
     <Products_ListProducts>
       {

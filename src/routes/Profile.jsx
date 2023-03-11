@@ -20,55 +20,63 @@ const Profile = () => {
   
   const fileInputRef =useRef(null);
   const formRef = useRef(null);
-  const [updateUser, {isLoading, isSuccess,
-    isError, error}]=useUpdateUserMutation()
+  //#region Services
+    const [updateUser, {isLoading, isSuccess,
+      isError, error}]=useUpdateUserMutation()
+
     const [UpdateUserImgMutation, {isLoading:isLoadingImg, isSuccess:isSuccessImg,
       isError:isErrorImg, error:errorImg}]=useUpdateUserImgMutation()
 
-  const { data} = useMeQuery();
-  const [logout]=useLogoutMutation();
+    const { data} = useMeQuery();
+    const [logout]=useLogoutMutation();
+  //#endregion Services
+
   
   const handleClickLogout=()=>{
     logout()
     window.location.href = '/home'
   }
-  const handleSubmit=(ev)=>{
-    ev.preventDefault();
-    const formData = new FormData();
-    const id=data?.result.id
-    const avatar=ev.target.files[0]
-    // const avatar=ev.target.value
-    // const avatar = fileInputRef.current.files[0];
-    formData.append("avatar", avatar)
-    formData.append("id", id);
-    console.log('El archivo seleccionado es:', formData.get("avatar"));
-    UpdateUserImgMutation(formData)
-  }
-  useEffect(() => {
-    if(isLoadingImg){
-      Swal.fire({
-          title:'Loading',
-          allowEscapeKey: false,
-          allowOutsideClick: false,
-          didOpen:()=>{
-              Swal.showLoading()
-          }
-      })
+
+  //#region UpdateImgProfile
+    const handleSubmit=(ev)=>{
+      ev.preventDefault();
+      const formData = new FormData();
+      const id=data?.result.id
+      const avatar=ev.target.files[0]
+      // const avatar=ev.target.value
+      // const avatar = fileInputRef.current.files[0];
+      formData.append("avatar", avatar)
+      formData.append("id", id);
+      console.log('El archivo seleccionado es:', formData.get("avatar"));
+      UpdateUserImgMutation(formData)
     }
-    if (isSuccessImg) {
+    useEffect(() => {
+      if(isLoadingImg){
         Swal.fire({
-            icon: 'success',
-            title: 'successfull updated img'
+            title:'Loading',
+            allowEscapeKey: false,
+            allowOutsideClick: false,
+            didOpen:()=>{
+                Swal.showLoading()
+            }
         })
-    }
-    else if(isErrorImg){
-        Swal.fire({
-            icon: 'error',
-            title: 'Oops...',
-            text: errorImg?.data.message,
-        })
-    }
-  }, [isLoadingImg]);
+      }
+      if (isSuccessImg) {
+          Swal.fire({
+              icon: 'success',
+              title: 'successfull updated img'
+          })
+      }
+      else if(isErrorImg){
+          Swal.fire({
+              icon: 'error',
+              title: 'Oops...',
+              text: errorImg?.data.message,
+          })
+      }
+    }, [isLoadingImg]);
+  //#endregion UpdateImgProfile
+
   return (
     <ThemeProvider theme={theme}>
       <ProfileContainer>

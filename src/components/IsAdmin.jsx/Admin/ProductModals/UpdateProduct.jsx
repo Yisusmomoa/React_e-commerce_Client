@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import Modal from '../../Modal/Modal'
 import { Modal_InputStyled } from '../../Modal/Modal.style'
 // import ButtonAddModal from '../../Modal/ButtonAddModal'
-import { useDeleteImgProductMutation, useGetProductByIdQuery, useUpdateProductMutation } from '../../../../state/store/service/ProductService'
+import { useDeleteImgProductMutation, useGetProductByIdQuery, useUpdateImgProductMutation, useUpdateProductMutation } from '../../../../state/store/service/ProductService'
 import Swal from 'sweetalert2'
 import {ButtonAddModalStyle} from '../../Modal/Modal.style'
 import styled from 'styled-components'
@@ -26,8 +26,6 @@ const UpdateProduct = ({isOpenModalUpdate,
             isLoading:isLoadingProduct, isError:isErrorProduct,
             isSuccess: isSuccessProduct, error:errorProduct
         }=useGetProductByIdQuery(idProd)
-            console.log("🚀 ~ file: UpdateProduct.jsx:37 ~ productToUpdate: data", data)
-
         const [
             updateProductService,
             {isSuccess, isLoading, isError, error}
@@ -38,10 +36,13 @@ const UpdateProduct = ({isOpenModalUpdate,
             {isSuccess:isSuccessDeleteImg, isLoading:isLoadingDeleteImg,
             isError:isErrorDeleteImg, error:errorDeleteImg}
         ]=useDeleteImgProductMutation()
+        const [
+            updateImgProduct, {isSuccess:isSuccessupdateImgProduct, isLoading:isLoadingupdateImgProduct,
+                isError:isErrorupdateImgProduct, error:errorupdateImgProduct}
+        ]=useUpdateImgProductMutation()
     //#endregion Services
 
     //#region handleInputs
-        //handleInputs
         const [nameProd, setnameProd] = useState("");
         const [descriptionProd, setdescriptionProd] = useState("");
         const [priceProd, setprice] = useState(0);
@@ -59,7 +60,6 @@ const UpdateProduct = ({isOpenModalUpdate,
             setdescriptionProd(data?.description)
             setprice(data?.price)
             setimgsProd(data?.ImgProducts)
-            console.log(imgsProd)
             return ()=>{
                 // setInfoProduct({})
                 setnameProd("")
@@ -68,85 +68,77 @@ const UpdateProduct = ({isOpenModalUpdate,
                 setimgsProd([])
             }
         }, [data]);
-        //handleInputs
     //#endregion handleInputs
     
     //#region Combos
-        //manejo de combos
-            const [brand, setbrand] = useState(1);
-            const [category, setcategory] = useState(1);
-            
-            const handleChangeBrand=(ev)=>{
-                setbrand(ev.target.value)
-            }
-            const handleClickSelectCategory=(ev)=>{
-                setcategory(ev.target.value)
-            }
-        //manejo de combos
+        const [brand, setbrand] = useState(1);
+        const [category, setcategory] = useState(1);
+        
+        const handleChangeBrand=(ev)=>{
+            setbrand(ev.target.value)
+        }
+        const handleClickSelectCategory=(ev)=>{
+            setcategory(ev.target.value)
+        }
     //#endregion Combos
 
     //#region updateProductService
-        //submit
+        const onSubmit=(ev)=>{
+            ev.preventDefault();
+            // console.log(ev.target.elements)
+            // const {image}=ev.target.elements
+            // console.log(image)
+            // console.log(image.files)
+            // console.log("Update", data.ProductPrice)
+            const formData=new FormData()
+            formData.append("id", productToUpdate.id)
+            formData.append("name", nameProd)
+            formData.append("description", descriptionProd)
+            formData.append("price", priceProd)
+            formData.append("CategoryId", category)
+            formData.append("ManuFacturerId", brand)
+            // formData.append("imgs", imgsProd)
+            updateProductService(formData)
+
+            console.log(imgsProd)
+
+            // agregar n imagenes al formdata
+            // for (let index = 0; index < imgsProd.image.length; index++) {
+            //     const element = imgsProd.image[index];
+            //     formData.append("images", element)
+            // }
             
-            const onSubmit=(ev)=>{
-                ev.preventDefault();
-                // console.log(ev.target.elements)
-                // const {image}=ev.target.elements
-                // console.log(image)
-                // console.log(image.files)
-                // console.log("Update", data.ProductPrice)
-                const formData=new FormData()
-                formData.append("id", productToUpdate.id)
-                formData.append("name", nameProd)
-                formData.append("description", descriptionProd)
-                formData.append("price", priceProd)
-                formData.append("CategoryId", category)
-                formData.append("ManuFacturerId", brand)
-                // formData.append("imgs", imgsProd)
-                updateProductService(formData)
+        }
 
-                console.log(imgsProd)
-
-                // agregar n imagenes al formdata
-                // for (let index = 0; index < imgsProd.image.length; index++) {
-                //     const element = imgsProd.image[index];
-                //     formData.append("images", element)
-                // }
-                
+        useEffect(() => {
+            if(isLoading){
+                Swal.fire({
+                    title:'Loading',
+                    allowEscapeKey: false,
+                    allowOutsideClick: false,
+                    didOpen:()=>{
+                        Swal.showLoading()
+                    }
+                })
             }
-
-            useEffect(() => {
-                if(isLoading){
-                    Swal.fire({
-                        title:'Loading',
-                        allowEscapeKey: false,
-                        allowOutsideClick: false,
-                        didOpen:()=>{
-                            Swal.showLoading()
-                        }
-                    })
-                }
-                if (isSuccess) {
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'successfull updated'
-                    }).then(()=>closeModalUpdate())
-                }
-                else if(isError){
-                    console.log(error)
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Oops...',
-                        text: error?.data.message,
-                    })
-                }
-            }, [isLoading]);
-            
-        //submit
+            if (isSuccess) {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'successfull updated'
+                }).then(()=>closeModalUpdate())
+            }
+            else if(isError){
+                console.log(error)
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: error?.data.message,
+                })
+            }
+        }, [isLoading]);
     //#endregion updateProductService
 
     //#region deleteImgProductService
-        //Manejo de imagenes
         const deleteImg=(idImg)=>{
             deleteImgProductService({
                 idImg,
@@ -191,15 +183,46 @@ const UpdateProduct = ({isOpenModalUpdate,
                 })
             }
         }, [isLoadingDeleteImg]);
-        
-        //Manejo de imagenes
-
     //#endregion deleteImgProductService
 
     //#region UpdateImg
-        const updateImg=(idImg)=>{
-            alert("updateImg"+idImg)
+        const updateImg=(idImg, ev)=>{
+            ev.preventDefault();
+            const formData = new FormData();
+            console.log("updateImg", idImg)
+            console.log("Idprod", idProd)
+            const img=ev.target.files[0]
+            console.log("file", img)
+            formData.append("idImg", idImg)
+            formData.append("idProd", idProd)
+            formData.append("img",img)
+            updateImgProduct(formData)
         }
+        useEffect(() => {
+            if(isLoadingupdateImgProduct){
+              Swal.fire({
+                  title:'Loading',
+                  allowEscapeKey: false,
+                  allowOutsideClick: false,
+                  didOpen:()=>{
+                      Swal.showLoading()
+                  }
+              })
+            }
+            if (isSuccessupdateImgProduct) {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'successfull updated img'
+                })
+            }
+            else if(isErrorupdateImgProduct){
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: errorupdateImgProduct?.data.message,
+                })
+            }
+          }, [isLoadingupdateImgProduct]);
     //#endregion UpdateImg
 
 
@@ -269,10 +292,12 @@ const UpdateProduct = ({isOpenModalUpdate,
                             multiple
                         />
                     </p>
-                    <ContainerImgs imgsProd={imgsProd} deleteImg={deleteImg} updateImg={updateImg}/>
+                    <ContainerImgs imgsProd={imgsProd} 
+                    deleteImg={deleteImg} updateImg={updateImg}/>
                 </>
                 :
-                <ContainerImgs imgsProd={imgsProd} deleteImg={deleteImg} updateImg={updateImg}/>
+                <ContainerImgs imgsProd={imgsProd} 
+                deleteImg={deleteImg} updateImg={updateImg}/>
                 
                 
             }
