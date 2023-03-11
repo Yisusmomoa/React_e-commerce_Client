@@ -30,7 +30,9 @@ export const products=createApi({
                 method:'PUT',
                 body:formData
             }),
-            invalidatesTags:["Products", "Product"]
+            // invalidatesTags:["Products", "Product"] //este jala si se mandan las imagenes y toda la información de golpe
+            //para mostrar el cambio en el modal de update product
+            invalidatesTags:["Products"]
         }),
         getPaginationProducts:builder.query({
             query:({size, page})=>({
@@ -52,9 +54,18 @@ export const products=createApi({
             }),
             invalidatesTags:["Product"]
         }),
+        // update one image product
         updateImgProduct:builder.mutation({
             query:(formData)=>({
                 url:`/updateImg`,
+                method:'PUT',
+                body:formData
+            }),
+            invalidatesTags:["Product"]
+        }),
+        addMoreImgsProduct:builder.mutation({
+            query:(formData)=>({
+                url:`/${formData.get('id')}`,
                 method:'PUT',
                 body:formData
             }),
@@ -71,5 +82,6 @@ export const {
     useGetPaginationProductsQuery,
     useGetProductByIdQuery,
     useDeleteImgProductMutation,
-    useUpdateImgProductMutation
+    useUpdateImgProductMutation,
+    useAddMoreImgsProductMutation
 }=products

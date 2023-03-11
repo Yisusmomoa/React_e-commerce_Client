@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import Modal from '../../Modal/Modal'
 import { Modal_InputStyled } from '../../Modal/Modal.style'
 // import ButtonAddModal from '../../Modal/ButtonAddModal'
-import { useDeleteImgProductMutation, useGetProductByIdQuery, useUpdateImgProductMutation, useUpdateProductMutation } from '../../../../state/store/service/ProductService'
+import { useAddMoreImgsProductMutation, useDeleteImgProductMutation, useGetProductByIdQuery, useUpdateImgProductMutation, useUpdateProductMutation } from '../../../../state/store/service/ProductService'
 import Swal from 'sweetalert2'
 import {ButtonAddModalStyle} from '../../Modal/Modal.style'
 import styled from 'styled-components'
@@ -40,6 +40,11 @@ const UpdateProduct = ({isOpenModalUpdate,
             updateImgProduct, {isSuccess:isSuccessupdateImgProduct, isLoading:isLoadingupdateImgProduct,
                 isError:isErrorupdateImgProduct, error:errorupdateImgProduct}
         ]=useUpdateImgProductMutation()
+        
+        const [
+            addMoreImgs,  {isSuccess:isSuccessAddMoreImgs, isLoading:isLoadingAddMoreImgs,
+            isError:isErrorAddMoreImgs, error:errorAddMoreImgs}
+        ]=useAddMoreImgsProductMutation()
     //#endregion Services
 
     //#region handleInputs
@@ -85,12 +90,9 @@ const UpdateProduct = ({isOpenModalUpdate,
     //#region updateProductService
         const onSubmit=(ev)=>{
             ev.preventDefault();
-            // console.log(ev.target.elements)
-            // const {image}=ev.target.elements
-            // console.log(image)
-            // console.log(image.files)
-            // console.log("Update", data.ProductPrice)
-            const imgs=ev.target.image.files
+            //para añadir más imagenes
+                // const imgs=ev.target.image.files
+            //para añadir más imagenes
             const formData=new FormData()
             formData.append("id", productToUpdate.id)
             formData.append("name", nameProd)
@@ -98,11 +100,14 @@ const UpdateProduct = ({isOpenModalUpdate,
             formData.append("price", priceProd)
             formData.append("CategoryId", category)
             formData.append("ManuFacturerId", brand)
-            // for (let index = 0; index < imgs.length; index++) {
-            //     const element = imgs[index];
-            //     console.log(element)
-            //     formData.append("images", element)
-            // }
+             //para añadir más imagenes
+                // for (let index = 0; index < imgs.length; index++) {
+                //     const element = imgs[index];
+                //     console.log(element)
+                //     formData.append("images", element)
+                // }
+
+             //para añadir más imagenes
             updateProductService(formData)
 
             // console.log(ev.target.image.files.length)
@@ -224,6 +229,47 @@ const UpdateProduct = ({isOpenModalUpdate,
         }, [isLoadingupdateImgProduct]);
     //#endregion UpdateImg
 
+    //#region AddMoreImgs
+        const handleAddImagesProduct=(ev)=>{
+            console.log("add images product")
+            ev.preventDefault();
+            const formData=new FormData()
+            formData.append("id", productToUpdate.id)
+            const imgs=ev.target.files
+            for (let index = 0; index < imgs.length; index++) {
+                const element = imgs[index];
+                console.log(element)
+                formData.append("images", element)
+            }
+            addMoreImgs(formData)
+        }
+        useEffect(() => {
+            if(isLoadingAddMoreImgs){
+                Swal.fire({
+                    title:'Loading',
+                    allowEscapeKey: false,
+                    allowOutsideClick: false,
+                    didOpen:()=>{
+                        Swal.showLoading()
+                    }
+                })
+            }
+            if (isSuccessAddMoreImgs) {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'successfull updated'
+                })
+            }
+            else if(isErrorAddMoreImgs){
+                console.log(errorAddMoreImgs)
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: errorAddMoreImgs?.data.message,
+                })
+            }
+        }, [isLoadingAddMoreImgs]);
+    //#endregion AddMoreImgs
 
   return isSuccessProduct&&(
     <Modal isOpen={isOpenModalUpdate} 
@@ -289,6 +335,7 @@ const UpdateProduct = ({isOpenModalUpdate,
                             name='image'
                             accept="image/png, image/jpeg"
                             multiple
+                            onChange={handleAddImagesProduct}
                         />
                     </p>
                     <ContainerImgs imgsProd={imgsProd} 
