@@ -62,10 +62,6 @@ const AdminProducts = () => {
     ]=useModal()
   //#endregion Modals
 
-  const searchProducts=(name)=>{
-    console.log("name Product", name)
-  }
-
   //#region DeleteProduct
       const handleDeleteProduct=(id)=>{
         Swal.fire({
@@ -111,6 +107,10 @@ const AdminProducts = () => {
       }, [isLoadingDelete]);
   //#endregion DeleteProduct
 
+  const searchProducts=(name)=>{
+    console.log("name Product", name)
+    console.log(data)
+  }
 
   const editProduct=(data)=>{
     setProductToUpdate(data)

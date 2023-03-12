@@ -42,8 +42,7 @@ const Products = () => {
         <Pagination count={countPag} 
           style={{display:'flex', justifyContent: 'center'}}
           size='large'
-          onChange={(ev, page)=>{setPage(page-1)}}/>
-        
+          onChange={(ev, page)=>{setPage(page-1)}}  />
       <Modal isOpen={isOpenOptions} closeModal={closeModalOptions}>
         <h1>Options</h1>
       </Modal>
