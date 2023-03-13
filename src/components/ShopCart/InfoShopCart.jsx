@@ -1,6 +1,6 @@
 import React from 'react'
-import styled from 'styled-components'
-import { CheckoutContainer, CodeContainer, InfoShopCartContainer, InputCode, TotalContainer } from './InfoShoCart.style'
+import { CheckoutContainer, CodeContainer, 
+  InfoShopCartContainer, InputCode, TotalContainer } from './InfoShoCart.style'
 
 import ArrowForwardOutlinedIcon from '@mui/icons-material/ArrowForwardOutlined';
 const InfoShopCart = () => {

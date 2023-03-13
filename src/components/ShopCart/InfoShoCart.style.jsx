@@ -10,7 +10,11 @@ export const InfoShopCartContainer=styled.div`
     flex-direction:column;
     justify-content:space-evenly;
     border-radius:5px;
-    
+    @media(${device.sm}){
+        height: auto;
+        width:100%;
+        margin-bottom:1rem;
+    }
 `
 
 export const TotalContainer=styled.div`

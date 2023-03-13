@@ -6,6 +6,10 @@ export const ItemsShopCartContainer=styled.div`
     width:100%;
     max-height:90vh;
     background-color:transparent;
+    @media(${device.sm}){
+        height: 500px;
+        width:100%;
+  }
 
 `
 

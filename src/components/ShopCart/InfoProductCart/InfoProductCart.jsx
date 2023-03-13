@@ -1,5 +1,6 @@
 import React from 'react'
 import { DetailProductsContainer, 
+  ImgProduct_ShopCart, 
   InfoProductCartContainer,  
   ProductInfo_ShopCart, 
   QuanitytContainer_ShopCart,
@@ -14,7 +15,7 @@ const InfoProductCart = () => {
     <InfoProductCartContainer>
 
       <DetailProductsContainer>
-        <img src={Monitor1} width='150px' height='160px' />
+        <ImgProduct_ShopCart src={Monitor1}/>
         <ProductInfo_ShopCart>
           <h4>Product name</h4>
           <p><span>Sub total</span> $129</p>
@@ -31,6 +32,7 @@ const InfoProductCart = () => {
       <SubTotalContainer_ShopCart>
         <span>$129</span>
       </SubTotalContainer_ShopCart>
+
     </InfoProductCartContainer>
   )
 }
