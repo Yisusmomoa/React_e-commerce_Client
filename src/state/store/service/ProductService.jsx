@@ -69,7 +69,7 @@ export const products=createApi({
                 method:'PUT',
                 body:formData
             }),
-            invalidatesTags:["Product"]
+            invalidatesTags:["Product", "Products"]
         })
     })
 })

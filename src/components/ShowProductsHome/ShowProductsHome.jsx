@@ -5,6 +5,7 @@ import RowProductsHome from '../RowProductsHome/RowProductsHome'
 import CarouselProducts from '../CarouselProducts/CarouselProducts'
 import { ButtonForm } from '../Form/Form.style'
 import { useGetPaginationProductsQuery } from '../../state/store/service/ProductService'
+import { Link } from 'react-router-dom'
 
 const ShowProductsHome = () => {
   const {data, isLoading, 
@@ -15,7 +16,7 @@ const ShowProductsHome = () => {
     <ShowProductsHomeStyled>
         <RowProductsHome products={data?.products}/>
         <CarouselProducts products={data?.products}/>
-        <ButtonForm>Explore more</ButtonForm>
+        <ButtonForm><Link to={'/products'}>Explore more</Link></ButtonForm>
     </ShowProductsHomeStyled>
   )
 }
