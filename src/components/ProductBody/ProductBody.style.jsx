@@ -125,4 +125,6 @@ export const ButtonAddToCart=styled.button`
 export const InputQuantity=styled.input`
     border:2px solid ${(props)=>props.theme.colors.Border};
     border-radius:5px;
+    width:125px;
+    height:35px;
 `

@@ -7,12 +7,13 @@ import InfoShopCart from '../components/ShopCart/InfoShopCart';
 const ShopCartStyled=styled.div`
   display:grid;
   background-color:${(props)=>props.theme.colors.fondo};
-  height:auto;
+  min-height: 100vh;
   width:auto;
   grid-template-rows:100%;
   grid-template-columns:75% 25%;
   font-family:${props=>props.theme.fonts.raleway};
   text-align:center;
+  gap:0.5rem;
 `
 const ShopCart = () => {
   return (

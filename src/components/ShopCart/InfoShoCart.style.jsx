@@ -3,7 +3,7 @@ import { device, deviceMin } from '../../styles/breakpoints'
 
 export const InfoShopCartContainer=styled.div`
     width:100%;
-    height:100%;
+    max-height:100%;
     background-color:#1b262ccf;
     color:${props=>props.theme.colors.Letras2};
     display:flex;
