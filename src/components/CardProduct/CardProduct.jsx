@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { CardProductContainer,
   CardProductImg,
   CardProductInfo, 
@@ -8,26 +8,28 @@ import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 
 import { NavBarLink } from '../Navbar/NavBar.style';
 import { ButtonForm } from '../Form/Form.style';
+import CartContext from '../../state/context/CartContext';
 
 const CardProduct = ({product}) => {
-  return (
-    <NavBarLink to={`/product/${product?.id}`}>
-      <CardProductContainer>
-        <CardProductImg src={product?.ImgProducts[0]?.LinkImg} 
-          alt={product?.name}/>
-          
-        <CardProductInfo>
-          <TitleProd>{product?.name}</TitleProd>
-          
-          <PriceProd>{product?.price}</PriceProd>
-          <ButtonForm>
-            <ShoppingCartOutlinedIcon/>
-            Add to cart
-          </ButtonForm>
-        </CardProductInfo>
+  const {addProduct}=useContext(CartContext)
 
-      </CardProductContainer>
-    </NavBarLink>
+  return (
+      
+        <CardProductContainer>
+          <NavBarLink to={`/product/${product?.id}`}>
+            <CardProductImg src={product?.ImgProducts[0]?.LinkImg} 
+              alt={product?.name}/>
+            </NavBarLink>
+          <CardProductInfo>
+            <TitleProd>{product?.name}</TitleProd>
+            <PriceProd>{product?.price}</PriceProd>
+            <ButtonForm onClick={()=>addProduct(product)}>
+              <ShoppingCartOutlinedIcon/>
+              Add to cart
+            </ButtonForm>
+          </CardProductInfo>
+        </CardProductContainer>
+     
   )
 }
 

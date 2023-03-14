@@ -3,7 +3,7 @@ import { device, deviceMin } from "../../styles/breakpoints";
 
 export const CardProductContainer=styled.div`
     display:flex;
-    width:90%;
+    width:20%;
     height:auto;
     /* border:1px solid ${props=>props.theme.colors.Letras}; */
     border: 1px groove ${props=>props.theme.colors.Border};
@@ -15,9 +15,15 @@ export const CardProductContainer=styled.div`
     &:hover{
         box-shadow: 1px 2px 10px 5px ${props=>props.theme.colors.Border};
     }
+    @media(${device.md}){
+        margin:0 auto;
+        height:auto;
+        width:45%;
+    }
     @media(${device.sm}){
         margin:0 auto;
         height:auto;
+        width:90%;
     }
 `
 export const CardProductInfo=styled.div`
