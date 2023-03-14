@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { ButtonAddToCart, 
   InputQuantity, 
   ProductBody_ContainerInfo, 
@@ -9,9 +9,16 @@ import AddCircleOutlineOutlinedIcon from '@mui/icons-material/AddCircleOutlineOu
 import RemoveCircleOutlineOutlinedIcon from '@mui/icons-material/RemoveCircleOutlineOutlined';
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
 import { NavBarLink } from '../Navbar/NavBar.style';
+import CartContext from '../../state/context/CartContext';
+
 const ProductBodyInfo = ({productInfo}) => {
+
+  //#region Context
+  const {addProduct} = useContext(CartContext);
+  //#endregion Context
+
   const [quantity, setQuantity]=useState(1)
-  console.log(productInfo)
+  
   return (
     <ProductBody_ContainerInfo>
       <FavoriteBorderOutlinedIcon fontSize='large'/>
@@ -29,7 +36,7 @@ const ProductBodyInfo = ({productInfo}) => {
           <InputQuantity type='number' value={quantity}  min={1} max={100} />
           <AddCircleOutlineOutlinedIcon fontSize='large' onClick={()=>quantity<100&&setQuantity(quantity+1)}/>
         </ProductInfo_ActionsQuantity>
-        <ButtonAddToCart>
+        <ButtonAddToCart onClick={()=>addProduct(productInfo, quantity)}>
           <ShoppingCartOutlinedIcon/>
           Add to cart
         </ButtonAddToCart>

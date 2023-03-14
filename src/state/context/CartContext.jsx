@@ -21,27 +21,30 @@ un valor específico al contexto y useContext se utiliza para consumir ese valor
 
 const CartProvider = ({children}) => {
   const [cart, setCart]=useState([]);
+ 
   const [total, setTotal]=useState({})
 
-  const addProduct=(product, amount)=>{
+  const addProduct=(product, amount=1)=>{
     const isProductExists=cart.find(element=>element.id===product.id)
+
+    const productToAdd={...product}
     if (isProductExists!==undefined) {
-        updateAmountProductExists(product.id, amount)
-        const Toast = Swal.mixin({
-            toast: true,
-            position: 'top-end',
-            showConfirmButton: false,
-            timer: 500,
-        })
-        
-        Toast.fire({
-            icon: 'success',
-            title: 'Product added to your cart'
-        })
+      updateAmountProductExists(productToAdd.id, amount)
+      const Toast = Swal.mixin({
+          toast: true,
+          position: 'top-end',
+          showConfirmButton: false,
+          timer: 500,
+      })
+      
+      Toast.fire({
+          icon: 'success',
+          title: 'Product added to your cart'
+      })
     }
     else{
-        product.amount=amount
-        setCart([...cart, product])
+      productToAdd.amount=amount
+        setCart([...cart, productToAdd])
         const Toast = Swal.mixin({
             toast: true,
             position: 'top-end',
@@ -70,11 +73,47 @@ const CartProvider = ({children}) => {
         })
   }
 
+  const updateAmountProductExists=(id, amount)=>{
+    const tempCart=[...cart]
+    const product=tempCart.find(element=>element.id===id)
+    product["amount"]+=amount;
+    setCart(tempCart)
+  }
+  
+  const getLengthShopCart=()=>{
+    return cart.length
+  }
+
+  const updateAmount=(id, amount)=>{
+    // que se actualice la cantidad del proudcto si ya esta en el carrito
+    //update amount only if the product exists in the cart
+
+    const tempCart=[...cart]
+    const product=tempCart.find(element=>element.id===id)
+    product["amount"]=amount;
+    setCart(tempCart)
+  }
+
+  const getTotal=()=>{
+    // aquí estaba el error xd
+    const subTotal=cart.reduce((acc, element)=>acc+(element.price*element.amount), 0)
+    setTotal({
+        subTotal,
+        Total:subTotal+subTotal*0.16
+    })
+  }
+  useEffect(() => {
+    getTotal()
+  }, [cart]);
+
   const data={
     cart,
     total,
     addProduct,
-    removeProduct
+    removeProduct,
+    getLengthShopCart,
+    updateAmount,
+    getTotal
   }
   return (
     <CartContext.Provider value={data}>

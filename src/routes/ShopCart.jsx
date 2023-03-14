@@ -1,10 +1,11 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import Swal from 'sweetalert2';
 import { theme } from '../styles/theme'
 import styled, { ThemeProvider } from 'styled-components';
 import ItemsShopCart from '../components/ShopCart/ItemsShopCart';
 import InfoShopCart from '../components/ShopCart/InfoShopCart';
 import { device, deviceMin } from '../styles/breakpoints';
+import CartContext from '../state/context/CartContext';
 
 const ShopCartStyled=styled.div`
   display:grid;
@@ -22,10 +23,11 @@ const ShopCartStyled=styled.div`
   }
 `
 const ShopCart = () => {
+  const {cart, removeProduct, updateAmount} = useContext(CartContext);
   return (
     <ThemeProvider theme={theme}>
       <ShopCartStyled>
-        <ItemsShopCart/>
+        <ItemsShopCart cart={cart} removeProduct={removeProduct} updateAmount={updateAmount}/>
         <InfoShopCart/>
       </ShopCartStyled>
     </ThemeProvider>

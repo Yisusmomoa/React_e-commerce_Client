@@ -1,15 +1,28 @@
-import React from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { CheckoutContainer, CodeContainer, 
   InfoShopCartContainer, InputCode, TotalContainer } from './InfoShoCart.style'
 
 import ArrowForwardOutlinedIcon from '@mui/icons-material/ArrowForwardOutlined';
+import CartContext from '../../state/context/CartContext';
 const InfoShopCart = () => {
+  const {total} = useContext(CartContext)
+  const [taxes, settaxes] = useState(0);
+  const [superTotal, setSuperTotal] = useState(0);
+  const [subTotal, setSubTotal] = useState(0);
+  useEffect(() => {
+    total && (
+      settaxes(total?.Total-total?.subTotal),
+      setSubTotal(total?.subTotal),
+      setSuperTotal(total?.Total)
+    )
+
+  }, [total]);
   return (
     <InfoShopCartContainer>
         <TotalContainer>
-            <p><span>Sub total</span> $129</p>
-            <p><span>Tax</span> $19</p>
-            <p><span>Total</span> $149</p>
+            <p><span>Sub total</span> ${subTotal?.toFixed(2)}</p>
+            <p><span>Tax</span> ${taxes?.toFixed(2)}</p>
+            <p><span>Total</span> ${superTotal?.toFixed(2)}</p>
         </TotalContainer>
         <CodeContainer>
             <span>Give code</span>
