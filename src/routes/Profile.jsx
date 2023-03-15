@@ -1,5 +1,5 @@
 import React, { useRef, useEffect } from 'react'
-import { Outlet, useNavigate } from 'react-router-dom'
+import { Outlet, redirect, useNavigate } from 'react-router-dom'
 import { ThemeProvider } from 'styled-components'
 import { theme } from '../styles/theme'
 import { ButtonLogout, ImgProfile, InputFile, ProfileContainer,
@@ -12,12 +12,12 @@ import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined
 import LocalMallOutlinedIcon from '@mui/icons-material/LocalMallOutlined';
 import AdminPanelSettingsOutlinedIcon from '@mui/icons-material/AdminPanelSettingsOutlined';
 import ProfileSubnavbar from '../components/Profile/ProfileSubnavbar'
-import { useLogoutMutation, useMeQuery, useUpdateUserImgMutation, useUpdateUserMutation } from '../state/store/service/UserService'
+import { useLazyMeQuery, useLogoutMutation, useMeQuery, useUpdateUserImgMutation, useUpdateUserMutation } from '../state/store/service/UserService'
 import CameraAltOutlinedIcon from '@mui/icons-material/CameraAltOutlined';
 
-// como contenedor aquí ira el sidebar
 const Profile = () => {
-  
+  const navigate=useNavigate()
+
   const fileInputRef =useRef(null);
   const formRef = useRef(null);
   //#region Services
@@ -28,17 +28,19 @@ const Profile = () => {
       isError:isErrorImg, error:errorImg}]=useUpdateUserImgMutation()
 
     const { data} = useMeQuery();
-    const [logout]=useLogoutMutation();
+    const [logout, {isLoading:isLoadingLogout, isSuccess:isSuccessLogout}]=useLogoutMutation();
+    const [trigger, {data:me, isLoading:isLoadingMe, 
+      isUninitialized:isUninitializedMe, isFetching:isFetchingMe}]=useLazyMeQuery()
   //#endregion Services
 
-  
   const handleClickLogout=()=>{
     logout()
+    // navigate('/home')
+    
     window.location.href = '/home'
     // TODO: manejar con un componente o una pagina, para evitar las recargas de paginas
   }
 
-  
   //#region UpdateImgProfile
     const handleSubmit=(ev)=>{
       ev.preventDefault();

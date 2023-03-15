@@ -92,5 +92,7 @@ export const {
     useDesactivateUserMutation,
     useDesactivateUserAdminMutation,
     useGetUserByIdQuery,
-    useUpdateUserAdminMutation
+    useUpdateUserAdminMutation,
+    useLazyMeQuery,
+    
 }=users

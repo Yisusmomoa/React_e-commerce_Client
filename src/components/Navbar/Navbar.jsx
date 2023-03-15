@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 
 // components
 import CartProfile from './CartProfile'
@@ -16,17 +16,17 @@ import { useMeQuery } from '../../state/store/service/UserService';
 const Navbar = () => {
   const [extendNavbar, setExtendNavbar] = useState(false)
   const [showSearchInput, setShowSearchInput] = useState(false)
-  const dataMe=useMeQuery()
-  // console.log(dataMe)
+  const {data, isLoading, isSuccess, isError, error}=useMeQuery()
   const handleClick=()=>{
       setExtendNavbar(!extendNavbar)
   }
   const handleClickSearch=()=>{
       setShowSearchInput(!showSearchInput)
   }
-  // useEffect(() => {
-  //   console.log("datame", dataMe)
-  // }, [dataMe]);
+
+  useEffect(() => {
+    console.log("🚀 ~ file: Navbar.jsx:28 ~ Navbar ~ data:", data)
+  }, [data]);
 
   return (
     <ThemeProvider theme={theme}>
@@ -34,7 +34,7 @@ const Navbar = () => {
           
         <NavBarLinks/>
         {
-          dataMe?.data&&<CartProfile/>
+          data&&<CartProfile/>
         }
         {/* <CartProfile/> */}
         

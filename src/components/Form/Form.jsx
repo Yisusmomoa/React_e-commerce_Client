@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { ButtonForm, ContainerImg, 
     ContainerInput, ContainerInputs, 
     FormStyled, ImgForm, InputForm } from './Form.style'
@@ -11,54 +11,61 @@ import { theme } from '../../styles/theme';
 import { NavBarLink } from '../Navbar/NavBar.style';
 import SignUp from '../../assets/signup/SignUp.svg'
 import SignIn from '../../assets/signin/SignIn.svg'
-import { useCreateUserMutation, useLoginMutation, useMeQuery } from '../../state/store/service/UserService';
+import { useCreateUserMutation, useLazyMeQuery, useLoginMutation, useMeQuery } from '../../state/store/service/UserService';
 import {useForm} from 'react-hook-form';
 import { Navigate, useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 
-// minuto 16:56 atomic design
 const Form = ({typeForm}) => {
     //TODO Validar que el email si sea un email
     const dataMe=useMeQuery()
 
-    // const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     const emailRegex =/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
     function validateEmail(email) {
-    return emailRegex.test(email);
+        return emailRegex.test(email);
     }
 
     const navigate=useNavigate()
-    const [registerAction, {isError, isLoading, isSuccess, error, data}]=useCreateUserMutation()
-    const [loginAction, {isError:isErrorLogin, isLoading:isLoadingLogin, 
-        isSuccess:isSuccessLogin, error:errorLogin, data:dataLogin}]=useLoginMutation()
-    const {
-        register,
-        handleSubmit,
-        watch, 
-        formState:{errors}
-    }=useForm()
+    //#region Services
+        const [registerAction, {isError, isLoading, isSuccess, error, data}]=useCreateUserMutation()
+        const [loginAction, {isError:isErrorLogin, isLoading:isLoadingLogin, 
+            isSuccess:isSuccessLogin, error:errorLogin, data:dataLogin}]=useLoginMutation()
+        const [trigger, {data:me, isLoading:isLoadingMe, 
+            isUninitialized:isUninitializedMe, isFetching:isFetchingMe}]=useLazyMeQuery()
+    //#endregion Services
 
-    const {
-        register:login,
-        handleSubmit:handleSubmitLogin,
-        watch:watchLogin,
-        formState:{errors:errorsLogin}
-    }=useForm()
+    //#region forms
+        const {
+            register,
+            handleSubmit,
+            watch, 
+            formState:{errors}
+        }=useForm()
 
-    const onSubmit=(user)=>{
-        if(validateEmail(user.email)){
-            registerAction(user)
-            console.log("email correcto")
+        const {
+            register:login,
+            handleSubmit:handleSubmitLogin,
+            watch:watchLogin,
+            formState:{errors:errorsLogin}
+        }=useForm()
+
+        const onSubmit=(user)=>{
+            if(validateEmail(user.email)){
+                registerAction(user)
+            }
         }
-    }
-    const onSubmitLogin=(user)=>{
-        loginAction(user)
-    }
+
+        const onSubmitLogin=(user)=>{
+            loginAction(user)
+        }
+    //#endregion forms
+
     // useEffect(() => {
     //     if(dataMe){
     //         navigate("/home")
     //     }
     // }, []);
+
     useEffect(() => {
         if(isLoading){
             Swal.fire({
@@ -97,14 +104,18 @@ const Form = ({typeForm}) => {
             })
         }
         if (isSuccessLogin) {
-            // Swal.fire({
-            //     icon: 'success',
-            //     title: 'Welcome'
-            // }).then(()=>navigate("/home"))
             Swal.fire({
                 icon: 'success',
                 title: 'Welcome'
-            }).then(()=>window.location.href = '/home')
+            }).then(()=>{
+                trigger()
+                navigate("/home")
+            })
+
+            // Swal.fire({
+            //     icon: 'success',
+            //     title: 'Welcome'
+            // }).then(()=>window.location.href = '/home')
         }
         else if(isErrorLogin){
             Swal.fire({
