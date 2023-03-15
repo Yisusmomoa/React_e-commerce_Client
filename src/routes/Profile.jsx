@@ -33,11 +33,10 @@ const Profile = () => {
       isUninitialized:isUninitializedMe, isFetching:isFetchingMe}]=useLazyMeQuery()
   //#endregion Services
 
-  const handleClickLogout=()=>{
+  const handleClickLogout=async ()=>{
     logout()
-    // navigate('/home')
-    
     window.location.href = '/home'
+
     // TODO: manejar con un componente o una pagina, para evitar las recargas de paginas
   }
 
@@ -81,6 +80,14 @@ const Profile = () => {
       }
     }, [isLoadingImg]);
   //#endregion UpdateImgProfile
+
+  // useEffect(() => {
+  //   if(isSuccessLogout){
+  //     console.log("🚀 ~ file: Profile.jsx:87 ~ useEffect ~ isSuccessLogout:", isSuccessLogout)
+  //     trigger()
+  //     return navigate('/home')
+  //   }
+  // }, [isLoadingLogout]);
 
   return (
     <ThemeProvider theme={theme}>

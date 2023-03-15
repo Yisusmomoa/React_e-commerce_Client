@@ -93,7 +93,7 @@ const CartProvider = ({children}) => {
     product["amount"]=amount;
     setCart(tempCart)
   }
-
+  
   const getTotal=()=>{
     // aquí estaba el error xd
     const subTotal=cart.reduce((acc, element)=>acc+(element.price*element.amount), 0)
@@ -103,8 +103,23 @@ const CartProvider = ({children}) => {
     })
   }
   useEffect(() => {
+    if(cart.length>0){
+      localStorage.setItem("cart", JSON.stringify(cart))
+      console.log("🚀 ~ file: CartContext.jsx:107 ~ useEffect ~ cart:", cart)
+    }
     getTotal()
   }, [cart]);
+
+  useEffect(() => {
+    console.log("shop cart 1")
+    if(localStorage.getItem('cart')){
+      console.log("🚀 ~ file: CartContext.jsx:113 ~ useEffect ~ cart:", cart)
+      setCart(JSON.parse(localStorage.getItem('cart')))
+    }
+    else{
+      console.log("cart empty")
+    }
+  }, []);
 
   const data={
     cart,

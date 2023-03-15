@@ -10,7 +10,7 @@ import NavbarResponsive from './NavbarResponsive'
 import { ThemeProvider } from 'styled-components'
 import { theme } from '../../styles/theme'
 import { NavBarStyled} from './NavBar.style'
-import { useMeQuery } from '../../state/store/service/UserService';
+import { useLazyMeQuery, useMeQuery } from '../../state/store/service/UserService';
 
 
 const Navbar = () => {
@@ -23,11 +23,6 @@ const Navbar = () => {
   const handleClickSearch=()=>{
       setShowSearchInput(!showSearchInput)
   }
-
-  useEffect(() => {
-    console.log("🚀 ~ file: Navbar.jsx:28 ~ Navbar ~ data:", data)
-  }, [data]);
-
   return (
     <ThemeProvider theme={theme}>
       <NavBarStyled>
