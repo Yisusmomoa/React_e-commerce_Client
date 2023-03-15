@@ -15,15 +15,19 @@ import { useMeQuery } from '../../state/store/service/UserService';
 
 const Navbar = () => {
   const [extendNavbar, setExtendNavbar] = useState(false)
-    const [showSearchInput, setShowSearchInput] = useState(false)
-    const dataMe=useMeQuery()
-    // console.log(dataMe)
-    const handleClick=()=>{
-        setExtendNavbar(!extendNavbar)
-    }
-    const handleClickSearch=()=>{
-        setShowSearchInput(!showSearchInput)
-    }
+  const [showSearchInput, setShowSearchInput] = useState(false)
+  const dataMe=useMeQuery()
+  // console.log(dataMe)
+  const handleClick=()=>{
+      setExtendNavbar(!extendNavbar)
+  }
+  const handleClickSearch=()=>{
+      setShowSearchInput(!showSearchInput)
+  }
+  // useEffect(() => {
+  //   console.log("datame", dataMe)
+  // }, [dataMe]);
+
   return (
     <ThemeProvider theme={theme}>
       <NavBarStyled>

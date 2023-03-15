@@ -35,6 +35,7 @@ const Profile = () => {
   const handleClickLogout=()=>{
     logout()
     window.location.href = '/home'
+    // TODO: manejar con un componente o una pagina, para evitar las recargas de paginas
   }
 
   
