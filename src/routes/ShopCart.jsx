@@ -1,11 +1,12 @@
 import React, { useContext } from 'react'
-import Swal from 'sweetalert2';
 import { theme } from '../styles/theme'
 import styled, { ThemeProvider } from 'styled-components';
 import ItemsShopCart from '../components/ShopCart/ItemsShopCart';
 import InfoShopCart from '../components/ShopCart/InfoShopCart';
-import { device, deviceMin } from '../styles/breakpoints';
+import { device } from '../styles/breakpoints';
 import CartContext from '../state/context/CartContext';
+import Empty_cart from '../assets/ShopCart/Empty_cart.svg'
+import { ImgForm } from '../components/Form/Form.style';
 
 const ShopCartStyled=styled.div`
   display:grid;
@@ -23,13 +24,27 @@ const ShopCartStyled=styled.div`
   }
 `
 const ShopCart = () => {
-  const {cart, removeProduct, updateAmount} = useContext(CartContext);
+  const {cart, removeProduct, updateAmount} = useContext(CartContext)
+
+  console.log(cart.length)
   return (
     <ThemeProvider theme={theme}>
-      <ShopCartStyled>
-        <ItemsShopCart cart={cart} removeProduct={removeProduct} updateAmount={updateAmount}/>
-        <InfoShopCart/>
-      </ShopCartStyled>
+        <ShopCartStyled>
+          {
+            cart.length<1?
+            <div>
+              <h1>No cuentas con productos en tu carrito</h1>
+              <img src={Empty_cart} alt='EmptyCartImg' width={'45%'} height={'auto'}/>
+            </div>
+            :
+            <>
+             <ItemsShopCart cart={cart} removeProduct={removeProduct} updateAmount={updateAmount}/>
+            <InfoShopCart/>
+            </>
+          }
+         
+        </ShopCartStyled>
+     
     </ThemeProvider>
   )
 }

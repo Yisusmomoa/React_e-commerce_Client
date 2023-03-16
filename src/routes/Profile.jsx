@@ -35,6 +35,7 @@ const Profile = () => {
 
   const handleClickLogout=async ()=>{
     logout()
+    localStorage.removeItem("cart")
     window.location.href = '/home'
 
     // TODO: manejar con un componente o una pagina, para evitar las recargas de paginas
