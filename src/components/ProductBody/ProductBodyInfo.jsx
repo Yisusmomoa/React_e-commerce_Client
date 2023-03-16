@@ -10,15 +10,33 @@ import RemoveCircleOutlineOutlinedIcon from '@mui/icons-material/RemoveCircleOut
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
 import { NavBarLink } from '../Navbar/NavBar.style';
 import CartContext from '../../state/context/CartContext';
+import { useMeQuery } from '../../state/store/service/UserService';
+import Swal from 'sweetalert2';
+import { useNavigate } from 'react-router-dom';
 
 const ProductBodyInfo = ({productInfo}) => {
 
+  const navigate=useNavigate()
   //#region Context
-  const {addProduct} = useContext(CartContext);
+    const {addProduct} = useContext(CartContext);
   //#endregion Context
 
   const [quantity, setQuantity]=useState(1)
-  
+  const {data}=useMeQuery()
+  const addProductCart=(product, quantity)=>{
+    if(data?.result){
+      addProduct(product, quantity)
+    }
+    else{
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'First create an account or sign in!',
+      }).then(()=>{
+        navigate('/signIn')
+      })
+    }
+  }
   return (
     <ProductBody_ContainerInfo>
       <FavoriteBorderOutlinedIcon fontSize='large'/>
@@ -36,7 +54,8 @@ const ProductBodyInfo = ({productInfo}) => {
           <InputQuantity type='number' value={quantity}  min={1} max={100} />
           <AddCircleOutlineOutlinedIcon fontSize='large' onClick={()=>quantity<100&&setQuantity(quantity+1)}/>
         </ProductInfo_ActionsQuantity>
-        <ButtonAddToCart onClick={()=>addProduct(productInfo, quantity)}>
+        {/* <ButtonAddToCart onClick={()=>addProduct(productInfo, quantity)}> */}
+        <ButtonAddToCart onClick={()=>addProductCart(productInfo, quantity)}>
           <ShoppingCartOutlinedIcon/>
           Add to cart
         </ButtonAddToCart>

@@ -12,7 +12,6 @@ const ProductBody = ({idProd}) => {
    
     useEffect(() => {
       if(isSuccess){
-        console.log(data)
         setProductInfo(data)
         setImgs(data?.ImgProducts)
       }
