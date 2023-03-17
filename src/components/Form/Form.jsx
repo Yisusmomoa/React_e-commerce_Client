@@ -1,6 +1,6 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { ButtonForm, ContainerImg, 
-    ContainerInput, ContainerInputs, 
+    ContainerInput, ContainerInputForm, ContainerInputs, 
     FormStyled, ImgForm, InputForm } from './Form.style'
 import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
 import AlternateEmailOutlinedIcon from '@mui/icons-material/AlternateEmailOutlined';
@@ -15,6 +15,8 @@ import { useCreateUserMutation, useLazyMeQuery, useLoginMutation, useMeQuery } f
 import {useForm} from 'react-hook-form';
 import { Navigate, useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
+import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
+import VisibilityOffOutlinedIcon from '@mui/icons-material/VisibilityOffOutlined';
 
 const Form = ({typeForm}) => {
     //TODO Validar que el email si sea un email
@@ -24,6 +26,7 @@ const Form = ({typeForm}) => {
     function validateEmail(email) {
         return emailRegex.test(email);
     }
+    const [showPassword, setshowPassword] = useState(false);
 
     const navigate=useNavigate()
     //#region Services
@@ -211,12 +214,29 @@ const Form = ({typeForm}) => {
                 </ContainerInput>
 
                 <ContainerInput>
-                    <div>
+                    <ContainerInputForm>
                         <HttpsOutlinedIcon fontSize='large'/>
-                        <InputForm type='password' 
+                        <InputForm type={showPassword? 'text': 'password'}
                             placeholder='Password'
-                            {...register("password", {required:true})}/>
-                    </div>
+                            {...register("password", {required:true})} />
+                        {
+                            showPassword 
+                            ?
+                                <VisibilityOffOutlinedIcon 
+                                onClick={()=>setshowPassword(!showPassword)}
+                                fontSize='small'
+                                style={{position:'absolute', right: '15px',
+                                cursor:'pointer' }}/>
+                            : 
+                                <VisibilityOutlinedIcon 
+                                onClick={()=>setshowPassword(!showPassword)}
+                                fontSize='small'
+                                style={{position:'absolute', right: '15px',
+                                cursor:'pointer' }} />
+                        }
+                       
+                       
+                    </ContainerInputForm>
                     <div>
                     {errors.password?.type==='required' && 
                         <span style={ {color:"red",
@@ -224,19 +244,23 @@ const Form = ({typeForm}) => {
                     </div>
                 </ContainerInput>
                 
-                <ContainerInput>
-                    <div>
+                {/* <ContainerInput>
+                    <ContainerInputForm>
                         <HttpsIcon fontSize='large'/>
                         <InputForm type='password' 
                             placeholder='Repeat your password'
                             {...register("passwordConfirm", {required:true})}/>
-                    </div>
+                        <VisibilityOutlinedIcon fontSize='small'
+                        style={{position:'absolute', 
+                            right: '15px', 
+                            cursor:'pointer' }} />
+                    </ContainerInputForm>
                     <div>
                     {errors.password?.type==='required' && 
                         <span style={ {color:"red",
                         fontSize:"12px"}}>This field is required</span>}
                     </div>
-                </ContainerInput>
+                </ContainerInput> */}
 
                 <ButtonForm >Register</ButtonForm>
             </ContainerInputs>

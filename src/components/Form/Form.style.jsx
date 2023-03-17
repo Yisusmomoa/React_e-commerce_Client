@@ -55,6 +55,10 @@ export const ContainerInput=styled.div`
     }
 `
 
+export const ContainerInputForm=styled.div`
+    position:relative;
+`
+
 export const InputForm=styled.input`
     border:none;
     color:${(props)=>props.theme.colors.Letras};
@@ -65,6 +69,7 @@ export const InputForm=styled.input`
     margin-left:5px;
     background-color:${(props)=>props.theme.colors.fondo};
 `
+
 
 export const ButtonForm=styled.button`
     color:${(props)=>props.theme.colors.Letras2};

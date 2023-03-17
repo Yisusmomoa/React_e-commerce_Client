@@ -15,6 +15,7 @@ import Profile from './routes/Profile'
 import WishList from "./routes/WishList";
 import MyOrders from "./routes/MyOrders";
 import ProfileDetails from "./routes/ProfileDetails";
+import Checkout from "./routes/Checkout";
 
 const router=createBrowserRouter([
     {
@@ -93,6 +94,10 @@ const router=createBrowserRouter([
                         element: <AdminBrands/>,
                     },
                 ]
+            },
+            {
+                path:'/checkout',
+                element:<Checkout/>
             }
         ]
     }
