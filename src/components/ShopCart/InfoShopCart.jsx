@@ -4,19 +4,22 @@ import { CheckoutContainer, CodeContainer,
 
 import ArrowForwardOutlinedIcon from '@mui/icons-material/ArrowForwardOutlined';
 import CartContext from '../../state/context/CartContext';
+import { Link } from 'react-router-dom'
+
 const InfoShopCart = () => {
   const {total} = useContext(CartContext)
   const [taxes, settaxes] = useState(0);
   const [superTotal, setSuperTotal] = useState(0);
   const [subTotal, setSubTotal] = useState(0);
+
   useEffect(() => {
     total && (
       settaxes(total?.Total-total?.subTotal),
       setSubTotal(total?.subTotal),
       setSuperTotal(total?.Total)
     )
-
   }, [total]);
+
   return (
     <InfoShopCartContainer>
         <TotalContainer>
@@ -31,7 +34,10 @@ const InfoShopCart = () => {
               
         </CodeContainer>
         <CheckoutContainer>
-            <button>Proceed to checkout  <ArrowForwardOutlinedIcon/> </button>
+            <button>
+              <Link to={'/checkout'} style={{color:'#DBE2EF'}}>Proceed to checkout</Link>
+              <ArrowForwardOutlinedIcon/> 
+            </button>
            
         </CheckoutContainer>
     </InfoShopCartContainer>

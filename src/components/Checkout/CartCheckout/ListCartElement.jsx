@@ -5,10 +5,10 @@ const ListCartElement = ({prod}) => {
   return (
     <ListCartElementContainer>
         <h3>
-            {prod.prodName} 
+            {prod.name} 
         </h3>
         <h3>
-            ${prod.price}  
+            ${prod.price*prod.amount} 
         </h3>
     </ListCartElementContainer>
   )

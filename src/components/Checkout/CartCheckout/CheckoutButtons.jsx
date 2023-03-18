@@ -2,13 +2,14 @@ import React from 'react'
 import { CartCheckout_Btns } from './CartCheckout.style'
 import LocalMallOutlinedIcon from '@mui/icons-material/LocalMallOutlined';
 import ArrowBackOutlinedIcon from '@mui/icons-material/ArrowBackOutlined';
+import { Link } from 'react-router-dom';
 
 const CheckoutButtons = () => {
   return (
     <CartCheckout_Btns>
         <button>
             <ArrowBackOutlinedIcon/>
-            Back to shop cart
+            <Link to={'/shopCart'} style={{color:'#DBE2EF'}}>Back to shop cart</Link>
         </button>
 
         <button>
