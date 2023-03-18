@@ -4,7 +4,7 @@ import LocalMallOutlinedIcon from '@mui/icons-material/LocalMallOutlined';
 import ArrowBackOutlinedIcon from '@mui/icons-material/ArrowBackOutlined';
 import { Link } from 'react-router-dom';
 
-const CheckoutButtons = () => {
+const CheckoutButtons = ({handleMakeBuy}) => {
   return (
     <CartCheckout_Btns>
         <button>
@@ -12,7 +12,7 @@ const CheckoutButtons = () => {
             <Link to={'/shopCart'} style={{color:'#DBE2EF'}}>Back to shop cart</Link>
         </button>
 
-        <button>
+        <button onClick={()=>handleMakeBuy()}>
             <LocalMallOutlinedIcon />
             Confirm and buy
         </button>
