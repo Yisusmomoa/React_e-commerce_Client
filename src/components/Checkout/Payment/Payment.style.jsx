@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { device, deviceMin } from "../../styles/breakpoints";
 
 
 export const PaymentContainer=styled.div`
@@ -7,7 +6,7 @@ export const PaymentContainer=styled.div`
     min-height:60vh;
     display:flex;
     flex-direction: column;
-
+    
 `
 export const Payment_Header=styled.div`
     width:100%;
@@ -67,7 +66,7 @@ export const Payment_Form=styled.form`
         box-sizing: border-box;
         font-size:16px;
         font-family:${props=>props.theme.fonts.raleway};
-        margin-left:1rem;
+        margin-left:1.6rem;
     }
     label{
         font-family:${props=>props.theme.fonts.raleway};

@@ -1,9 +1,12 @@
 import React from 'react'
-import { Card_Expire_CCV_Container, PaymentContainer, Payment_Card, Payment_Form, Payment_Header, Payment_PayPal } from './Payment.style'
+import { Card_Expire_CCV_Container, PaymentContainer, 
+  Payment_Card, Payment_Form, 
+  Payment_Header, Payment_PayPal } from './Payment.style'
 import CreditCardOutlinedIcon from '@mui/icons-material/CreditCardOutlined';
-import logoPaypal from '../../assets/logoPaypal.png'
-import Visa from '../../assets/tarjetas/Visa.png'
-import Mastercard from '../../assets/tarjetas/Mastercard.png'
+
+import logoPaypal from '../../../assets/logoPaypal.png'
+import Visa from '../../../assets/tarjetas/Visa.png'
+import Mastercard from '../../../assets/tarjetas/Mastercard.png'
 
 const Payment = () => {
   return (
@@ -19,7 +22,7 @@ const Payment = () => {
           <Payment_PayPal>
             <div>
               <input type="radio" id="paypal" name="payment" value="Paypal"/>
-              <label for="paypal">Paypal</label>
+              <label htmlFor="paypal">Paypal</label>
             </div>
             <img src={logoPaypal} />
           </Payment_PayPal>
@@ -27,7 +30,7 @@ const Payment = () => {
           <Payment_Card>
             <div>
               <input type="radio" id="Card" name="payment" value="Card" />
-              <label for="Card">Debit/Credit Card</label>
+              <label htmlFor="Card">Debit/Credit Card</label>
             </div>
            <div>
               <img src={Visa} />
@@ -45,8 +48,10 @@ const Payment = () => {
                 name="NameCard" placeholder='Name on card' />
             </label>
           </div>
+          
           <div>
-            <label>Card number
+            <label>
+              Card number
               <input type="text" id="NumberCard" 
                 name="NumberCard" placeholder='Card number' />
             </label>

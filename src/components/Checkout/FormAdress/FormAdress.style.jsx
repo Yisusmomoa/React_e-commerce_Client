@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { device, deviceMin } from "../../styles/breakpoints";
 
 
 export const FormAdressContainer=styled.form`
@@ -19,6 +18,7 @@ export const FormAdressContainer=styled.form`
         font-family:${props=>props.theme.fonts.raleway};
         margin-left:1rem;
     }
+    
 `
 
 export const CityContainer=styled.div`

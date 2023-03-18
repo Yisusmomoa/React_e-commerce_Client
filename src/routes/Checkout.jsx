@@ -2,9 +2,9 @@ import React, { useContext } from 'react'
 import styled, { ThemeProvider } from 'styled-components'
 import { theme } from '../styles/theme'
 
-import FormAdress from '../components/Checkout/FormAdress'
-import Payment from '../components/Checkout/Payment'
-import CartCheckout from '../components/Checkout/CartCheckout'
+import FormAdress from '../components/Checkout/FormAdress/FormAdress'
+import Payment from '../components/Checkout/Payment/Payment'
+import CartCheckout from '../components/Checkout/CartCheckout/CartCheckout'
 const CheckoutStyled=styled.div`
   background-color:${(props)=>props.theme.colors.fondo};
   min-height: 65vh;
