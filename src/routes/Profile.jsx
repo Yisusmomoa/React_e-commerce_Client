@@ -127,6 +127,7 @@ const Profile = () => {
         </Profile_Aside>
 
         <ProfileSubnavbar/>
+        
         <Outlet/>
       </ProfileContainer>
     </ThemeProvider>

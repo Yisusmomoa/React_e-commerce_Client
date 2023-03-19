@@ -11,7 +11,7 @@ import Swal from 'sweetalert2';
 import { useNavigate } from 'react-router-dom';
 
 const CartCheckout = () => {
-  const {cart, total}=useContext(CartContext)
+  const {cart, total, setCart}=useContext(CartContext)
   const navigate=useNavigate()
 
   //#region MakeBuy
@@ -39,7 +39,11 @@ const CartCheckout = () => {
           Swal.fire({
               icon: 'success',
               title: 'successfully'
-          }).then(()=>navigate('/home'))
+          }).then(()=>{
+            localStorage.removeItem("cart")
+            setCart([])
+            navigate('/home')
+          })
       }
       else if(isError){
           console.log(error)

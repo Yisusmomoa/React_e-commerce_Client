@@ -4,15 +4,18 @@ import { Link, NavLink } from "react-router-dom";
 
 export const ProfileContainer=styled.div`
     height:auto;
-    width:100%;
+    width:auto;
     display:flex;
-    flex-wrap:wrap;
+    
     border:1px solid ${props=>props.theme.colors.Border};
     background-color:${(props)=>props.theme.colors.fondo};
     font-family:${props=>props.theme.fonts.raleway};
     /* justify-content: center; */
     align-items: center;
     margin: 0 auto;
+    @media(${device.sm}){
+        flex-wrap:wrap;
+    }
 `
 
 export const Profile_Aside=styled.aside`

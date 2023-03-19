@@ -117,6 +117,7 @@ const CartProvider = ({children}) => {
 
   const data={
     cart,
+    setCart,
     total,
     addProduct,
     removeProduct,

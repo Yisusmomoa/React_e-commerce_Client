@@ -10,10 +10,16 @@ export const buys=createApi({
                 method:'POST',
                 body
             })
-        })
+        }),
+        getAllBuysFromUser:builder.query({
+            query:()=>"",
+        }),
+        
     })
 })
 
 export const {
-    useMakeBuyMutation
+    useMakeBuyMutation,
+    useGetAllBuysFromUserQuery,
+    useLazyGetAllBuysFromUserQuery
 }=buys
