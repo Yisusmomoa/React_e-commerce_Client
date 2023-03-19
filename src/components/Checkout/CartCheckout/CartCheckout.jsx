@@ -13,42 +13,45 @@ import { useNavigate } from 'react-router-dom';
 const CartCheckout = () => {
   const {cart, total}=useContext(CartContext)
   const navigate=useNavigate()
-  const [makeBuy, {
-    isSuccess,
-    isLoading,
-    isError,
-    error
-  }]=useMakeBuyMutation()
-  const handleMakeBuy=()=>{
-    console.log(cart)
-    makeBuy(cart)
-  }
-  useEffect(() => {
-    if(isLoading){
-        Swal.fire({
-            title:'Loading',
-            allowEscapeKey: false,
-            allowOutsideClick: false,
-            didOpen:()=>{
-                Swal.showLoading()
-            }
-        })
+
+  //#region MakeBuy
+    const [makeBuy, {
+      isSuccess,
+      isLoading,
+      isError,
+      error
+    }]=useMakeBuyMutation()
+    const handleMakeBuy=()=>{
+      makeBuy(cart)
     }
-    if (isSuccess) {
-        Swal.fire({
-            icon: 'success',
-            title: 'successfully'
-        }).then(()=>navigate('/home'))
-    }
-    else if(isError){
-        console.log(error)
-        Swal.fire({
-            icon: 'error',
-            title: 'Oops...',
-            text: error?.data?.message,
-        })
-    }
-  }, [isLoading]);
+    useEffect(() => {
+      if(isLoading){
+          Swal.fire({
+              title:'Loading',
+              allowEscapeKey: false,
+              allowOutsideClick: false,
+              didOpen:()=>{
+                  Swal.showLoading()
+              }
+          })
+      }
+      if (isSuccess) {
+          Swal.fire({
+              icon: 'success',
+              title: 'successfully'
+          }).then(()=>navigate('/home'))
+      }
+      else if(isError){
+          console.log(error)
+          Swal.fire({
+              icon: 'error',
+              title: 'Oops...',
+              text: error?.data?.message,
+          })
+      }
+    }, [isLoading]);
+  //#endregion MakeBuy
+
   return (
     <div>
       <h2>

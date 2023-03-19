@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import {device, deviceMin} from '../../../styles/breakpoints'
 
 export const CartCheckoutContainer=styled.div`
     width:100%;
@@ -7,7 +8,13 @@ export const CartCheckoutContainer=styled.div`
     flex-direction: column;
     justify-content: space-evenly;
     align-items: center;
-
+    
+    @media(${device.lg}){
+        height:auto;
+    }
+    @media(${device.sm}){
+        height:100%;
+    }
 `
 
 export const CartCheckout_ListCartContainer=styled.div`

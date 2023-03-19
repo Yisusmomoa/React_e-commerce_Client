@@ -1,9 +1,10 @@
 import styled from "styled-components";
+import { device, deviceMin } from "../../../styles/breakpoints";
 
 
 export const FormAdressContainer=styled.form`
     width:100%;
-    min-height:60vh;
+    height:70%;
     display:grid;
     grid-template-rows: 33% 33% 33%;
     grid-template-columns:50% 50%;
@@ -18,7 +19,9 @@ export const FormAdressContainer=styled.form`
         font-family:${props=>props.theme.fonts.raleway};
         margin-left:1rem;
     }
-    
+    @media(${device.lg}){
+        height:35vh;
+    }
 `
 
 export const CityContainer=styled.div`
