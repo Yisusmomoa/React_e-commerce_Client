@@ -6,7 +6,8 @@ import ProductBodyInfo from './ProductBodyInfo'
 import { useGetProductByIdQuery } from '../../state/store/service/ProductService'
 
 const ProductBody = ({idProd}) => { 
-    const {data, isLoading, isSuccess, isError, error}=useGetProductByIdQuery(idProd)
+    const {data, isLoading, 
+      isSuccess, isError, error}=useGetProductByIdQuery(idProd)
     const [imgs, setImgs]=useState([])
     const [productInfo, setProductInfo]=useState({})
    

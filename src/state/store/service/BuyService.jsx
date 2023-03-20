@@ -14,12 +14,18 @@ export const buys=createApi({
         getAllBuysFromUser:builder.query({
             query:()=>"",
         }),
-        
+        getBuyByIdFromUser:builder.query({
+            query:(id)=>({
+                url:`/${id}`,
+            }),
+        })
     })
 })
 
 export const {
     useMakeBuyMutation,
     useGetAllBuysFromUserQuery,
-    useLazyGetAllBuysFromUserQuery
+    useLazyGetAllBuysFromUserQuery,
+    useGetBuyByIdFromUserQuery,
+    useLazyGetBuyByIdFromUserQuery
 }=buys

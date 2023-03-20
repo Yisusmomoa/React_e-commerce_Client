@@ -16,6 +16,7 @@ import WishList from "./routes/WishList";
 import MyOrders from "./routes/MyOrders";
 import ProfileDetails from "./routes/ProfileDetails";
 import Checkout from "./routes/Checkout";
+import OrderDetail from "./routes/OrderDetail";
 
 const router=createBrowserRouter([
     {
@@ -98,6 +99,10 @@ const router=createBrowserRouter([
             {
                 path:'/checkout',
                 element:<Checkout/>
+            },
+            {
+                path:"/myorders/:id",
+                element:<OrderDetail/>
             }
         ]
     }

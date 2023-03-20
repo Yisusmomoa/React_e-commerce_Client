@@ -18,8 +18,6 @@ const MyOrders = () => {
     isError,
     error
   }=useGetAllBuysFromUserQuery()
-    console.log("🚀 ~ file: MyOrders.jsx:21 ~ MyOrders ~ data:", data)
-  
   return isSuccess&&(
     <TableContainer component={Paper} 
         sx={{ maxHeight: 550 }}
@@ -35,7 +33,7 @@ const MyOrders = () => {
             <TableBody>
               {data?.map((row) => (
                 <TableRow key={row.id} 
-                  component={Link}to={`/buy/${row.id}`} >
+                  component={Link}to={`/myorders/${row.id}`} >
                   <TableCell component="th" scope="row">
                     {row.createdAt}
                   </TableCell>

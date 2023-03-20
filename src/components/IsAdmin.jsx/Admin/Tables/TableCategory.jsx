@@ -44,7 +44,7 @@ const TableCategory = ({data, editCategory, handleDeleteCategory }) => {
               ))}
             </TableBody>
           </Table>
-        </TableContainer>
+      </TableContainer>
   )
 }
 
