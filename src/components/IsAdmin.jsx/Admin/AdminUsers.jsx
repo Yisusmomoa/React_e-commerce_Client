@@ -132,50 +132,7 @@ const AdminUsers = () => {
         title={'Users'}/>
       <hr/>
       <TableUser data={data} handleDesactivateUser={handleDesactivateUser} editUser={editUser} />
-      {/* <TableContainer component={Paper} 
-        sx={{ maxHeight: 550 }}>
-        <Table sx={{ minWidth: 850 }} 
-         stickyHeader >
-          <TableHead>
-            <TableRow>
-              <TableCell>Active</TableCell>
-              <TableCell>Id</TableCell>
-              <TableCell >username</TableCell>
-              <TableCell >email</TableCell>
-              <TableCell >role</TableCell>
-              <TableCell >updatedAt</TableCell>
-              <TableCell >createdAt</TableCell>
-              <TableCell >Edit</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {data?.map((row) => (
-              <TableRow
-                key={row.id}>
-              <TableCell sx={{maxwidth:150}}>
-                <Checkbox 
-                  onChange={(ev)=>handleDesactivateUser(row.id, ev.target.checked)}
-                checked={row.isActive} />
-              </TableCell>
-                <TableCell component="th" 
-                  scope="row"
-                  sx={{maxwidth:150}}>
-                  {row.id}
-                </TableCell>
-                <TableCell sx={{maxwidth:150}}>{row.username}</TableCell>
-                <TableCell sx={{maxwidth:150}}>{row.email}</TableCell>
-                <TableCell sx={{maxwidth:150}}>{row.RolId===1?'Admin':'Normal'}</TableCell>
-                <TableCell sx={{maxwidth:150}}>{row.updatedAt}</TableCell>
-                <TableCell sx={{maxwidth:150}}>{row.createdAt}</TableCell>
-                <TableCell sx={{width:240}}><ButtonAdmin title={'Edit'} 
-                  typeBtn={'Edit'} iconName={'Edit'} data={row}
-                  action={editUser}> </ButtonAdmin>
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer> */}
+      
     </AdminUsersContainer>
   )
 }

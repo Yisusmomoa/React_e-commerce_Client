@@ -120,7 +120,6 @@ const ProfileDetails = () => {
         })
       }
       else if(isErrorDesactivate){
-          console.log(errorDesactivate)
           Swal.fire({
               icon: 'error',
               title: 'Oops...',

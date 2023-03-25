@@ -18,6 +18,7 @@ const MyOrders = () => {
     isError,
     error
   }=useGetAllBuysFromUserQuery()
+  
   return isSuccess&&(
     <TableContainer component={Paper} 
         sx={{ maxHeight: 550 }}
@@ -56,24 +57,3 @@ const MyOrders = () => {
 export default MyOrders
 
 
-
-/*
-return isSuccess&&(
-    <MyOrdersContainer>
-      {
-        data?.map(buy=>(
-          <div key={buy.id} >
-            <p>
-              Fecha: {buy.createdAt} 
-              Products: {buy.Products[0].name}
-              Total: {buy.superTotal}
-            </p>
-            {buy.products}
-            
-          </div>
-        ))
-      }
-    </MyOrdersContainer>
-  )
-
-*/

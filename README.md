@@ -28,17 +28,16 @@ El sitio web de Tech Zone es fácil de navegar y tiene un diseño moderno y atra
 
 
 
-## Demo
+## Figma
 
-Insert gif or link to demo
-
-
+Diseño en figma de la interface
+https://www.figma.com/file/ba2njzl7hm6tTHHBWCxUcg/E-commerce?node-id=0%3A1&t=lMT4HZdLBOoQyaZF-1
 ## Run Locally
 
 Clone the project
 
 ```bash
-  git clone https://link-to-project
+  git clone https://github.com/Yisusmomoa/React_e-commerce_Client.git
 ```
 
 Go to the project directory
@@ -56,22 +55,45 @@ Install dependencies
 Start the server
 
 ```bash
-  npm run start
+  npm run dev
 ```
-
-
-## Environment Variables
-
-To run this project, you will need to add the following environment variables to your .env file
-
-`API_KEY`
-
-`ANOTHER_API_KEY`
 
 
 ## Authors
 
 - [@Yisusmomoa](https://github.com/Yisusmomoa)
-- [@DaLunaF](https://github.com/DaLunaF)
-- [@DaLunaF](https://github.com/DaLunaF)
 
+
+## Para el diseño de la interface se tomarón en cuenta los patrones y principios del diseño web y la usabilidad 
+
+### Principos del diseño web
+- principio 1: No hagas pensar al usuario (una estructura clara, pistas visuales)
+- principio 2: No agotes la paciencia del usuario (informar usando los loaders)
+- principio 3: Anticipación, ve al grano (Enfocar la atención del usuario, que algunos aspectos de la interfaz atraigan mas que otros)
+- principio 4: Convencionalidad(si algo ya jala, no le muevas, no le tires al innovador)
+- principio 5: Reversibilidad
+- principio 9. KISS
+
+### Patrones del diseño web
+- patrón 1: Simple es bueno, facilidad de escaneo, uso el escaneo con patrón Z.
+- patrón 3: navegación intuitiva, usar un diseño ("top-down")
+- patrón 4: consitencia entre pantallas
+- patrón 5: selección de color, que haya buen contraste entre ellos, personalmente me pegue a la regla de color 60-30-10
+- patrón 7: responsive
+
+### leyes de usabilidad:
+
+- Fitt's law: que los botones o elementos que tenga que hacer click tengan un tamaño correcto, grande.
+
+- Hick's law: menor numero de opciones, dividir en opciones más pequeñas.
+
+- Jakob's law: replicar la estructura del mismo sector que tu pagina, amazon, ebay, mercado libre. así el usuario no se pierde, es una estructura que funciona y es familiar.
+
+- law of proximity: datos que tengan que ver entre ellos, ponlos juntos. Productos más vendidos, más populares, novedades, filtros.
+
+- Serial position effect: siempre en la parte izq, está el logo/inicio, y del lado der. el botón con el que quiero que interactues, carrito, iniciar sesión, etc. las partes más importantes.
+
+## Gracias codellege
+
+
+- A la gente de Codellege y Softek, por la oportunidad de tomar este curso y mejorar mis habilidades como desarrollador.

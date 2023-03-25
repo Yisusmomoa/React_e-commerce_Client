@@ -63,12 +63,6 @@ const Form = ({typeForm}) => {
         }
     //#endregion forms
 
-    // useEffect(() => {
-    //     if(dataMe){
-    //         navigate("/home")
-    //     }
-    // }, []);
-
     useEffect(() => {
         if(isLoading){
             Swal.fire({
@@ -243,24 +237,6 @@ const Form = ({typeForm}) => {
                         fontSize:"12px"}}>This field is required</span>}
                     </div>
                 </ContainerInput>
-                
-                {/* <ContainerInput>
-                    <ContainerInputForm>
-                        <HttpsIcon fontSize='large'/>
-                        <InputForm type='password' 
-                            placeholder='Repeat your password'
-                            {...register("passwordConfirm", {required:true})}/>
-                        <VisibilityOutlinedIcon fontSize='small'
-                        style={{position:'absolute', 
-                            right: '15px', 
-                            cursor:'pointer' }} />
-                    </ContainerInputForm>
-                    <div>
-                    {errors.password?.type==='required' && 
-                        <span style={ {color:"red",
-                        fontSize:"12px"}}>This field is required</span>}
-                    </div>
-                </ContainerInput> */}
 
                 <ButtonForm >Register</ButtonForm>
             </ContainerInputs>
@@ -270,8 +246,6 @@ const Form = ({typeForm}) => {
                 <NavBarLink to={'/signIn'}>I am already a member</NavBarLink>
             </ContainerImg>
         </FormStyled>
-        {/* {isLoading&&<span>Loading...</span>} */}
-        {/* {isError&&<span>{error?.data.message}</span>} */}
     </ThemeProvider>
   )
 }

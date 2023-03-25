@@ -37,8 +37,6 @@ const Profile = () => {
     logout()
     localStorage.removeItem("cart")
     window.location.href = '/home'
-
-    // TODO: manejar con un componente o una pagina, para evitar las recargas de paginas
   }
 
   //#region UpdateImgProfile
@@ -47,11 +45,8 @@ const Profile = () => {
       const formData = new FormData();
       const id=data?.result.id
       const avatar=ev.target.files[0]
-      // const avatar=ev.target.value
-      // const avatar = fileInputRef.current.files[0];
       formData.append("avatar", avatar)
       formData.append("id", id);
-      console.log('El archivo seleccionado es:', formData.get("avatar"));
       UpdateUserImgMutation(formData)
     }
 
@@ -82,13 +77,6 @@ const Profile = () => {
     }, [isLoadingImg]);
   //#endregion UpdateImgProfile
 
-  // useEffect(() => {
-  //   if(isSuccessLogout){
-  //     console.log("🚀 ~ file: Profile.jsx:87 ~ useEffect ~ isSuccessLogout:", isSuccessLogout)
-  //     trigger()
-  //     return navigate('/home')
-  //   }
-  // }, [isLoadingLogout]);
 
   return (
     <ThemeProvider theme={theme}>
