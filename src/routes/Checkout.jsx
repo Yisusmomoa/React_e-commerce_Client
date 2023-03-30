@@ -5,6 +5,9 @@ import {device, deviceMin} from '../styles/breakpoints'
 import FormAdress from '../components/Checkout/FormAdress/FormAdress'
 import Payment from '../components/Checkout/Payment/Payment'
 import CartCheckout from '../components/Checkout/CartCheckout/CartCheckout'
+import { Navigate } from 'react-router-dom'
+import { useMeQuery } from '../state/store/service/UserService'
+
 const CheckoutStyled=styled.div`
   background-color:${(props)=>props.theme.colors.fondo};
   height: auto;
@@ -37,15 +40,20 @@ const CheckoutStyled=styled.div`
 `
 
 const Checkout = () => {
-    
-  return (
-    <ThemeProvider theme={theme}>
-        <CheckoutStyled>
-            <FormAdress/>
-            <Payment/>
-            <CartCheckout/>
-        </CheckoutStyled>
-    </ThemeProvider>
+  const { data, isLoading, isSuccess} = useMeQuery();
+  console.log("🚀 ~ file: Checkout.jsx:44 ~ Checkout ~ data:", data)
+  
+  return !isLoading && (
+    data!=undefined?(
+      <ThemeProvider theme={theme}>
+          <CheckoutStyled>
+              <FormAdress/>
+              <Payment/>
+              <CartCheckout/>
+          </CheckoutStyled>
+      </ThemeProvider>
+    )
+    :<Navigate to="/" replace={true}  />
   )
 }
 

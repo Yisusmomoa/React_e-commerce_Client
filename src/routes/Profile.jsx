@@ -1,5 +1,5 @@
 import React, { useRef, useEffect } from 'react'
-import { Outlet, redirect, useNavigate } from 'react-router-dom'
+import { Navigate, NavigationType, Outlet, redirect, useNavigate } from 'react-router-dom'
 import { ThemeProvider } from 'styled-components'
 import { theme } from '../styles/theme'
 import { ButtonLogout, ImgProfile, InputFile, ProfileContainer,
@@ -17,7 +17,7 @@ import CameraAltOutlinedIcon from '@mui/icons-material/CameraAltOutlined';
 
 const Profile = () => {
   const navigate=useNavigate()
-
+  
   const fileInputRef =useRef(null);
   const formRef = useRef(null);
   //#region Services
@@ -27,7 +27,7 @@ const Profile = () => {
     const [UpdateUserImgMutation, {isLoading:isLoadingImg, isSuccess:isSuccessImg,
       isError:isErrorImg, error:errorImg}]=useUpdateUserImgMutation()
 
-    const { data} = useMeQuery();
+    const { data, isLoading:isLoadingUser} = useMeQuery();
     const [logout, {isLoading:isLoadingLogout, isSuccess:isSuccessLogout}]=useLogoutMutation();
     const [trigger, {data:me, isLoading:isLoadingMe, 
       isUninitialized:isUninitializedMe, isFetching:isFetchingMe}]=useLazyMeQuery()
@@ -78,8 +78,9 @@ const Profile = () => {
   //#endregion UpdateImgProfile
 
 
-  return (
-    <ThemeProvider theme={theme}>
+  return !isLoadingUser && (
+    data!=undefined?(
+      <ThemeProvider theme={theme}>
       <ProfileContainer>
 
         <Profile_Aside>
@@ -118,7 +119,9 @@ const Profile = () => {
         
         <Outlet/>
       </ProfileContainer>
-    </ThemeProvider>
+      </ThemeProvider>
+    )
+    :<Navigate to="/" replace={true}  />
   )
 }
 

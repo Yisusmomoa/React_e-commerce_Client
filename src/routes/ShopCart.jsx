@@ -6,7 +6,9 @@ import InfoShopCart from '../components/ShopCart/InfoShopCart';
 import { device } from '../styles/breakpoints';
 import CartContext from '../state/context/CartContext';
 import Empty_cart from '../assets/ShopCart/Empty_cart.svg'
-import { ImgForm } from '../components/Form/Form.style';
+import { Navigate } from 'react-router-dom';
+import { useMeQuery } from '../state/store/service/UserService';
+
 
 const ShopCartStyled=styled.div`
   display:grid;
@@ -25,9 +27,11 @@ const ShopCartStyled=styled.div`
 `
 const ShopCart = () => {
   const {cart, removeProduct, updateAmount} = useContext(CartContext)
-
-  console.log(cart.length)
-  return (
+  const {
+    data, isLoading, isSuccess
+  }=useMeQuery()
+  return !isLoading &&
+  data!=undefined?(
     <ThemeProvider theme={theme}>
         <ShopCartStyled>
           {
@@ -47,6 +51,7 @@ const ShopCart = () => {
      
     </ThemeProvider>
   )
+  :<Navigate to="/" replace={true}  />
 }
 
 export default ShopCart

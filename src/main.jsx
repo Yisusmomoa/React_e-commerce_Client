@@ -5,7 +5,6 @@ import router from './router'
 import { store } from './state/store/store'
 import { Provider } from 'react-redux'
 import { CartProvider } from './state/context/CartContext'
-import { UserProvider } from './state/context/UserContext'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
