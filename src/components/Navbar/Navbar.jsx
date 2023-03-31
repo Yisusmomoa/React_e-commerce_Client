@@ -12,17 +12,20 @@ import { theme } from '../../styles/theme'
 import { NavBarStyled} from './NavBar.style'
 import { useLazyMeQuery, useMeQuery } from '../../state/store/service/UserService';
 
-
 const Navbar = () => {
   const [extendNavbar, setExtendNavbar] = useState(false)
   const [showSearchInput, setShowSearchInput] = useState(false)
-  const {data, isLoading, isSuccess, isError, error}=useMeQuery()
+  const {data, isLoading, isSuccess, isError, error}=useMeQuery()  
+
   const handleClick=()=>{
       setExtendNavbar(!extendNavbar)
+
   }
   const handleClickSearch=()=>{
       setShowSearchInput(!showSearchInput)
   }
+
+
   return (
     <ThemeProvider theme={theme}>
       <NavBarStyled>
@@ -31,8 +34,6 @@ const Navbar = () => {
         {
           data&&<CartProfile/>
         }
-        {/* <CartProfile/> */}
-        
 
         <NavbarResponsive 
             extendNavbar={extendNavbar} 
@@ -42,6 +43,7 @@ const Navbar = () => {
         </NavBarStyled>
       
       <NavbarExtended extendNavbar={extendNavbar}/>
+
     </ThemeProvider>
   )
 }

@@ -82,6 +82,9 @@ export const NavbarHeaderOptsRespopnsive=styled.div`
 `
 
 export const NavBarExtendedContainer=styled.div`
+ position: fixed;
+    z-index: 999;
+    left: 0;
     display:flex;
     flex-direction:column;
     width:75vw;

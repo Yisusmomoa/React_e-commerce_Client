@@ -7,50 +7,53 @@ import { useCreateCategoryMutation } from '../../../../state/store/service/Categ
 import Swal from 'sweetalert2'
 
 const AddCategory = ({isOpenModalAdd, closeModalAdd}) => {
-    const [createCategory,
-    {
-        isError,
-        isLoading,
-        isSuccess,
-        error
-    }]=useCreateCategoryMutation()
-    const onSubmit=(categ)=>{
-        console.log(categ)
-        createCategory(categ)
-    }
-    const {
-        register:create,
-        handleSubmit,
-        watch, 
-        formState:{errors}
-    }=useForm()
 
-    useEffect(() => {
-        if(isLoading){
-            Swal.fire({
-                title:'Loading',
-                allowEscapeKey: false,
-                allowOutsideClick: false,
-                didOpen:()=>{
-                    Swal.showLoading()
-                }
-            })
+    //#region Services
+        const [createCategory,
+        {
+            isError,
+            isLoading,
+            isSuccess,
+            error
+        }]=useCreateCategoryMutation()
+        const onSubmit=(categ)=>{
+            console.log(categ)
+            createCategory(categ)
         }
-        if (isSuccess) {
-            Swal.fire({
-                icon: 'success',
-                title: 'successfull created'
-            }).then(()=>closeModalAdd())
-        }
-        else if(isError){
-            console.log(error)
-            Swal.fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: error?.data.message,
-            })
-        }
-    }, [isLoading]);
+        const {
+            register:create,
+            handleSubmit,
+            watch, 
+            formState:{errors}
+        }=useForm()
+
+        useEffect(() => {
+            if(isLoading){
+                Swal.fire({
+                    title:'Loading',
+                    allowEscapeKey: false,
+                    allowOutsideClick: false,
+                    didOpen:()=>{
+                        Swal.showLoading()
+                    }
+                })
+            }
+            if (isSuccess) {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'successfull created'
+                }).then(()=>closeModalAdd())
+            }
+            else if(isError){
+                console.log(error)
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: error?.data.message,
+                })
+            }
+        }, [isLoading]);
+    //#endregion Services
 
   return (
     <Modal isOpen={isOpenModalAdd} 
