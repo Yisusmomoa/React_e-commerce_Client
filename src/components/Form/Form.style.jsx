@@ -46,8 +46,17 @@ export const ContainerImg=styled.div`
 export const ContainerInput=styled.div`
     width:100%;
     display:flex;
+    flex-direction:column;
     align-items: center;
     justify-content: center;
+    div{
+        display:flex;
+        flex-direction:row;
+    }
+`
+
+export const ContainerInputForm=styled.div`
+    position:relative;
 `
 
 export const InputForm=styled.input`
@@ -60,6 +69,7 @@ export const InputForm=styled.input`
     margin-left:5px;
     background-color:${(props)=>props.theme.colors.fondo};
 `
+
 
 export const ButtonForm=styled.button`
     color:${(props)=>props.theme.colors.Letras2};

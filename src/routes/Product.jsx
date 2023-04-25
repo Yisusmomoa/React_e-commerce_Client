@@ -1,7 +1,8 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled, { ThemeProvider } from 'styled-components'
 import { theme } from '../styles/theme'
 import ProductBody from '../components/ProductBody/ProductBody'
+import { useParams } from 'react-router-dom'
 
 const ProductStyled=styled.div`
  background-color:${(props)=>props.theme.colors.fondo};
@@ -11,10 +12,13 @@ const ProductStyled=styled.div`
   text-align:center;
 `
 const Product = () => {
+  const params=useParams()
+  const [idProd, setidProd] = useState(params.id);
+  // console.log(idProd)
   return (
     <ThemeProvider theme={theme}>
       <ProductStyled>
-        <ProductBody/>
+        <ProductBody idProd={idProd}/>
       </ProductStyled>
     </ThemeProvider>
   )

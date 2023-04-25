@@ -3,23 +3,56 @@ import { device, deviceMin } from "../../styles/breakpoints";
 import { Link, NavLink } from "react-router-dom";
 
 export const ProfileContainer=styled.div`
+    height:auto;
+    width:auto;
     display:flex;
+    
     border:1px solid ${props=>props.theme.colors.Border};
     background-color:${(props)=>props.theme.colors.fondo};
-    height:auto;
-    width:100%;
     font-family:${props=>props.theme.fonts.raleway};
+    /* justify-content: center; */
+    align-items: center;
+    margin: 0 auto;
+    @media(${device.sm}){
+        flex-wrap:wrap;
+    }
 `
 
 export const Profile_Aside=styled.aside`
-    min-width:350px;
+    width:30%;
     /* height:auto; */
     height:85vh;
     display:flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    border:1px solid ${props=>props.theme.colors.Border};
+    /* border:1px solid ${props=>props.theme.colors.Border}; */
+    @media(${device.sm}){
+        width:50%;
+        display:none;
+    }
+`
+
+export const Profile_SubNavbar=styled.div`
+    width:100%;
+    /* height:auto; */
+    height:auto;
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom:15px;
+    @media(${deviceMin.sm}){
+        display:none;
+    }
+`
+export const SubNavBar_InfoUser=styled.div`
+
+`
+export const SubNavBar_Links=styled.div`
+    display:flex;
+    width:80%;
+    height:auto;
+    gap:5px;
 `
 
 export const Profile_Link=styled(Link)`
@@ -65,4 +98,51 @@ export const ButtonLogout=styled.button`
         background-color:${(props)=>props.theme.colors.DeleteHover};
     }
 
+`
+export const ProfilePic=styled.form`
+    position: relative;
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    overflow: hidden;
+    background-color: #111;
+   
+`
+
+export const ImgProfile=styled.img`
+    width:100%;
+    height:100%;
+    border-radius: 50%;
+    cursor:pointer;
+    object-fit: cover;
+    opacity: 1;
+    transition: opacity .2s ease-in-out;
+    &:hover{
+        opacity: .5;
+    }
+`
+
+export const ProfilePicContent=styled.div`
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    opacity: 0;
+    transition: opacity .2s ease-in-out;
+    &:hover{
+        opacity: 1;
+    }
+    
+`
+
+export const InputFile=styled.input`
+opacity: 0;
+   position: absolute;
+   z-index: -1;
 `

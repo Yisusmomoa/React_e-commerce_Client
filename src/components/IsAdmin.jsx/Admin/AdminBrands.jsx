@@ -1,98 +1,124 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from "styled-components";
 import { device, deviceMin } from "../../../styles/breakpoints";
 import SubNavbar from '../SubNavbar/SubNavbar';
 
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
-import ButtonAdmin from './ButtonAdmin';
+import { useModal } from '../../../state/hooks/useModal';
+
+import { useDeleteBrandMutation, useGetAllBrandsQuery } from '../../../state/store/service/BrandService';
+import AddBrand from './BrandModals/AddBrand';
+import Swal from 'sweetalert2';
+import UpdateBrand from './BrandModals/UpdateBrand';
+import TableBrand from './Tables/TableBrand';
+
 
 const AdminBrandsContainer=styled.div`
   width:100%;
   height:100%;
 `
 
-function createData(
-  id,
-  name,
-  imgBrand,
-  createdAt,
-  updatedAt,
-) {
-  return { id, name,imgBrand, createdAt, updatedAt };
-}
-
-const rows = [
-  createData(1, "Brand1", "imgBrand1",6.0,1.0),
-  createData(2, "Brand2","imgBrand2", 9.0,1.0),
-  createData(3, "Brand3","imgBrand3", 16.0,1.0 ),
-  createData(4, "Brand4","imgBrand4", 3.7, 10),
-  createData(5, "Brand5","imgBrand5", 16.0, 5),
-];
-
 const AdminBrands = () => {
-  const showModalBrand=()=>{
-    alert("Admin Brand")
-  }
+
+  //#region Services
+    const {
+      data, isSuccess,isLoading, isError,error
+    }=useGetAllBrandsQuery()
+    const [
+      deleteBrand,
+      {isSuccess:isSuccessDelete,
+      isLoading:isLoadingDelete,
+      isError:isErrorDelete,
+      error:errorDelete}
+    ]=useDeleteBrandMutation()
+  //#endregion Services
+
+  //#region Modals
+    const [
+      isOpenModalAdd,
+      openModalAdd,
+      closeModalAdd
+    ]=useModal()
+
+    const [
+      isOpenModalUpdate,
+      openModalUpdate,
+      closeModalUpdate
+    ]=useModal()
+  //#endregion Modals
+
   const searchBrand=(name)=>{
     console.log("name Brand", name)
   }
-  const deleteBrand=(id)=>{
-    console.log("deleteBrand", id)
-  }
-  const editBrand=(id)=>{
-    console.log("editBrand", id)
-  }
+
+  //#region deleteBrand
+    const handleDeleteBrand=(id)=>{
+      Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          deleteBrand(id)  
+        }
+      })
+    }
+    useEffect(() => {
+      if(isLoadingDelete){
+          Swal.fire({
+              title:'Loading',
+              allowEscapeKey: false,
+              allowOutsideClick: false,
+              didOpen:()=>{
+                  Swal.showLoading()
+              }
+          })
+      }
+      if (isSuccessDelete) {
+        Swal.fire(
+          'Deleted!',
+          'Your register has been deleted.',
+          'success'
+        )
+      }
+      else if(isErrorDelete){
+          console.log(errorDelete)
+          Swal.fire({
+              icon: 'error',
+              title: 'Oops...',
+              text: errorDelete?.data.message,
+          })
+      }
+    }, [isLoadingDelete]);
+  //#endregion deleteBrand
+
+  //#region editBrand
+    const [brandToUpdate, setBrandToUpdate]=useState({})
+    const editBrand=(data)=>{
+      setBrandToUpdate(data)
+      openModalUpdate()
+    }
+  //#endregion editBrand
+
   return (
     <AdminBrandsContainer>
-      <SubNavbar showModal={showModalBrand} 
+      <AddBrand isOpenModalAdd={isOpenModalAdd}
+        closeModalAdd={closeModalAdd}/>
+      
+      <UpdateBrand
+        isOpenModalUpdate={isOpenModalUpdate}
+        closeModalUpdate={closeModalUpdate}
+        brandToUpdate={brandToUpdate}
+      />
+     
+      <SubNavbar showModal={openModalAdd} 
         search={searchBrand} title={'Brands'}/>
       <hr/>
-      <TableContainer component={Paper} 
-        sx={{ maxHeight: 550 }}>
-        <Table sx={{ minWidth: 850 }} 
-         stickyHeader >
-          <TableHead>
-            <TableRow>
-              <TableCell>Id</TableCell>
-              <TableCell >Name</TableCell>
-              <TableCell >updatedAt</TableCell>
-              <TableCell >createdAt</TableCell>
-              <TableCell >Edit</TableCell>
-              <TableCell >Delete</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {rows.map((row) => (
-              <TableRow
-                key={row.id}
-              >
-                <TableCell component="th" 
-                  scope="row"
-                  sx={{maxwidth:180}}>
-                  {row.id}
-                </TableCell>
-                <TableCell sx={{maxwidth:180}}>{row.name}</TableCell>
-                <TableCell sx={{maxwidth:180}}>{row.updatedAt}</TableCell>
-                <TableCell sx={{maxwidth:180}}>{row.createdAt}</TableCell>
-                <TableCell sx={{width:280}}><ButtonAdmin title={'Edit'} 
-                  typeBtn={'Edit'} iconName={'Edit'} id={row.id}
-                  action={editBrand}> </ButtonAdmin>
-                </TableCell>
-                <TableCell sx={{width:280}}><ButtonAdmin title={'Delete'}
-                  typeBtn={'Delete'} iconName={'Delete'} id={row.id}
-                  action={deleteBrand}> </ButtonAdmin>
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
+      <TableBrand data={data} editBrand={editBrand} handleDeleteBrand={handleDeleteBrand}/>
+      
     </AdminBrandsContainer>
   )
 }

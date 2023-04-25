@@ -10,13 +10,14 @@ const CarouselStyled=styled(Carousel)`
         display:none;
     }
 `
-const CarouselProducts = () => {
+const CarouselProducts = ({products}) => {
   return (
     <CarouselStyled>
-      <CardProduct/>
-      <CardProduct/>
-      <CardProduct/>
-      <CardProduct/>
+      {
+        products?.map(prod=>(
+          <CardProduct key={prod.id} product={prod}/>
+        ))
+      }
     </CarouselStyled>
   )
 }

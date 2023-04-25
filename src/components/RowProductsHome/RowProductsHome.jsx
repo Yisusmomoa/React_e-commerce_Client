@@ -2,13 +2,14 @@ import React from 'react'
 import { RowProductsHomeStyled } from './RowProductsHome.style'
 import CardProduct from '../CardProduct/CardProduct'
 
-const RowProductsHome = () => {
+const RowProductsHome = ({products}) => {
   return (
     <RowProductsHomeStyled>
-        <CardProduct/>
-        <CardProduct/>
-        <CardProduct/>
-        <CardProduct/>
+      {
+        products?.map(prod=>(
+          <CardProduct key={prod.id} product={prod}/>
+        ))
+      }
     </RowProductsHomeStyled>
   )
 }

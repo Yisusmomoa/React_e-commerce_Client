@@ -1,17 +1,20 @@
 import React from 'react'
 import { DropdownCategoryStyled } from './DropdownCategory.style'
 import { ThemeProvider } from 'styled-components'
-import { theme } from '../../styles/theme'
+import { theme } from '../../styles/theme';
+import { useGetAllCategoriesQuery } from '../../state/store/service/CategoryService';
 
 const DropdownCategory = () => {
+  const {data, isError, isLoading, isSuccess}=useGetAllCategoriesQuery()
   return (
     <ThemeProvider theme={theme}>
       <DropdownCategoryStyled>
-          <option value="fruit">Fruit</option>
+        {
+          data?.results.map(categ=>(
+            <option value={categ.id} key={categ.id}>{categ.name}</option>
+          ))
+        }
 
-          <option value="vegetable">Vegetable</option>
-
-          <option value="meat">Meat</option>
       </DropdownCategoryStyled>
     </ThemeProvider>
   )

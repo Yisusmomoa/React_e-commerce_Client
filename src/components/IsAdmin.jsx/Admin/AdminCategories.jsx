@@ -1,95 +1,113 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import Swal from 'sweetalert2'
 import styled from "styled-components";
 import { device, deviceMin } from "../../../styles/breakpoints";
-import SubNavbar from '../SubNavbar/SubNavbar';
 
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
-import ButtonAdmin from './ButtonAdmin';
+import SubNavbar from '../SubNavbar/SubNavbar';
+import AddCategory from './CategoriesModals/AddCategory';
+import UpdateCategory from './CategoriesModals/UpdateCategory';
+import TableCategory from './Tables/TableCategory';
+
+import { useModal } from '../../../state/hooks/useModal';
+
+import { useDeleteCategoryMutation, useGetAllCategoriesQuery } from '../../../state/store/service/CategoryService';
 
 const AdminCategoriesContainer=styled.div`
   width:100%;
   height:100%;
 `
 
-function createData(
-  id,
-  name,
-  createdAt,
-  updatedAt,
-) {
-  return { id, name, createdAt, updatedAt };
-}
-
-const rows = [
-  createData(1, "Categoria1", 6.0,1.0),
-  createData(2, "Categoria2", 9.0,1.0),
-  createData(3, "Categoria3", 16.0,1.0 ),
-  createData(4, "Categoria4", 3.7, 10),
-  createData(5, "Categoria5", 16.0, 5),
-];
-
 const AdminCategories = () => {
-  const showModalCategories=()=>{
-    alert("Admin Categories")
-  }
+  //#region Service
+    const {data, isError, isLoading, isSuccess, error}=useGetAllCategoriesQuery()
+    const [deleteCategory,
+      {isSuccess:isSuccessDelete, 
+        isLoading:isLoadingDelete, 
+        isError:isErrorDelete, 
+        error:errorDelete}]=useDeleteCategoryMutation()
+  //#endregion Service
+
+  //#region Modals
+    const [isOpenModalAdd, openModalAdd, closeModalAdd]=useModal()
+    const [isOpenModalUpdate, openModalUpdate, closeModalUpdate]=useModal()
+    const [categoryToUpdate, setCategoryToUpdate]=useState({})
+  //#endregion Modals
+
   const searchCategories=(name)=>{
     console.log("name Categories", name)
   }
-  const deleteCategory=(id)=>{
-    console.log("deleteCategory", id)
+
+  //#region deleteCategory
+    const handleDeleteCategory=(id)=>{
+      Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          deleteCategory(id)  
+        }
+      })
+    }
+    useEffect(() => {
+      if(isLoadingDelete){
+          Swal.fire({
+              title:'Loading',
+              allowEscapeKey: false,
+              allowOutsideClick: false,
+              didOpen:()=>{
+                  Swal.showLoading()
+              }
+          })
+      }
+      if (isSuccessDelete) {
+        Swal.fire(
+          'Deleted!',
+          'Your register has been deleted.',
+          'success'
+        )
+      }
+      else if(isErrorDelete){
+          console.log(errorDelete)
+          Swal.fire({
+              icon: 'error',
+              title: 'Oops...',
+              text: errorDelete?.data.message,
+          })
+      }
+    }, [isLoadingDelete]);
+  //#endregion deleteCategory
+  
+  const editCategory=(data)=>{
+    setCategoryToUpdate(data)
+    openModalUpdate()
   }
-  const editCategory=(id)=>{
-    console.log("editCategory", id)
-  }
+
+
   return (
-    <AdminCategoriesContainer>
-      <SubNavbar showModal={showModalCategories} 
-        search={searchCategories}
-        title={'Categories'}/>
-      <hr/>
-      <TableContainer component={Paper} sx={{ maxHeight: 550 }}>
-        <Table sx={{ minWidth: 650 }} stickyHeader>
-          <TableHead>
-            <TableRow>
-              <TableCell sx={{maxwidth:180}}>Id</TableCell>
-              <TableCell sx={{maxwidth:180}} >Name</TableCell>
-              <TableCell sx={{maxwidth:180}} >updatedAt</TableCell>
-              <TableCell sx={{maxwidth:180}} >createdAt</TableCell>
-              <TableCell sx={{width:280}}>Edit</TableCell>
-              <TableCell sx={{width:280}}>Delete</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {rows.map((row) => (
-              <TableRow
-                key={row.id}
-              >
-                <TableCell component="th" scope="row">
-                  {row.id}
-                </TableCell>
-                <TableCell >{row.name}</TableCell>
-                <TableCell >{row.updatedAt}</TableCell>
-                <TableCell >{row.createdAt}</TableCell>
-                <TableCell ><ButtonAdmin title={'Edit'} 
-                  typeBtn={'Edit'} iconName={'Edit'} id={row.id}
-                  action={editCategory}> </ButtonAdmin>
-                </TableCell>
-                <TableCell ><ButtonAdmin title={'Delete'}
-                  typeBtn={'Delete'} iconName={'Delete'} id={row.id}
-                  action={deleteCategory}> </ButtonAdmin>
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
-    </AdminCategoriesContainer>
+    <>
+      <AddCategory isOpenModalAdd={isOpenModalAdd} 
+        closeModalAdd={closeModalAdd}/>
+
+      <UpdateCategory isOpenModalUpdate={isOpenModalUpdate}
+        closeModalUpdate={closeModalUpdate} 
+        category={categoryToUpdate}/>
+
+      <AdminCategoriesContainer>
+        <SubNavbar showModal={openModalAdd} 
+          search={searchCategories}
+          title={'Categories'}/>
+        <hr/>
+        
+        <TableCategory data={data} editCategory={editCategory} handleDeleteCategory={handleDeleteCategory}/>
+               
+      </AdminCategoriesContainer>
+
+    </>
   )
 }
 
