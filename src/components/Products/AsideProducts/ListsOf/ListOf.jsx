@@ -12,6 +12,24 @@ import FormLabel from '@mui/material/FormLabel';
 const ListOf = ({info, title, select}) => {
   return (
     <ListOfContainer>
+            {
+                info?.map(element=>(
+                    <label key={element.id}><input type="radio" onClick={()=>select(element?.id)}
+                name={title} value={element?.id}/>{element?.name}</label>
+                ))
+            }   
+            
+    </ListOfContainer>
+  )
+}
+
+export default ListOf
+
+
+
+
+/*
+<ListOfContainer>
         <FormControl>
             <FormLabel id="demo-radio-buttons-group-label">{title}</FormLabel>
             <RadioGroup
@@ -27,11 +45,8 @@ const ListOf = ({info, title, select}) => {
             </RadioGroup>
         </FormControl>
     </ListOfContainer>
-  )
-}
 
-export default ListOf
-
+*/
 
 /*
 <FormGroup>

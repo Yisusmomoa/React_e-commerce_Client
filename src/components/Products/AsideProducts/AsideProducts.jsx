@@ -5,30 +5,15 @@ import { Price_Container, Products_AsideOptions } from './AsideProducts.style'
 import { useGetAllCategoriesQuery } from '../../../state/store/service/CategoryService'
 import { useGetAllBrandsQuery } from '../../../state/store/service/BrandService';
 
-const AsideProducts = () => {
+const AsideProducts = ({
+  selectCategory, selectBrand, 
+  setPriceMinHandle, setPriceMaxHandle
+}) => {
   const {data, isError, isSuccess, error}=useGetAllCategoriesQuery();
   const {
     data:dataBrand, isSuccess:isSuccessBrand, 
     isError:isErrorBrand,error:errorBrand
   }=useGetAllBrandsQuery()
-
-
-  const [priceMin, setPriceMin] = useState(0);
-  const [priceMax, setPriceMax] = useState(0);
-  
-  const selectCategory=(id)=>{
-    console.log("Select category ", id)
-  }
-  const selectBrand=(id)=>{
-    console.log("Select brand ", id)
-  }
-
-  const setPriceMinHandle=(price)=>{
-    setPriceMin(price)
-  }
-  const setPriceMaxHandle=(price)=>{
-    setPriceMax(price)
-  }
   
   return (
     <Products_AsideOptions>

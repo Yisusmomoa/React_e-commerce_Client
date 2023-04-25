@@ -22,6 +22,7 @@ const IsAdmin = () => {
             <Profile_Link to={'/admin/brands'}>Brands</Profile_Link>
             <Profile_Link to={'/admin/categories'}>Categories</Profile_Link>
             <Profile_Link to={'/admin/users'}>Users</Profile_Link>
+            <Profile_Link to={'/admin/sales'}>Sales</Profile_Link>
             
           </IsAdmin_Aside>
 

@@ -25,6 +25,8 @@ const AdminProductsContainer=styled.div`
 const AdminProducts = () => {
 
   //#region Services
+  //cuando son gets, me regresa un objeto
+  //data, isSuccess, isError, isLoading, error
     const {
       data, isSuccess, isError,error
     }=useGetAllProductsQuery()
@@ -37,8 +39,11 @@ const AdminProducts = () => {
       isError:isErrorBrand, error:errorBrand
     }=useGetAllBrandsQuery()
 
+
+    //un array de 2 posiciones
+    //
     const [
-      deleteProduct,
+      deleteProduct, //la fiunción que va a ejecutar
       {isSuccess:isSuccessDelete,
       isLoading:isLoadingDelete,
       isError:isErrorDelete,
@@ -108,6 +113,7 @@ const AdminProducts = () => {
   //#endregion DeleteProduct
 
   const searchProducts=(name)=>{
+    //es donde vas a implementar el endpoint de searchProducts
     console.log("name Product", name)
     console.log(data)
   }
@@ -135,7 +141,9 @@ const AdminProducts = () => {
         title={'Products'}/>
       <hr/>
       
-      <TableProduct data={data} editProduct={editProduct} handleDeleteProduct={handleDeleteProduct} />
+      <TableProduct data={data} 
+        editProduct={editProduct} 
+        handleDeleteProduct={handleDeleteProduct} />
       
     </AdminProductsContainer>
   )

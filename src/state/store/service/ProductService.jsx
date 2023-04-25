@@ -35,8 +35,8 @@ export const products=createApi({
             invalidatesTags:["Products"]
         }),
         getPaginationProducts:builder.query({
-            query:({size, page})=>({
-                url:`/pagination/?size=${size}&page=${page}`,
+            query:({size, page, categoryId, brandId, priceMin, priceMax})=>({
+                url:`/filter?size=${size}&page=${page}&categoryId=${categoryId}&brandId=${brandId}&priceMin=${priceMin}&priceMax=${priceMax}`,
                 method:'GET',
             })
         }),

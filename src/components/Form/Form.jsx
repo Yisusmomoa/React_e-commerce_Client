@@ -81,11 +81,13 @@ const Form = ({typeForm}) => {
             }).then(()=>navigate("/signIn"))
         }
         else if(isError){
+            console.log("🚀 ~ file: Form.jsx:84 ~ useEffect ~ error?.data.message:", error?.data.message)
             Swal.fire({
                 icon: 'error',
                 title: 'Oops...',
                 text: error?.data.message,
             })
+            
         }
     }, [isLoading]);
 

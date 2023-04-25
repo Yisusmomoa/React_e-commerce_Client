@@ -15,10 +15,7 @@ const InputPriceFilter=styled.input`
 const PriceFilter = ({setPrice}) => {
   return (
     <ThemeProvider theme={theme}>
-      <>
         <InputPriceFilter type='number' onChange={(ev)=>setPrice(ev.target.value)}/>
-
-      </>
     </ThemeProvider>
   )
 }

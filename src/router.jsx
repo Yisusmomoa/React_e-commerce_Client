@@ -17,6 +17,7 @@ import MyOrders from "./routes/MyOrders";
 import ProfileDetails from "./routes/ProfileDetails";
 import Checkout from "./routes/Checkout";
 import OrderDetail from "./routes/OrderDetail";
+import AdminSales from "./components/IsAdmin.jsx/Admin/AdminSales";
 
 const router=createBrowserRouter([
     {
@@ -93,6 +94,10 @@ const router=createBrowserRouter([
                     {
                         path: "brands",
                         element: <AdminBrands/>,
+                    },
+                    {
+                        path: "sales",
+                        element: <AdminSales/>,
                     },
                 ]
             },
