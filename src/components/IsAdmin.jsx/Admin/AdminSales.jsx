@@ -24,7 +24,7 @@ const AdminSales = () => {
 //#endregion Modals
 
 //#region DeleteProduct
-const handleDeleteProduct=(id)=>{
+const handleDeleteSale=(id)=>{
   Swal.fire({
     title: 'Are you sure?',
     text: "You won't be able to revert this!",
@@ -35,7 +35,7 @@ const handleDeleteProduct=(id)=>{
     confirmButtonText: 'Yes, delete it!'
   }).then((result) => {
     if (result.isConfirmed) {
-      deleteProduct(id)  
+      // deleteProduct(id)  
     }
   })
 }
@@ -58,7 +58,7 @@ const handleDeleteProduct=(id)=>{
       <hr/>
       <TableSale data={data} 
         editSale={editSale}
-        handleDeleteProduct={}/>
+        handleDeleteProduct={handleDeleteSale}/>
     </AdminSalesContainer>
   )
 }
