@@ -1,8 +1,13 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/dist/query/react";
 
+
+/*
+si se genera el token en el backend, pero en el frontend no se recibe
+*/
+
 export const users=createApi({
     reducerPath:'user',
-    baseQuery:fetchBaseQuery({baseUrl:'https://reacte-commerceserver-production.up.railway.app/api/user'}),
+    baseQuery:fetchBaseQuery({baseUrl:'/api/user'}),
     tagTypes:["me", "users"],
     endpoints:(builder)=>({
         getAllUsers:builder.query({

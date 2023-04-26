@@ -6,7 +6,7 @@ export default defineConfig({
   plugins: [react()],
   server:{
     proxy:{
-      '/api':'https://reacte-commerceserver-production.up.railway.app/'
+      '/api':'http://localhost:8080'
     }
   }
 })
