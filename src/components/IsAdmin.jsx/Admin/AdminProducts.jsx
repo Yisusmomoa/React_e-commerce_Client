@@ -28,6 +28,23 @@ const AdminProducts = () => {
     const {
       data, isSuccess, isError,error
     }=useGetAllProductsQuery()
+    const [dataState, setDataState] = useState({});
+    
+    setDataState(data);
+
+    const searchProducts=(name)=>{
+      console.log("name Product", name)
+      console.log(data)
+      
+      let filteredData = {}
+      data.forEach(e => {
+          if(e.includes(name))
+          {
+            filteredData.push(e);  
+          }
+      });
+      setDataState(filteredData);
+    }
 
     const {data:dataCateg, isError:isErrorCateg, 
       isSuccess:isSuccessCateg, error:errorCateg}=useGetAllCategoriesQuery()
@@ -63,63 +80,59 @@ const AdminProducts = () => {
   //#endregion Modals
 
   //#region DeleteProduct
-      const handleDeleteProduct=(id)=>{
-        Swal.fire({
-          title: 'Are you sure?',
-          text: "You won't be able to revert this!",
-          icon: 'warning',
-          showCancelButton: true,
-          confirmButtonColor: '#3085d6',
-          cancelButtonColor: '#d33',
-          confirmButtonText: 'Yes, delete it!'
-        }).then((result) => {
-          if (result.isConfirmed) {
-            deleteProduct(id)  
-          }
-        })
+    const handleDeleteProduct=(id)=>{
+      Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          deleteProduct(id)  
+        }
+      })
+    }
+
+    useEffect(() => {
+      if(isLoadingDelete){
+          Swal.fire({
+              title:'Loading',
+              allowEscapeKey: false,
+              allowOutsideClick: false,
+              didOpen:()=>{
+                  Swal.showLoading()
+              }
+          })
       }
-      useEffect(() => {
-        if(isLoadingDelete){
-            Swal.fire({
-                title:'Loading',
-                allowEscapeKey: false,
-                allowOutsideClick: false,
-                didOpen:()=>{
-                    Swal.showLoading()
-                }
-            })
-        }
-        if (isSuccessDelete) {
-          Swal.fire(
-            'Deleted!',
-            'Your register has been deleted.',
-            'success'
-          )
-        }
-        else if(isErrorDelete){
-            console.log(errorDelete)
-            Swal.fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: errorDelete?.data.message,
-            })
-        }
-      }, [isLoadingDelete]);
+      if (isSuccessDelete) {
+        Swal.fire(
+          'Deleted!',
+          'Your register has been deleted.',
+          'success'
+        )
+      }
+      else if(isErrorDelete){
+          console.log(errorDelete)
+          Swal.fire({
+              icon: 'error',
+              title: 'Oops...',
+              text: errorDelete?.data.message,
+          })
+      }
+    }, [isLoadingDelete]);
   //#endregion DeleteProduct
-
-  const searchProducts=(name)=>{
-    console.log("name Product", name)
-    console.log(data)
-  }
-
+  
   const editProduct=(data)=>{
-    setProductToUpdate(data)
-    openModalUpdate()
   }
+
+  setProductToUpdate(data)
+  openModalUpdate()
   
   return (
-    <AdminProductsContainer>
-      
+    <AdminProductsContainer> 
       <AddProduct isOpenModalAdd={isOpenModalAdd} closeModalAdd={closeModalAdd}
         brands={dataBrands} categories={dataCateg?.results} />
 
@@ -135,7 +148,7 @@ const AdminProducts = () => {
         title={'Products'}/>
       <hr/>
       
-      <TableProduct data={data} editProduct={editProduct} handleDeleteProduct={handleDeleteProduct} />
+      <TableProduct data={dataState} editProduct={editProduct} handleDeleteProduct={handleDeleteProduct} />
       
     </AdminProductsContainer>
   )

@@ -84,7 +84,7 @@ const Form = ({typeForm}) => {
             Swal.fire({
                 icon: 'error',
                 title: 'Oops...',
-                text: error?.data.message,
+                text: error?.data,
             })
         }
     }, [isLoading]);
@@ -118,7 +118,7 @@ const Form = ({typeForm}) => {
             Swal.fire({
                 icon: 'error',
                 title: 'Oops...',
-                text: errorLogin?.data.message,
+                text: errorLogin?.data
             })
         }
     }, [isLoadingLogin]);
