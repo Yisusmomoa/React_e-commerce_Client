@@ -22,12 +22,9 @@ export const users=createApi({
             query:(body)=>({
                 url:'/login',
                 method:"POST",
-                body
+                body,
+                credentials:"include"
             }),
-            extraOptions:{
-                credentials:"include",
-                
-            }
         }),
         me:builder.query({
             query:()=>'/me',
