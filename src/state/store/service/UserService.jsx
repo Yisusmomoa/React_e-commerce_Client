@@ -17,23 +17,36 @@ export const users=createApi({
             }),
             invalidatesTags:["users"]
         }),
+        //https://es.stackoverflow.com/questions/560449/express-js-no-recibo-la-cookie-en-el-navegador
         login:builder.mutation({
             query:(body)=>({
                 url:'/login',
                 method:"POST",
                 body
             }),
+            extraOptions:{
+                credentials:"include",
+                
+            }
         }),
         me:builder.query({
             query:()=>'/me',
-            providesTags:["me"]
+            providesTags:["me"],
+            extraOptions:{
+                credentials:"include",
+                
+            }
         }),
         logout:builder.mutation({
             query:()=>({
                 url:'/logout',
                 method:"POST"
             }),
-            invalidatesTags:["me"]
+            invalidatesTags:["me"],
+            extraOptions:{
+                credentials:"include",
+                
+            }
         }),
         updateUser:builder.mutation({
             query:({id, ...body})=>({
