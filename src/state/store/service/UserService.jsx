@@ -23,7 +23,9 @@ export const users=createApi({
                 url:'/login',
                 method:"POST",
                 body,
-                credentials:"include"
+                credentials:"include",
+                headers: {'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json'},
+                
             }),
         }),
         me:builder.query({
