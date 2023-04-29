@@ -8,6 +8,10 @@ export default defineConfig({
     proxy:{
       // '/api':'http://localhost:8080/'
       '/api':'https://reacte-commerceserver-production.up.railway.app/'
-    }
+    },
+    
+  },
+  build: {
+    chunkSizeWarningLimit: 2000 // ajusta este valor al tamaño límite que desees
   }
 })
