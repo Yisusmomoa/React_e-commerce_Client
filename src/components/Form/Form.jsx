@@ -17,7 +17,7 @@ import { Navigate, useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 import VisibilityOffOutlinedIcon from '@mui/icons-material/VisibilityOffOutlined';
-
+console.log("ya estoy hasta la puta madre de todo esto .l., nada quiere jalar, sino es una pinche cosa es otra")
 const Form = ({typeForm}) => {
     //TODO Validar que el email si sea un email
     const dataMe=useMeQuery()

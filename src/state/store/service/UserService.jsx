@@ -3,6 +3,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/dist/query/react";
 
 /*
 si se genera el token en el backend, pero en el frontend no se recibe
+.l.l.
 */
 
 export const users=createApi({
