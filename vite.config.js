@@ -9,5 +9,6 @@ export default defineConfig({
       // '/api':'http://localhost:8080/'
       '/api':'https://reacte-commerceserver-production.up.railway.app/'
     }
-  }
+  },
+  base:'https://Yisusmomoa.github.io/React_e-commerce_Client'
 })
