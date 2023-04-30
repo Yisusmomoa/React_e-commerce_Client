@@ -2,7 +2,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
 export const sales=createApi({
     reducerPath:'sales',
-    baseQuery:fetchBaseQuery({baseUrl:'/api/sale'}),
+    baseQuery:fetchBaseQuery({baseUrl:'https://reacte-commerceserver-production.up.railway.app/api/sale'}),
     tagTypes:["Sales"],
     endpoints:(builder)=>({
         getAllSales:builder.query({

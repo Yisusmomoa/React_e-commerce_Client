@@ -7,7 +7,7 @@ si se genera el token en el backend, pero en el frontend no se recibe
 
 export const users=createApi({
     reducerPath:'user',
-    baseQuery:fetchBaseQuery({baseUrl:'/api/user'}),
+    baseQuery:fetchBaseQuery({baseUrl:'https://reacte-commerceserver-production.up.railway.app/api/user'}),
     tagTypes:["me", "users"],
     endpoints:(builder)=>({
         getAllUsers:builder.query({
@@ -22,29 +22,43 @@ export const users=createApi({
             }),
             invalidatesTags:["users"]
         }),
+        //https://es.stackoverflow.com/questions/560449/express-js-no-recibo-la-cookie-en-el-navegador
         login:builder.mutation({
             query:(body)=>({
                 url:'/login',
                 method:"POST",
-                body
+                body,
+                credentials:"include",
+                headers: {'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json'},
+                
             }),
         }),
         me:builder.query({
-            query:()=>'/me',
-            providesTags:["me"]
+            query:()=>({
+                url:'/me',
+                method:'GET',
+                credentials:"include",
+                headers: {'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json'},
+                
+            }),
+            providesTags:["me"],
         }),
         logout:builder.mutation({
             query:()=>({
                 url:'/logout',
-                method:"POST"
+                method:"POST",
+                credentials:"include",
+                headers: {'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json'},
             }),
-            invalidatesTags:["me"]
+            invalidatesTags:["me"],
         }),
         updateUser:builder.mutation({
             query:({id, ...body})=>({
                 url:`/${id}`,
                 method:"PUT",
-                body
+                body,
+                credentials:"include",
+                headers: {'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json'},
             }),
             invalidatesTags:["me"],
         }),
@@ -52,21 +66,27 @@ export const users=createApi({
             query:(formData)=>({
                 url:`/${formData.get("id")}`,
                 method:"PUT",
-                body: formData
+                body: formData,
+                credentials:"include",
+                headers: {'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json'},
             }),
             invalidatesTags:["me"]
         }),
         desactivateUser:builder.mutation({
             query:(id)=>({
                 url:`/${id}`,
-                method:"DELETE"
+                method:"DELETE",
+                credentials:"include",
+                headers: {'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json'},
             }),
             invalidatesTags:["me"]
         }),
         desactivateUserAdmin:builder.mutation({
             query:(id)=>({
                 url:`/${id}`,
-                method:"DELETE"
+                method:"DELETE",
+                credentials:"include",
+                headers: {'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json'},
             }),
             invalidatesTags:["users"]
         }),
@@ -77,7 +97,9 @@ export const users=createApi({
             query:({id, ...body})=>({
                 url:`/admin/users/${id}`,
                 method:"PUT",
-                body
+                body,
+                credentials:"include",
+                headers: {'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json'},
             }),
             invalidatesTags:["users"],
         })
