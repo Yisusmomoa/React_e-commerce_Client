@@ -29,12 +29,14 @@ export const users=createApi({
             }),
         }),
         me:builder.query({
-            query:()=>'/me',
-            providesTags:["me"],
-            headers:{'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json'},
-            extraOptions:{
+            query:()=>({
+                url:'/me',
+                method:'GET',
                 credentials:"include",
-            }
+                headers: {'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json'},
+                
+            }),
+            providesTags:["me"],
         }),
         logout:builder.mutation({
             query:()=>({
