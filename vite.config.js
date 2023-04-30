@@ -10,6 +10,5 @@ export default defineConfig({
       '/api':'https://reacte-commerceserver-production.up.railway.app/'
     }
   },
-  base:'https://Yisusmomoa.github.io/React_e-commerce_Client'
 })
 
