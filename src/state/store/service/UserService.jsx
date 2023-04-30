@@ -41,19 +41,19 @@ export const users=createApi({
         logout:builder.mutation({
             query:()=>({
                 url:'/logout',
-                method:"POST"
+                method:"POST",
+                credentials:"include",
+                headers: {'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json'},
             }),
             invalidatesTags:["me"],
-            extraOptions:{
-                credentials:"include",
-                
-            }
         }),
         updateUser:builder.mutation({
             query:({id, ...body})=>({
                 url:`/${id}`,
                 method:"PUT",
-                body
+                body,
+                credentials:"include",
+                headers: {'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json'},
             }),
             invalidatesTags:["me"],
         }),
@@ -61,21 +61,27 @@ export const users=createApi({
             query:(formData)=>({
                 url:`/${formData.get("id")}`,
                 method:"PUT",
-                body: formData
+                body: formData,
+                credentials:"include",
+                headers: {'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json'},
             }),
             invalidatesTags:["me"]
         }),
         desactivateUser:builder.mutation({
             query:(id)=>({
                 url:`/${id}`,
-                method:"DELETE"
+                method:"DELETE",
+                credentials:"include",
+                headers: {'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json'},
             }),
             invalidatesTags:["me"]
         }),
         desactivateUserAdmin:builder.mutation({
             query:(id)=>({
                 url:`/${id}`,
-                method:"DELETE"
+                method:"DELETE",
+                credentials:"include",
+                headers: {'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json'},
             }),
             invalidatesTags:["users"]
         }),
@@ -86,7 +92,9 @@ export const users=createApi({
             query:({id, ...body})=>({
                 url:`/admin/users/${id}`,
                 method:"PUT",
-                body
+                body,
+                credentials:"include",
+                headers: {'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json'},
             }),
             invalidatesTags:["users"],
         })
