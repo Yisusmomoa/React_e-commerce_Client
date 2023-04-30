@@ -31,9 +31,9 @@ export const users=createApi({
         me:builder.query({
             query:()=>'/me',
             providesTags:["me"],
+            headers:{'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json'},
             extraOptions:{
                 credentials:"include",
-                
             }
         }),
         logout:builder.mutation({
