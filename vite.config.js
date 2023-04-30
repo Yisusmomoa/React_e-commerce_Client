@@ -9,16 +9,6 @@ export default defineConfig({
       // '/api':'http://localhost:8080/'
       '/api':'https://reacte-commerceserver-production.up.railway.app/'
     },
-    
-  },
-  build: {
-    chunkSizeWarningLimit: 1000000000 // ajusta este valor al tamaño límite que desees
-  },
-  resolve: {
-    alias: {
-      "~": path.resolve(__dirname, "node_modules"),
-      "@": path.resolve(__dirname, "src"),
-    },
-  },
+  }
 })
 
