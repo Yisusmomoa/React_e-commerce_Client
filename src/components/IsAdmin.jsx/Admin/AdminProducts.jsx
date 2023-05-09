@@ -28,7 +28,7 @@ const AdminProducts = () => {
     const {
       data, isSuccess, isError,error
     }=useGetAllProductsQuery()
-    const [dataState, setDataState] = useState({});
+    const [dataState, setDataState] = useState([]);
     
     setDataState(data);
 
