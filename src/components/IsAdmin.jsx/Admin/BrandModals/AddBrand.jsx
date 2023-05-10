@@ -25,6 +25,7 @@ const AddBrand = ({isOpenModalAdd, closeModalAdd}) => {
     }=useForm()
 
     const handleOnSubmit=(brand)=>{
+        console.log("🚀 ~ file: AddBrand.jsx:28 ~ handleOnSubmit ~ brand:", brand)
         // ev.preventDefault();
         // const {
         //     imgBrand
