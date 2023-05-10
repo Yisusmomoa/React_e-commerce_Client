@@ -15,7 +15,6 @@ export const products=createApi({
                 method:'POST',
                 body,
                 credentials:"include",
-                headers: {'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json'},
             }),
             invalidatesTags:["Products"]
         }),
@@ -24,7 +23,6 @@ export const products=createApi({
                 url:`/${id}`,
                 method:'DELETE',
                 credentials:"include",
-                headers: {'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json'},
             }),
             invalidatesTags:["Products"]
         }),
@@ -34,7 +32,6 @@ export const products=createApi({
                 method:'PUT',
                 body:formData,
                 credentials:"include",
-                headers: {'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json'},
             }),
             // invalidatesTags:["Products", "Product"] //este jala si se mandan las imagenes y toda la información de golpe
             //para mostrar el cambio en el modal de update product
@@ -52,7 +49,6 @@ export const products=createApi({
             query:(id)=>({
                 url:`/${id}`,
                 credentials:"include",
-                headers: {'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json'},
             }),
             providesTags:["Product"],
         }),
@@ -62,7 +58,6 @@ export const products=createApi({
                 method:'POST',
                 body,
                 credentials:"include",
-                headers: {'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json'},
             }),
             invalidatesTags:["Product"]
         }),
@@ -73,7 +68,6 @@ export const products=createApi({
                 method:'PUT',
                 body:formData,
                 credentials:"include",
-                headers: {'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json'},
             }),
             invalidatesTags:["Product"]
         }),
@@ -83,7 +77,6 @@ export const products=createApi({
                 method:'PUT',
                 body:formData,
                 credentials:"include",
-                headers: {'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json'},
             }),
             invalidatesTags:["Product", "Products"]
         })
