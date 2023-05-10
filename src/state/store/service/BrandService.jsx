@@ -24,7 +24,6 @@ export const brands=createApi({
                 url:`/${id}`,
                 method:"DELETE",
                 credentials:"include",
-                headers: {'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json'},
             }),
             invalidatesTags:["Brands"]
         }),
@@ -34,7 +33,6 @@ export const brands=createApi({
                 method:"PUT",
                 body:formData,
                 credentials:"include",
-                headers: {'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json'},
                 // body:{
                 //     name:formData.get("name"),
                 //     imgBrand:formData.get("imgBrand")
