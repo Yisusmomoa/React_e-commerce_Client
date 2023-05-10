@@ -15,7 +15,7 @@ export const brands=createApi({
                 method:'POST',
                 body,
                 credentials:"include",
-                headers: {   'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json'}
+                headers: {   'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json', 'Content-Type': 'multipart/form-data'}
             }),
             invalidatesTags:["Brands"]
         }),
