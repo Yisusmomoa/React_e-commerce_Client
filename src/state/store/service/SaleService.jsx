@@ -11,21 +11,27 @@ export const sales=createApi({
         }),
         getOneSale:builder.query({
             query:(id)=>({
-                url:`/${id}`
+                url:`/${id}`,
+                credentials:"include",
+                headers: {'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json'},
             })
         }),
         createSale:builder.mutation({
             query:(body)=>({
                 url:'/',
                 method:'POST',
-                body
+                body,
+                credentials:"include",
+                headers: {'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json'},
             }),
             invalidatesTags:["Sales"]
         }),
         deleteSale:builder.mutation({
             query:(id)=>({
                 url:`/${id}`,
-                method:'DELETE'
+                method:'DELETE',
+                credentials:"include",
+                headers: {'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json'},
             }),
             invalidatesTags:["Sales"]
         }),
@@ -33,7 +39,9 @@ export const sales=createApi({
             query:({id, ...body})=>({
                 url:`/${id}`,
                 method:'PUT',
-                body
+                body,
+                credentials:"include",
+                headers: {'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json'},
             }),
             invalidatesTags:["Sales"]
         })

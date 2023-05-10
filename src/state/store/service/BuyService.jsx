@@ -8,7 +8,9 @@ export const buys=createApi({
             query:(body)=>({
                 url:'/',
                 method:'POST',
-                body
+                body,
+                credentials:"include",
+                headers: {'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json'},
             })
         }),
         getAllBuysFromUser:builder.query({

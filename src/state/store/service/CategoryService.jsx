@@ -13,14 +13,19 @@ export const categories=createApi({
             query:(body)=>({
                 url:'/',
                 method:'POST',
-                body
+                body,
+                credentials:"include",
+                headers: {'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json'},
+                
             }),
             invalidatesTags:["Categories"]
         }),
         deleteCategory:builder.mutation({
             query:(id)=>({
                 url:`/${id}`,
-                method:"DELETE"
+                method:"DELETE",
+                credentials:"include",
+                headers: {'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json'},
             }),
             invalidatesTags:["Categories"]
         }),
@@ -28,7 +33,9 @@ export const categories=createApi({
             query:({id, ...body})=>({
                 url:`/${id}`,
                 method:'PUT',
-                body
+                body,
+                credentials:"include",
+                headers: {'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json'},
             }),
             invalidatesTags:["Categories"]
         })
