@@ -63,7 +63,6 @@ export const users=createApi({
                 method:"PUT",
                 body: formData,
                 credentials:"include",
-                headers: {'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json'},
             }),
             invalidatesTags:["me"]
         }),
@@ -94,7 +93,6 @@ export const users=createApi({
                 method:"PUT",
                 body,
                 credentials:"include",
-                headers: {'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json'},
             }),
             invalidatesTags:["users"],
         })
