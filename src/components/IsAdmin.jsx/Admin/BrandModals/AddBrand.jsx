@@ -61,7 +61,7 @@ const AddBrand = ({isOpenModalAdd, closeModalAdd}) => {
             Swal.fire({
                 icon: 'error',
                 title: 'Oops...',
-                text: error?.data.message,
+                text: error?.data?.message,
             })
         }
         return ()=>{
