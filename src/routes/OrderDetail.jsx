@@ -19,8 +19,10 @@ const OrderDetail = () => {
   const {
     data, isError, isSuccess, isLoading, error
   }=useGetBuyByIdFromUserQuery(params.id)
+    
 
   useEffect(() => {
+    console.log("🚀 ~ file: OrderDetail.jsx:22 ~ OrderDetail ~ error:", error)
     if(isSuccess){
       setBuy(data)
     }
