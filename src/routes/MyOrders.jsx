@@ -18,6 +18,7 @@ const MyOrders = () => {
     isError,
     error
   }=useGetAllBuysFromUserQuery()
+    console.log("🚀 ~ file: MyOrders.jsx:21 ~ MyOrders ~ data:", data)
   
   return isSuccess&&(
     <TableContainer component={Paper} 
