@@ -22,6 +22,7 @@ export const buys=createApi({
         getBuyByIdFromUser:builder.query({
             query:(id)=>({
                 url:`/${id}`,
+                credentials:"include",
             }),
         })
     })
