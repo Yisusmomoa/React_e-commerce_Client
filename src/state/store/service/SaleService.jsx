@@ -6,7 +6,11 @@ export const sales=createApi({
     tagTypes:["Sales"],
     endpoints:(builder)=>({
         getAllSales:builder.query({
-            query:()=>'',
+            query:()=>({
+                url:'/',
+                credentials:"include",
+                headers: {'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json'},
+            }),
             providesTags:["Sales"]
         }),
         getOneSale:builder.query({
@@ -22,7 +26,6 @@ export const sales=createApi({
                 method:'POST',
                 body,
                 credentials:"include",
-                headers: {'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json'},
             }),
             invalidatesTags:["Sales"]
         }),
