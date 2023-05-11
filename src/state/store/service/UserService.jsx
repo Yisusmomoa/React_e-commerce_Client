@@ -12,8 +12,13 @@ export const users=createApi({
     tagTypes:["me", "users"],
     endpoints:(builder)=>({
         getAllUsers:builder.query({
-            query:()=>"",
-            providesTags:["users"]
+            query:()=>({
+                url:'/',
+                credentials:"include",
+                headers: {'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json'},
+            }),
+            providesTags:["users"],
+            
         }),
         createUser:builder.mutation({
             query:(body)=>({
@@ -69,7 +74,6 @@ export const users=createApi({
                 method:"PUT",
                 body: formData,
                 credentials:"include",
-                headers: {'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json'},
             }),
             invalidatesTags:["me"]
         }),
@@ -100,7 +104,6 @@ export const users=createApi({
                 method:"PUT",
                 body,
                 credentials:"include",
-                headers: {'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json'},
             }),
             invalidatesTags:["users"],
         })
