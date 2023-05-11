@@ -9,15 +9,13 @@ export const sales=createApi({
             query:()=>({
                 url:'/',
                 credentials:"include",
-                headers: {'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json'},
-            }),
+             }),
             providesTags:["Sales"]
         }),
         getOneSale:builder.query({
             query:(id)=>({
                 url:`/${id}`,
                 credentials:"include",
-                headers: {'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json'},
             })
         }),
         createSale:builder.mutation({
