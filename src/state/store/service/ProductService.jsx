@@ -2,7 +2,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
 export const products=createApi({
     reducerPath:'products',
-    baseQuery:fetchBaseQuery({baseUrl:'/api/product'}),
+    baseQuery:fetchBaseQuery({baseUrl:'https://reacte-commerceserver-production.up.railway.app/api/product'}),
     tagTypes:["Products", "Product"],
     endpoints:(builder)=>({
         getAllProducts:builder.query({
@@ -13,14 +13,16 @@ export const products=createApi({
             query:(body)=>({
                 url:'/',
                 method:'POST',
-                body
+                body,
+                credentials:"include",
             }),
             invalidatesTags:["Products"]
         }),
         deleteProduct:builder.mutation({
             query:(id)=>({
                 url:`/${id}`,
-                method:'DELETE'
+                method:'DELETE',
+                credentials:"include",
             }),
             invalidatesTags:["Products"]
         }),
@@ -28,7 +30,8 @@ export const products=createApi({
             query:(formData)=>({
                 url:`/${formData.get('id')}`,
                 method:'PUT',
-                body:formData
+                body:formData,
+                credentials:"include",
             }),
             // invalidatesTags:["Products", "Product"] //este jala si se mandan las imagenes y toda la información de golpe
             //para mostrar el cambio en el modal de update product
@@ -38,11 +41,14 @@ export const products=createApi({
             query:({size, page, categoryId, brandId, priceMin, priceMax})=>({
                 url:`/filter?size=${size}&page=${page}&categoryId=${categoryId}&brandId=${brandId}&priceMin=${priceMin}&priceMax=${priceMax}`,
                 method:'GET',
+                credentials:"include",
+                headers: {'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json'},
             })
         }),
         getProductById:builder.query({
             query:(id)=>({
                 url:`/${id}`,
+                credentials:"include",
             }),
             providesTags:["Product"],
         }),
@@ -50,7 +56,8 @@ export const products=createApi({
             query:(body)=>({
                 url:'/deletImg',
                 method:'POST',
-                body
+                body,
+                credentials:"include",
             }),
             invalidatesTags:["Product"]
         }),
@@ -59,7 +66,8 @@ export const products=createApi({
             query:(formData)=>({
                 url:`/updateImg`,
                 method:'PUT',
-                body:formData
+                body:formData,
+                credentials:"include",
             }),
             invalidatesTags:["Product"]
         }),
@@ -67,7 +75,8 @@ export const products=createApi({
             query:(formData)=>({
                 url:`/${formData.get('id')}`,
                 method:'PUT',
-                body:formData
+                body:formData,
+                credentials:"include",
             }),
             invalidatesTags:["Product", "Products"]
         })

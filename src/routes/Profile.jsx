@@ -35,10 +35,11 @@ const Profile = () => {
 
   const handleClickLogout=async ()=>{
     logout()
-    localStorage.removeItem("cart")
-    window.location.href = '/home'
+    document.cookie="name=token;max-age=0;";  
+    document.cookie="name=tuptm;max-age=0;";  
+      localStorage.removeItem("cart")
+      window.location.href = '/home'
   }
-
   //#region UpdateImgProfile
     const handleSubmit=(ev)=>{
       ev.preventDefault();

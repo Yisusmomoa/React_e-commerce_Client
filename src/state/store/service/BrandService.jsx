@@ -2,7 +2,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
 export const brands=createApi({
     reducerPath:'brands',
-    baseQuery:fetchBaseQuery({baseUrl:'/api/manufacturer'}),
+    baseQuery:fetchBaseQuery({baseUrl:'https://reacte-commerceserver-production.up.railway.app/api/manufacturer'}),
     tagTypes:["Brands"],
     endpoints:(builder)=>({
         getAllBrands:builder.query({
@@ -13,14 +13,17 @@ export const brands=createApi({
             query:(body)=>({
                 url:'/',
                 method:'POST',
-                body
+                body,
+                credentials:"include",
+                mode:'cors'
             }),
             invalidatesTags:["Brands"]
         }),
         deleteBrand:builder.mutation({
             query:(id)=>({
                 url:`/${id}`,
-                method:"DELETE"
+                method:"DELETE",
+                credentials:"include",
             }),
             invalidatesTags:["Brands"]
         }),
@@ -28,7 +31,8 @@ export const brands=createApi({
             query:(formData)=>({
                 url:`/${formData.get("id")}`,
                 method:"PUT",
-                body:formData
+                body:formData,
+                credentials:"include",
                 // body:{
                 //     name:formData.get("name"),
                 //     imgBrand:formData.get("imgBrand")
