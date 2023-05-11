@@ -14,7 +14,10 @@ export const buys=createApi({
             })
         }),
         getAllBuysFromUser:builder.query({
-            query:()=>"",
+            query:()=>({
+                url:'/',
+                credentials:"include",
+            })
         }),
         getBuyByIdFromUser:builder.query({
             query:(id)=>({
