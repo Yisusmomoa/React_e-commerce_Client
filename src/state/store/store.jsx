@@ -8,6 +8,7 @@ import { brands } from './service/BrandService';
 import { products } from './service/ProductService';
 import { buys } from './service/BuyService';
 import { sales } from './service/SaleService';
+import { wishList } from './service/WishlistService';
 
 export const store=configureStore({
     reducer:{
@@ -16,7 +17,8 @@ export const store=configureStore({
         [brands.reducerPath]:brands.reducer,
         [products.reducerPath]:products.reducer,
         [buys.reducerPath]:buys.reducer,
-        [sales.reducerPath]:sales.reducer
+        [sales.reducerPath]:sales.reducer,
+        [wishList.reducerPath]:wishList.reducer
     },
     middleware:(getDefaultMiddleware)=>getDefaultMiddleware()
         .concat(categories.middleware)
@@ -25,6 +27,7 @@ export const store=configureStore({
         .concat(products.middleware)
         .concat(buys.middleware)
         .concat(sales.middleware)
+        .concat(wishList.middleware)
 })
 
 

@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useState, useEffect } from 'react'
 import { ButtonAddToCart, 
   InputQuantity, 
   ProductBody_ContainerInfo, 
@@ -13,6 +13,7 @@ import CartContext from '../../state/context/CartContext';
 import { useMeQuery } from '../../state/store/service/UserService';
 import Swal from 'sweetalert2';
 import { useNavigate } from 'react-router-dom';
+import { useAddProductToWishListMutation } from '../../state/store/service/WishlistService';
 
 const ProductBodyInfo = ({productInfo}) => {
 
@@ -37,9 +38,40 @@ const ProductBodyInfo = ({productInfo}) => {
       })
     }
   }
+  const [addToWishlist, {isLoading, isSuccess, 
+    isError, error}]=useAddProductToWishListMutation()
+  const favoriteIconClick=()=>{
+    addToWishlist({id:productInfo?.id})
+  }
+  useEffect(() => {
+    if(isLoading){
+      Swal.fire({
+          title:'Loading',
+          allowEscapeKey: false,
+          allowOutsideClick: false,
+          didOpen:()=>{
+              Swal.showLoading()
+          }
+      })
+    }
+    if (isSuccess) {
+        Swal.fire({
+            icon: 'success',
+            title: 'successfully added to your wishlist'
+        })
+    }
+    else if(isError){
+      console.log("error", error)
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: error?.data.message,
+        })
+    }
+  }, [isLoading]);
   return (
     <ProductBody_ContainerInfo>
-      <FavoriteBorderOutlinedIcon fontSize='large'/>
+      <FavoriteBorderOutlinedIcon fontSize='large' onClick={()=>favoriteIconClick()}/>
       <h2>{productInfo?.name}</h2>
       <h4>Product description</h4>
       <h6>{productInfo?.description} </h6>
