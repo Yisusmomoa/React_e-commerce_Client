@@ -38,6 +38,8 @@ const ProductBodyInfo = ({productInfo}) => {
       })
     }
   }
+  const [addToWishlist, {isLoading, isSuccess, 
+    isError, error}]=useAddProductToWishListMutation()
   const favoriteIconClick=()=>{
     addToWishlist({id:productInfo?.id})
   }
