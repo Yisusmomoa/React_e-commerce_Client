@@ -37,6 +37,7 @@ const ProductBodyInfo = ({productInfo}) => {
       })
     }
   }
+  // comentario de prueba
   return (
     <ProductBody_ContainerInfo>
       <FavoriteBorderOutlinedIcon fontSize='large'/>
