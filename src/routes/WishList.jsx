@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { useShowProductsWishListQuery } from '../state/store/service/WishlistService'
+import { useRemoveProductWishListMutation, useShowProductsWishListQuery } from '../state/store/service/WishlistService'
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import { WishlistCard, WishlistContainer, 
   WishlistImgCard, WishlistInfoContainer, 
@@ -16,7 +16,11 @@ const WishList = () => {
     isError,
     error
   }=useShowProductsWishListQuery()
-    console.log("🚀 ~ file: WishList.jsx:13 ~ WishList ~ data:", data)
+
+  const [
+    removeProductWishList,
+    {isSuccess:isSuccessRemove, isLoading:isLoadingRemove, isError:isErrorRemove, error:errorRemove}
+  ]=useRemoveProductWishListMutation()
   
   return !isLoading&&(
     <WishlistContainer>
@@ -40,7 +44,7 @@ const WishList = () => {
               <WishlistInfoProduct>
                 <h5>{product.Category.name}</h5>
                 <p>Added {product.WishList.createdAt}</p>
-                <h4>Eliminar</h4>
+                <h4 onClick={()=>removeProductWishList(product.id)}>Eliminar</h4>
               </WishlistInfoProduct>
 
             </WishlistInfoContainer>
