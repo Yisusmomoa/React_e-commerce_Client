@@ -7,7 +7,7 @@ export default defineConfig({
   server:{
     proxy:{
       // '/api':'http://localhost:8080/'
-      '/api':'https://reacte-commerceserver-production.up.railway.app/'
+      '/api':'34.174.145.222:8080/'
     },
   }
 })

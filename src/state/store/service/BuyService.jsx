@@ -2,7 +2,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
 export const buys=createApi({
     reducerPath:'buys',
-    baseQuery:fetchBaseQuery({baseUrl:'https://reacte-commerceserver-production.up.railway.app/api/buy'}),
+    baseQuery:fetchBaseQuery({baseUrl:'34.174.145.222:8080/api/buy'}),
     endpoints:(builder)=>({
         makeBuy:builder.mutation({
             query:(body)=>({

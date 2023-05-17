@@ -2,7 +2,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
 export const wishList=createApi({
     reducerPath:'wishlist',
-    baseQuery:fetchBaseQuery({baseUrl:'https://reacte-commerceserver-production.up.railway.app/api//wishList'}),
+    baseQuery:fetchBaseQuery({baseUrl:'34.174.145.222:8080/api//wishList'}),
     tagTypes:["wishlist"],
     endpoints:(builder)=>({
         addProductToWishList:builder.mutation({

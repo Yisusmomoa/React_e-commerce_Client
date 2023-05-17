@@ -2,7 +2,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/dist/query/react";
 
 export const users=createApi({
     reducerPath:'user',
-    baseQuery:fetchBaseQuery({baseUrl:'https://reacte-commerceserver-production.up.railway.app/api/user'}),
+    baseQuery:fetchBaseQuery({baseUrl:'34.174.145.222:8080/api/user'}),
     tagTypes:["me", "users"],
     endpoints:(builder)=>({
         getAllUsers:builder.query({
