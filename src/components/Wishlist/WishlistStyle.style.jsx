@@ -11,7 +11,6 @@ export const WishlistContainer=styled.div`
 export const WishlistCard=styled.div`
   width:auto;
   height:200px;
-  border:1px solid blue;
   margin-top:0.5rem;
   margin-bottom:0.5rem;
   margin-right: 0.5rem;
@@ -21,7 +20,8 @@ export const WishlistCard=styled.div`
   grid-template-columns:30% 70%;
   align-items: center;
   justify-items: center;
-
+  border: 1px groove rgba(97, 113, 122, 0.2);
+  
 `
 export const WishlistImgCard=styled.img`
   width:70%;
@@ -53,6 +53,7 @@ export const WishlistPrice=styled.div`
   gap:100px;
   button{
     margin:0;
+    margin-right: 1rem;
   }
 `
 
