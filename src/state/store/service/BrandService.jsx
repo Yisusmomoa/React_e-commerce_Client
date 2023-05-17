@@ -2,7 +2,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
 export const brands=createApi({
     reducerPath:'brands',
-    baseQuery:fetchBaseQuery({baseUrl:'https://reacte-commerceserver-production.up.railway.app/api/manufacturer'}),
+    baseQuery:fetchBaseQuery({baseUrl:'https://techzone-api.onrender.com/api/manufacturer'}),
     tagTypes:["Brands"],
     endpoints:(builder)=>({
         getAllBrands:builder.query({
